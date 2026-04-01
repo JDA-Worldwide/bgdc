@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dev",
+      "runtimeExecutable": "echo",
+      "runtimeArgs": ["reusing existing dev server"],
+      "port": 3000,
+      "autoPort": true
+    }
+  ]
+}
