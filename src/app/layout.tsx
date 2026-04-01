@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Playfair_Display, DM_Sans } from "next/font/google";
 import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { Analytics } from "@vercel/analytics/react";
@@ -8,6 +9,20 @@ import { settingsQuery } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import { JsonLd, organizationSchema } from "@/lib/jsonLd";
 import "./globals.css";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  variable: "--font-playfair",
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-dm-sans",
+  display: "swap",
+});
 
 interface GlobalSettings {
   siteTitle?: string;
@@ -25,14 +40,16 @@ export async function generateMetadata(): Promise<Metadata> {
     tags: ["globalSettings"],
   });
 
-  const siteTitle = settings?.siteTitle || "bgdc";
+  const siteTitle = settings?.siteTitle || "Bargersville Economic Development";
 
   return {
     title: {
       template: `%s | ${siteTitle}`,
       default: siteTitle,
     },
-    description: settings?.defaultSeo?.metaDescription || `Built with ${siteTitle}`,
+    description:
+      settings?.defaultSeo?.metaDescription ||
+      "Grow Where Access Meets Opportunity — Bargersville, Indiana",
     metadataBase: new URL(
       settings?.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
     ),
@@ -49,10 +66,11 @@ export default async function RootLayout({
     tags: ["globalSettings"],
   });
 
-  const siteUrl = settings?.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const siteUrl =
+    settings?.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
       <body className="antialiased">
         <a
           href="#main-content"
@@ -63,7 +81,7 @@ export default async function RootLayout({
         {settings && (
           <JsonLd
             data={organizationSchema({
-              name: settings.siteTitle || "bgdc",
+              name: settings.siteTitle || "Bargersville Economic Development",
               url: siteUrl,
               logo: settings.logo?.asset ? urlFor(settings.logo).width(600).url() : undefined,
               socialLinks: settings.socialLinks,

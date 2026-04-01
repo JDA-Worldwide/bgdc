@@ -11,6 +11,13 @@ import Testimonials from "./modules/Testimonials";
 import FAQ from "./modules/FAQ";
 import TeamGrid from "./modules/TeamGrid";
 import ContactForm from "./modules/ContactForm";
+import HeroSection from "./home/HeroSection";
+import TickerSection from "./home/TickerSection";
+import WhySection from "./home/WhySection";
+import LocationSection from "./home/LocationSection";
+import GrowthSection from "./home/GrowthSection";
+import IncentivesSection from "./home/IncentivesSection";
+import CtaBanner from "./home/CtaBanner";
 import { JsonLd, faqPageSchema } from "@/lib/jsonLd";
 import { toPlainText, type PortableTextBlock } from "@portabletext/react";
 
@@ -42,9 +49,23 @@ const moduleMap: Record<string, ComponentType<any>> = {
   faq: FAQ,
   teamGrid: TeamGrid,
   contactForm: ContactForm,
+  homepageHero: HeroSection,
+  partnersTicker: TickerSection,
+  whyPillars: WhySection,
+  locationMap: LocationSection,
+  projectsGrid: GrowthSection,
+  incentivesGrid: IncentivesSection,
+  ctaBanner: CtaBanner,
 };
 
-const fullBleedModules = new Set(["hero", "cta"]);
+const fullBleedModules = new Set([
+  "hero",
+  "cta",
+  "homepageHero",
+  "partnersTicker",
+  "locationMap",
+  "ctaBanner",
+]);
 
 function buildFaqJsonLd(module: FAQModule) {
   if (!module.items?.length) return null;

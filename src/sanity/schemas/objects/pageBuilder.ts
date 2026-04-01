@@ -17,5 +17,12 @@ export default defineType({
     defineArrayMember({ type: "faq" }),
     defineArrayMember({ type: "teamGrid" }),
     defineArrayMember({ type: "contactForm" }),
+    defineArrayMember({ type: "homepageHero" }),
+    defineArrayMember({ type: "partnersTicker" }),
+    defineArrayMember({ type: "whyPillars" }),
+    defineArrayMember({ type: "locationMap" }),
+    defineArrayMember({ type: "projectsGrid" }),
+    defineArrayMember({ type: "incentivesGrid" }),
+    defineArrayMember({ type: "ctaBanner" }),
   ],
 });
