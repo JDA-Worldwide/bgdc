@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { sanityFetch } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/fetch";
 import { pageBySlugQuery, allPagesQuery, settingsQuery } from "@/sanity/lib/queries";
 import { buildMetadata } from "@/lib/metadata";
 import { JsonLd, webPageSchema } from "@/lib/jsonLd";
@@ -40,8 +40,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const [page, settings] = await Promise.all([
-    sanityFetch<PageData | null>({ query: pageBySlugQuery, params: { slug }, tags: ["page"] }),
-    sanityFetch<GlobalSettings | null>({ query: settingsQuery, tags: ["globalSettings"] }),
+    sanityFetch<PageData | null>({ query: pageBySlugQuery, params: { slug }, tags: ["page"], stega: false }),
+    sanityFetch<GlobalSettings | null>({ query: settingsQuery, tags: ["globalSettings"], stega: false }),
   ]);
 
   if (!page) return {};

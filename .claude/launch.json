@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "dev",
-      "runtimeExecutable": "echo",
-      "runtimeArgs": ["reusing existing dev server"],
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
       "port": 3000,
       "autoPort": true
     }
