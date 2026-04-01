@@ -4,7 +4,7 @@ import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { sanityFetch } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/fetch";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import { JsonLd, organizationSchema } from "@/lib/jsonLd";
@@ -38,6 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await sanityFetch<GlobalSettings | null>({
     query: settingsQuery,
     tags: ["globalSettings"],
+    stega: false,
   });
 
   const siteTitle = settings?.siteTitle || "Bargersville Economic Development";
@@ -64,6 +65,7 @@ export default async function RootLayout({
   const settings = await sanityFetch<GlobalSettings | null>({
     query: settingsQuery,
     tags: ["globalSettings"],
+    stega: false,
   });
 
   const siteUrl =

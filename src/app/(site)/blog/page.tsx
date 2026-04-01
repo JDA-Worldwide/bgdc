@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { sanityFetch } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/fetch";
 import { allBlogPostsQuery } from "@/sanity/lib/queries";
 import { formatDate } from "@/lib/utils";
 import SanityImage from "@/components/ui/SanityImage";

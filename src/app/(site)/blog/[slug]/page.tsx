@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { sanityFetch } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/fetch";
 import { blogPostBySlugQuery, allBlogPostsQuery, settingsQuery } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import { formatDate } from "@/lib/utils";
@@ -47,8 +47,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const [post, settings] = await Promise.all([
-    sanityFetch<BlogPost | null>({ query: blogPostBySlugQuery, params: { slug }, tags: ["blogPost"] }),
-    sanityFetch<GlobalSettings | null>({ query: settingsQuery, tags: ["globalSettings"] }),
+    sanityFetch<BlogPost | null>({ query: blogPostBySlugQuery, params: { slug }, tags: ["blogPost"], stega: false }),
+    sanityFetch<GlobalSettings | null>({ query: settingsQuery, tags: ["globalSettings"], stega: false }),
   ]);
 
   if (!post) return {};

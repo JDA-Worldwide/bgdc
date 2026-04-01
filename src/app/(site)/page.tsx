@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { sanityFetch } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/fetch";
 import { homepageQuery, settingsQuery } from "@/sanity/lib/queries";
 import { buildMetadata } from "@/lib/metadata";
 import { JsonLd, webPageSchema } from "@/lib/jsonLd";
@@ -30,10 +30,11 @@ interface GlobalSettings {
 
 export async function generateMetadata(): Promise<Metadata> {
   const [page, settings] = await Promise.all([
-    sanityFetch<PageData | null>({ query: homepageQuery, tags: ["page"] }),
+    sanityFetch<PageData | null>({ query: homepageQuery, tags: ["page"], stega: false }),
     sanityFetch<GlobalSettings | null>({
       query: settingsQuery,
       tags: ["globalSettings"],
+      stega: false,
     }),
   ]);
 

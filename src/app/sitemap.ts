@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { sanityFetch } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/fetch";
 import { allPagesQuery, allBlogPostsQuery } from "@/sanity/lib/queries";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
