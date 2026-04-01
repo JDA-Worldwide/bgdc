@@ -24,6 +24,13 @@ import testimonials from "./objects/testimonials";
 import faq from "./objects/faq";
 import teamGrid from "./objects/teamGrid";
 import contactForm from "./objects/contactForm";
+import homepageHero from "./objects/homepageHero";
+import partnersTicker from "./objects/partnersTicker";
+import whyPillars from "./objects/whyPillars";
+import locationMap from "./objects/locationMap";
+import projectsGrid from "./objects/projectsGrid";
+import incentivesGrid from "./objects/incentivesGrid";
+import ctaBanner from "./objects/ctaBanner";
 import pageBuilder from "./objects/pageBuilder";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
@@ -51,5 +58,12 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   faq,
   teamGrid,
   contactForm,
+  homepageHero,
+  partnersTicker,
+  whyPillars,
+  locationMap,
+  projectsGrid,
+  incentivesGrid,
+  ctaBanner,
   pageBuilder,
 ];

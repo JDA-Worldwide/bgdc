@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { createClient } from "next-sanity";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
 const sanityClient = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
@@ -81,7 +83,7 @@ export async function POST(request: Request) {
       const to = recipientEmail || process.env.CONTACT_FORM_RECIPIENT || "info@jdaworldwide.com";
       const from = process.env.CONTACT_FORM_SENDER || "noreply@jdaworldwide.com";
 
-      await resend.emails.send({
+      await resend!.emails.send({
         from,
         to,
         subject: `New contact form submission from ${name}`,
