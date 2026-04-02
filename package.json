@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "prod-build": "NODE_ENV=production && next build",
+    "prod-start": "NODE_ENV=production && next start",
     "start": "next start",
-    "lint": "eslint",
-    "seed": "node --env-file=.env.local scripts/seed.mjs"
+    "lint": "eslint"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.2",
