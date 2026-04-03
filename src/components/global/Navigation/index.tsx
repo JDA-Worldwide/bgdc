@@ -4,24 +4,54 @@ import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-const navLinks = [
-  { label: "Why Bargersville?", href: "/why-bargersville" },
-  { label: "Available Land", href: "/available-land" },
-  { label: "Incentives", href: "/incentives" },
-  { label: "Resources", href: "/resources" },
-  { label: "News", href: "/news" },
+/* ---------- Types ---------- */
+
+interface NavChild {
+  label: string;
+  url: string;
+  isExternal?: boolean;
+}
+
+interface NavItem {
+  label: string;
+  url: string;
+  isExternal?: boolean;
+  children?: NavChild[];
+}
+
+interface NavigationProps {
+  items?: NavItem[];
+}
+
+/* ---------- Fallback data (used when Sanity has no navigation document) ---------- */
+
+const fallbackItems: NavItem[] = [
+  { label: "Why Bargersville?", url: "/why-bargersville" },
+  { label: "Available Land", url: "/available-land" },
+  { label: "Incentives", url: "/incentives" },
+  { label: "Resources", url: "/resources" },
+  { label: "News", url: "/news" },
 ];
 
-export default function Navigation() {
+/* ---------- Component ---------- */
+
+export default function Navigation({ items }: NavigationProps) {
+  const resolvedItems = items?.length ? items : fallbackItems;
+
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const pathname = usePathname();
   const toggleRef = useRef<HTMLButtonElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const dropdownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Close menus on route change
   useEffect(() => {
     setMobileOpen(false);
+    setOpenDropdown(null);
   }, [pathname]);
 
+  // Mobile menu: focus management + Escape to close
   useEffect(() => {
     if (!mobileOpen) return;
 
@@ -40,6 +70,37 @@ export default function Navigation() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [mobileOpen]);
 
+  // Desktop dropdown: close on outside click
+  useEffect(() => {
+    if (!openDropdown) return;
+
+    function handleClick(e: MouseEvent) {
+      const target = e.target as HTMLElement;
+      if (!target.closest("[data-dropdown]")) {
+        setOpenDropdown(null);
+      }
+    }
+
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [openDropdown]);
+
+  // Desktop dropdown hover helpers (with small delay to prevent flicker)
+  function handleDropdownEnter(label: string) {
+    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    setOpenDropdown(label);
+  }
+
+  function handleDropdownLeave() {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setOpenDropdown(null);
+    }, 150);
+  }
+
+  function isActive(url: string) {
+    return pathname === url || pathname.startsWith(url + "/");
+  }
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.08] bg-brand-primary">
       <nav
@@ -48,7 +109,6 @@ export default function Navigation() {
       >
         {/* Brand */}
         <a href="/" className="flex items-center gap-3 shrink-0">
-          {/* Logo mark */}
           <div className="flex items-center justify-center size-9">
             <svg
               className="size-8"
@@ -62,10 +122,8 @@ export default function Navigation() {
             </svg>
           </div>
 
-          {/* Divider */}
           <div className="h-7 w-px bg-white/25 hidden sm:block" />
 
-          {/* Wordmark */}
           <div className="hidden sm:block uppercase leading-[11px] text-[11px]">
             <span className="block font-medium tracking-[1.54px] text-brand-steel">
               Bargersville
@@ -78,20 +136,109 @@ export default function Navigation() {
 
         {/* Desktop nav */}
         <div className="hidden lg:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "px-3 py-2 text-[12.5px] uppercase tracking-[0.875px] transition-colors hover:text-white",
-                pathname === link.href
-                  ? "text-white"
-                  : "text-white/70"
-              )}
-            >
-              {link.label}
-            </a>
-          ))}
+          {resolvedItems.map((item) => {
+            const hasChildren = item.children && item.children.length > 0;
+
+            if (hasChildren) {
+              return (
+                <div
+                  key={item.label}
+                  className="relative"
+                  data-dropdown
+                  onMouseEnter={() => handleDropdownEnter(item.label)}
+                  onMouseLeave={handleDropdownLeave}
+                >
+                  <button
+                    type="button"
+                    className={cn(
+                      "flex items-center gap-1 px-3 py-2 text-[12.5px] uppercase tracking-[0.875px] transition-colors hover:text-white",
+                      isActive(item.url) ? "text-white" : "text-white/70"
+                    )}
+                    aria-expanded={openDropdown === item.label}
+                    aria-haspopup="true"
+                    onClick={() =>
+                      setOpenDropdown(
+                        openDropdown === item.label ? null : item.label
+                      )
+                    }
+                  >
+                    {item.label}
+                    <svg
+                      className={cn(
+                        "size-3 transition-transform",
+                        openDropdown === item.label && "rotate-180"
+                      )}
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M3 4.5L6 7.5L9 4.5"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  {openDropdown === item.label && (
+                    <div className="absolute top-full left-0 mt-1 min-w-[200px] rounded-md border border-white/10 bg-brand-primary shadow-lg">
+                      <div className="py-1">
+                        {/* Parent link in dropdown */}
+                        <a
+                          href={item.url}
+                          target={item.isExternal ? "_blank" : undefined}
+                          rel={item.isExternal ? "noopener noreferrer" : undefined}
+                          className={cn(
+                            "block px-4 py-2.5 text-[12px] uppercase tracking-[0.7px] transition-colors hover:bg-white/10 hover:text-white border-b border-white/[0.06]",
+                            isActive(item.url) ? "text-white" : "text-white/60"
+                          )}
+                        >
+                          {item.label} Overview
+                        </a>
+                        {item.children!.map((child) => (
+                          <a
+                            key={child.url}
+                            href={child.url}
+                            target={child.isExternal ? "_blank" : undefined}
+                            rel={
+                              child.isExternal
+                                ? "noopener noreferrer"
+                                : undefined
+                            }
+                            className={cn(
+                              "block px-4 py-2.5 text-[12px] uppercase tracking-[0.7px] transition-colors hover:bg-white/10 hover:text-white",
+                              isActive(child.url)
+                                ? "text-white"
+                                : "text-white/60"
+                            )}
+                          >
+                            {child.label}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
+            return (
+              <a
+                key={item.url}
+                href={item.url}
+                target={item.isExternal ? "_blank" : undefined}
+                rel={item.isExternal ? "noopener noreferrer" : undefined}
+                className={cn(
+                  "px-3 py-2 text-[12.5px] uppercase tracking-[0.875px] transition-colors hover:text-white",
+                  isActive(item.url) ? "text-white" : "text-white/70"
+                )}
+              >
+                {item.label}
+              </a>
+            );
+          })}
           <a
             href="/contact"
             className="ml-4 inline-flex items-center justify-center rounded-[3px] bg-brand-secondary px-5 h-8 text-[12px] font-semibold uppercase tracking-[0.96px] text-brand-navy-dark transition-colors hover:bg-brand-secondary/90"
@@ -130,20 +277,105 @@ export default function Navigation() {
           className="border-t border-white/[0.08] bg-brand-primary lg:hidden"
         >
           <div className="px-4 py-4 space-y-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "block rounded px-3 py-3 text-sm font-medium uppercase tracking-wider transition-colors hover:bg-white/10",
-                  pathname === link.href
-                    ? "text-white"
-                    : "text-white/70"
-                )}
-              >
-                {link.label}
-              </a>
-            ))}
+            {resolvedItems.map((item) => {
+              const hasChildren = item.children && item.children.length > 0;
+
+              if (hasChildren) {
+                return (
+                  <div key={item.label}>
+                    <button
+                      type="button"
+                      className={cn(
+                        "flex w-full items-center justify-between rounded px-3 py-3 text-sm font-medium uppercase tracking-wider transition-colors hover:bg-white/10",
+                        isActive(item.url) ? "text-white" : "text-white/70"
+                      )}
+                      aria-expanded={openDropdown === item.label}
+                      onClick={() =>
+                        setOpenDropdown(
+                          openDropdown === item.label ? null : item.label
+                        )
+                      }
+                    >
+                      {item.label}
+                      <svg
+                        className={cn(
+                          "size-4 transition-transform",
+                          openDropdown === item.label && "rotate-180"
+                        )}
+                        viewBox="0 0 12 12"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M3 4.5L6 7.5L9 4.5"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </button>
+
+                    {openDropdown === item.label && (
+                      <div className="ml-4 space-y-1 border-l border-white/10 pl-3 pb-2">
+                        <a
+                          href={item.url}
+                          target={item.isExternal ? "_blank" : undefined}
+                          rel={
+                            item.isExternal
+                              ? "noopener noreferrer"
+                              : undefined
+                          }
+                          className={cn(
+                            "block rounded px-3 py-2 text-sm transition-colors hover:bg-white/10",
+                            isActive(item.url) ? "text-white" : "text-white/60"
+                          )}
+                        >
+                          Overview
+                        </a>
+                        {item.children!.map((child) => (
+                          <a
+                            key={child.url}
+                            href={child.url}
+                            target={child.isExternal ? "_blank" : undefined}
+                            rel={
+                              child.isExternal
+                                ? "noopener noreferrer"
+                                : undefined
+                            }
+                            className={cn(
+                              "block rounded px-3 py-2 text-sm transition-colors hover:bg-white/10",
+                              isActive(child.url)
+                                ? "text-white"
+                                : "text-white/60"
+                            )}
+                          >
+                            {child.label}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
+              return (
+                <a
+                  key={item.url}
+                  href={item.url}
+                  target={item.isExternal ? "_blank" : undefined}
+                  rel={
+                    item.isExternal ? "noopener noreferrer" : undefined
+                  }
+                  className={cn(
+                    "block rounded px-3 py-3 text-sm font-medium uppercase tracking-wider transition-colors hover:bg-white/10",
+                    isActive(item.url) ? "text-white" : "text-white/70"
+                  )}
+                >
+                  {item.label}
+                </a>
+              );
+            })}
             <a
               href="/contact"
               className="block mt-2 text-center rounded-[3px] bg-brand-secondary px-5 py-3 text-sm font-semibold uppercase tracking-wider text-brand-navy-dark"
