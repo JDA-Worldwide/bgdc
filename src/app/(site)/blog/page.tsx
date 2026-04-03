@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { sanityFetch } from "@/sanity/lib/fetch";
+import { sanityFetch } from "@/sanity/lib/live";
 import { allBlogPostsQuery } from "@/sanity/lib/queries";
 import { formatDate } from "@/lib/utils";
 import SanityImage from "@/components/ui/SanityImage";
@@ -19,19 +19,21 @@ interface BlogPostPreview {
 }
 
 export default async function BlogListingPage() {
-  const posts = await sanityFetch<BlogPostPreview[]>({
+  const { data: posts } = await sanityFetch({
     query: allBlogPostsQuery,
     tags: ["blogPost"],
   });
 
+  const typedPosts = (posts as BlogPostPreview[] | null) ?? [];
+
   return (
     <section className="mx-auto max-w-[var(--container-content)] px-4 py-section">
       <h1 className="mb-12 font-display text-4xl font-bold">Blog</h1>
-      {posts.length === 0 ? (
+      {typedPosts.length === 0 ? (
         <p className="text-brand-muted">No posts yet.</p>
       ) : (
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
+          {typedPosts.map((post) => (
             <article key={post.slug}>
               <a href={`/blog/${post.slug}`} className="group block">
                 {post.featuredImage?.asset && (

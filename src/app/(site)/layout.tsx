@@ -1,4 +1,4 @@
-import { sanityFetch } from "@/sanity/lib/fetch";
+import { sanityFetch } from "@/sanity/lib/live";
 import { navigationQuery } from "@/sanity/lib/queries";
 import Navigation from "@/components/global/Navigation";
 import Footer from "@/components/global/Footer";
@@ -25,15 +25,14 @@ export default async function SiteLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const navigation = await sanityFetch<NavigationData | null>({
+  const { data: navigation } = await sanityFetch({
     query: navigationQuery,
     tags: ["navigation"],
-    stega: false,
   });
 
   return (
     <>
-      <Navigation items={navigation?.items} />
+      <Navigation items={(navigation as NavigationData | null)?.items} />
       <main id="main-content">{children}</main>
       <Footer />
     </>
