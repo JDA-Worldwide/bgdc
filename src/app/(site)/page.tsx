@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { sanityFetch } from "@/sanity/lib/fetch";
+import { sanityFetch } from "@/sanity/lib/live";
 import { homepageQuery, settingsQuery } from "@/sanity/lib/queries";
 import { buildMetadata } from "@/lib/metadata";
 import { JsonLd, webPageSchema } from "@/lib/jsonLd";
@@ -29,16 +29,15 @@ interface GlobalSettings {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [page, settings] = await Promise.all([
-    sanityFetch<PageData | null>({ query: homepageQuery, tags: ["page"], stega: false }),
-    sanityFetch<GlobalSettings | null>({
-      query: settingsQuery,
-      tags: ["globalSettings"],
-      stega: false,
-    }),
+  const [{ data: page }, { data: settings }] = await Promise.all([
+    sanityFetch({ query: homepageQuery, tags: ["page"] }),
+    sanityFetch({ query: settingsQuery, tags: ["globalSettings"] }),
   ]);
 
-  if (!page) {
+  const typedPage = page as PageData | null;
+  const typedSettings = settings as GlobalSettings | null;
+
+  if (!typedPage) {
     return {
       title:
         "Bargersville Economic Development — Grow Where Access Meets Opportunity",
@@ -48,25 +47,25 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   const siteUrl =
-    settings?.siteUrl ||
+    typedSettings?.siteUrl ||
     process.env.NEXT_PUBLIC_SITE_URL ||
     "http://localhost:3000";
-  return buildMetadata(page, siteUrl);
+  return buildMetadata(typedPage, siteUrl);
 }
 
 export default async function HomePage() {
-  const [page, settings] = await Promise.all([
-    sanityFetch<PageData | null>({ query: homepageQuery, tags: ["page"] }),
-    sanityFetch<GlobalSettings | null>({
-      query: settingsQuery,
-      tags: ["globalSettings"],
-    }),
+  const [{ data: page }, { data: settings }] = await Promise.all([
+    sanityFetch({ query: homepageQuery, tags: ["page"] }),
+    sanityFetch({ query: settingsQuery, tags: ["globalSettings"] }),
   ]);
 
+  const typedPage = page as PageData | null;
+  const typedSettings = settings as GlobalSettings | null;
+
   // If a "home" page exists in Sanity with modules, render via PageBuilder
-  if (page?.modules?.length) {
+  if (typedPage?.modules?.length) {
     const siteUrl =
-      settings?.siteUrl ||
+      typedSettings?.siteUrl ||
       process.env.NEXT_PUBLIC_SITE_URL ||
       "http://localhost:3000";
 
@@ -74,14 +73,14 @@ export default async function HomePage() {
       <>
         <JsonLd
           data={webPageSchema({
-            title: page.seo?.metaTitle || page.title,
-            description: page.seo?.metaDescription,
+            title: typedPage.seo?.metaTitle || typedPage.title,
+            description: typedPage.seo?.metaDescription,
             url: siteUrl,
-            organizationName: settings?.siteTitle,
+            organizationName: typedSettings?.siteTitle,
           })}
         />
-        <h1 className="sr-only">{page.title}</h1>
-        <PageBuilder modules={page.modules} />
+        <h1 className="sr-only">{typedPage.title}</h1>
+        <PageBuilder modules={typedPage.modules} />
       </>
     );
   }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { sanityFetch } from "@/sanity/lib/fetch";
+import { sanityFetch } from "@/sanity/lib/live";
+import { client } from "@/sanity/lib/client";
 import { pageBySlugQuery, allPagesQuery, settingsQuery } from "@/sanity/lib/queries";
 import { buildMetadata } from "@/lib/metadata";
 import { JsonLd, webPageSchema } from "@/lib/jsonLd";
@@ -23,10 +24,7 @@ interface GlobalSettings {
 }
 
 export async function generateStaticParams() {
-  const pages = await sanityFetch<{ slug: string }[]>({
-    query: allPagesQuery,
-    tags: ["page"],
-  });
+  const pages = await client.fetch<{ slug: string }[]>(allPagesQuery);
 
   return pages
     .filter((p) => p.slug && p.slug !== "home")
@@ -39,15 +37,16 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const [page, settings] = await Promise.all([
-    sanityFetch<PageData | null>({ query: pageBySlugQuery, params: { slug }, tags: ["page"], stega: false }),
-    sanityFetch<GlobalSettings | null>({ query: settingsQuery, tags: ["globalSettings"], stega: false }),
+  const [{ data: page }, { data: settings }] = await Promise.all([
+    sanityFetch({ query: pageBySlugQuery, params: { slug }, tags: ["page"] }),
+    sanityFetch({ query: settingsQuery, tags: ["globalSettings"] }),
   ]);
 
-  if (!page) return {};
+  const typedPage = page as PageData | null;
+  if (!typedPage) return {};
 
-  const siteUrl = settings?.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  return buildMetadata(page, siteUrl);
+  const siteUrl = (settings as GlobalSettings | null)?.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  return buildMetadata(typedPage, siteUrl);
 }
 
 export default async function DynamicPage({
@@ -56,27 +55,29 @@ export default async function DynamicPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [page, settings] = await Promise.all([
-    sanityFetch<PageData | null>({ query: pageBySlugQuery, params: { slug }, tags: ["page"] }),
-    sanityFetch<GlobalSettings | null>({ query: settingsQuery, tags: ["globalSettings"] }),
+  const [{ data: page }, { data: settings }] = await Promise.all([
+    sanityFetch({ query: pageBySlugQuery, params: { slug }, tags: ["page"] }),
+    sanityFetch({ query: settingsQuery, tags: ["globalSettings"] }),
   ]);
 
-  if (!page) notFound();
+  const typedPage = page as PageData | null;
+  if (!typedPage) notFound();
 
-  const siteUrl = settings?.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const typedSettings = settings as GlobalSettings | null;
+  const siteUrl = typedSettings?.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
   return (
     <>
       <JsonLd
         data={webPageSchema({
-          title: page.seo?.metaTitle || page.title,
-          description: page.seo?.metaDescription,
-          url: `${siteUrl}/${page.slug}`,
-          organizationName: settings?.siteTitle,
+          title: typedPage.seo?.metaTitle || typedPage.title,
+          description: typedPage.seo?.metaDescription,
+          url: `${siteUrl}/${typedPage.slug}`,
+          organizationName: typedSettings?.siteTitle,
         })}
       />
-      <h1 className="sr-only">{page.title}</h1>
-      <PageBuilder modules={page.modules} />
+      <h1 className="sr-only">{typedPage.title}</h1>
+      <PageBuilder modules={typedPage.modules} />
     </>
   );
 }

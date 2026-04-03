@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -33,23 +34,54 @@ const fallbackItems: NavItem[] = [
   { label: "News", url: "/news" },
 ];
 
+/* ---------- Link helper ---------- */
+
+function NavLink({
+  href,
+  isExternal,
+  className,
+  children,
+}: {
+  href: string;
+  isExternal?: boolean;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  if (isExternal) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
+  );
+}
+
 /* ---------- Component ---------- */
 
 export default function Navigation({ items }: NavigationProps) {
   const resolvedItems = items?.length ? items : fallbackItems;
 
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const pathname = usePathname();
+  const [prevPathname, setPrevPathname] = useState(pathname);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const dropdownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Close menus on route change
-  useEffect(() => {
+  // Close menus on route change — setState during render (before commit) is the
+  // React-recommended pattern for deriving state from changing props/values.
+  // See: https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
     setMobileOpen(false);
     setOpenDropdown(null);
-  }, [pathname]);
+  }
 
   // Mobile menu: focus management + Escape to close
   useEffect(() => {
@@ -86,16 +118,16 @@ export default function Navigation({ items }: NavigationProps) {
   }, [openDropdown]);
 
   // Desktop dropdown hover helpers (with small delay to prevent flicker)
-  function handleDropdownEnter(label: string) {
+  const handleDropdownEnter = useCallback((label: string) => {
     if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
     setOpenDropdown(label);
-  }
+  }, []);
 
-  function handleDropdownLeave() {
+  const handleDropdownLeave = useCallback(() => {
     dropdownTimeoutRef.current = setTimeout(() => {
       setOpenDropdown(null);
     }, 150);
-  }
+  }, []);
 
   function isActive(url: string) {
     return pathname === url || pathname.startsWith(url + "/");
@@ -108,7 +140,7 @@ export default function Navigation({ items }: NavigationProps) {
         className="mx-auto flex max-w-[var(--container-content)] items-center justify-between px-6 lg:px-8 h-16"
       >
         {/* Brand */}
-        <a href="/" className="flex items-center gap-3 shrink-0">
+        <Link href="/" className="flex items-center gap-3 shrink-0">
           <div className="flex items-center justify-center size-9">
             <svg
               className="size-8"
@@ -132,7 +164,7 @@ export default function Navigation({ items }: NavigationProps) {
               Economic Development
             </span>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <div className="hidden lg:flex items-center gap-1">
@@ -186,27 +218,21 @@ export default function Navigation({ items }: NavigationProps) {
                     <div className="absolute top-full left-0 mt-1 min-w-[200px] rounded-md border border-white/10 bg-brand-primary shadow-lg">
                       <div className="py-1">
                         {/* Parent link in dropdown */}
-                        <a
+                        <NavLink
                           href={item.url}
-                          target={item.isExternal ? "_blank" : undefined}
-                          rel={item.isExternal ? "noopener noreferrer" : undefined}
+                          isExternal={item.isExternal}
                           className={cn(
                             "block px-4 py-2.5 text-[12px] uppercase tracking-[0.7px] transition-colors hover:bg-white/10 hover:text-white border-b border-white/[0.06]",
                             isActive(item.url) ? "text-white" : "text-white/60"
                           )}
                         >
                           {item.label} Overview
-                        </a>
+                        </NavLink>
                         {item.children!.map((child) => (
-                          <a
+                          <NavLink
                             key={child.url}
                             href={child.url}
-                            target={child.isExternal ? "_blank" : undefined}
-                            rel={
-                              child.isExternal
-                                ? "noopener noreferrer"
-                                : undefined
-                            }
+                            isExternal={child.isExternal}
                             className={cn(
                               "block px-4 py-2.5 text-[12px] uppercase tracking-[0.7px] transition-colors hover:bg-white/10 hover:text-white",
                               isActive(child.url)
@@ -215,7 +241,7 @@ export default function Navigation({ items }: NavigationProps) {
                             )}
                           >
                             {child.label}
-                          </a>
+                          </NavLink>
                         ))}
                       </div>
                     </div>
@@ -225,26 +251,25 @@ export default function Navigation({ items }: NavigationProps) {
             }
 
             return (
-              <a
+              <NavLink
                 key={item.url}
                 href={item.url}
-                target={item.isExternal ? "_blank" : undefined}
-                rel={item.isExternal ? "noopener noreferrer" : undefined}
+                isExternal={item.isExternal}
                 className={cn(
                   "px-3 py-2 text-[12.5px] uppercase tracking-[0.875px] transition-colors hover:text-white",
                   isActive(item.url) ? "text-white" : "text-white/70"
                 )}
               >
                 {item.label}
-              </a>
+              </NavLink>
             );
           })}
-          <a
+          <Link
             href="/contact"
             className="ml-4 inline-flex items-center justify-center rounded-[3px] bg-brand-secondary px-5 h-8 text-[12px] font-semibold uppercase tracking-[0.96px] text-brand-navy-dark transition-colors hover:bg-brand-secondary/90"
           >
             Contact
-          </a>
+          </Link>
         </div>
 
         {/* Mobile toggle */}
@@ -318,31 +343,21 @@ export default function Navigation({ items }: NavigationProps) {
 
                     {openDropdown === item.label && (
                       <div className="ml-4 space-y-1 border-l border-white/10 pl-3 pb-2">
-                        <a
+                        <NavLink
                           href={item.url}
-                          target={item.isExternal ? "_blank" : undefined}
-                          rel={
-                            item.isExternal
-                              ? "noopener noreferrer"
-                              : undefined
-                          }
+                          isExternal={item.isExternal}
                           className={cn(
                             "block rounded px-3 py-2 text-sm transition-colors hover:bg-white/10",
                             isActive(item.url) ? "text-white" : "text-white/60"
                           )}
                         >
                           Overview
-                        </a>
+                        </NavLink>
                         {item.children!.map((child) => (
-                          <a
+                          <NavLink
                             key={child.url}
                             href={child.url}
-                            target={child.isExternal ? "_blank" : undefined}
-                            rel={
-                              child.isExternal
-                                ? "noopener noreferrer"
-                                : undefined
-                            }
+                            isExternal={child.isExternal}
                             className={cn(
                               "block rounded px-3 py-2 text-sm transition-colors hover:bg-white/10",
                               isActive(child.url)
@@ -351,7 +366,7 @@ export default function Navigation({ items }: NavigationProps) {
                             )}
                           >
                             {child.label}
-                          </a>
+                          </NavLink>
                         ))}
                       </div>
                     )}
@@ -360,28 +375,25 @@ export default function Navigation({ items }: NavigationProps) {
               }
 
               return (
-                <a
+                <NavLink
                   key={item.url}
                   href={item.url}
-                  target={item.isExternal ? "_blank" : undefined}
-                  rel={
-                    item.isExternal ? "noopener noreferrer" : undefined
-                  }
+                  isExternal={item.isExternal}
                   className={cn(
                     "block rounded px-3 py-3 text-sm font-medium uppercase tracking-wider transition-colors hover:bg-white/10",
                     isActive(item.url) ? "text-white" : "text-white/70"
                   )}
                 >
                   {item.label}
-                </a>
+                </NavLink>
               );
             })}
-            <a
+            <Link
               href="/contact"
               className="block mt-2 text-center rounded-[3px] bg-brand-secondary px-5 py-3 text-sm font-semibold uppercase tracking-wider text-brand-navy-dark"
             >
               Contact
-            </a>
+            </Link>
           </div>
         </div>
       )}

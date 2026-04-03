@@ -4,7 +4,7 @@ import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { sanityFetch } from "@/sanity/lib/fetch";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import { JsonLd, organizationSchema } from "@/lib/jsonLd";
@@ -35,13 +35,12 @@ interface GlobalSettings {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const settings = await sanityFetch<GlobalSettings | null>({
+  const { data: settings } = await sanityFetch({
     query: settingsQuery,
     tags: ["globalSettings"],
-    stega: false,
   });
 
-  const siteTitle = settings?.siteTitle || "Bargersville Economic Development";
+  const siteTitle = (settings as GlobalSettings | null)?.siteTitle || "Bargersville Economic Development";
 
   return {
     title: {
@@ -49,10 +48,10 @@ export async function generateMetadata(): Promise<Metadata> {
       default: siteTitle,
     },
     description:
-      settings?.defaultSeo?.metaDescription ||
+      (settings as GlobalSettings | null)?.defaultSeo?.metaDescription ||
       "Grow Where Access Meets Opportunity — Bargersville, Indiana",
     metadataBase: new URL(
-      settings?.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+      (settings as GlobalSettings | null)?.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
     ),
   };
 }
@@ -62,14 +61,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const settings = await sanityFetch<GlobalSettings | null>({
+  const { data: settings } = await sanityFetch({
     query: settingsQuery,
     tags: ["globalSettings"],
-    stega: false,
   });
 
+  const typedSettings = settings as GlobalSettings | null;
   const siteUrl =
-    settings?.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    typedSettings?.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
   return (
     <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
@@ -80,17 +79,18 @@ export default async function RootLayout({
         >
           Skip to content
         </a>
-        {settings && (
+        {typedSettings && (
           <JsonLd
             data={organizationSchema({
-              name: settings.siteTitle || "Bargersville Economic Development",
+              name: typedSettings.siteTitle || "Bargersville Economic Development",
               url: siteUrl,
-              logo: settings.logo?.asset ? urlFor(settings.logo).width(600).url() : undefined,
-              socialLinks: settings.socialLinks,
+              logo: typedSettings.logo?.asset ? urlFor(typedSettings.logo).width(600).url() : undefined,
+              socialLinks: typedSettings.socialLinks,
             })}
           />
         )}
         {children}
+        <SanityLive />
         {(await draftMode()).isEnabled && <VisualEditing />}
         <Analytics />
         <SpeedInsights />
