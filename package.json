@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "prod-build": "NODE_ENV=production && next build",
-    "prod-start": "NODE_ENV=production && next start",
+    "prod-build": "NODE_ENV=production next build",
+    "prod-start": "NODE_ENV=production next start",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit"
