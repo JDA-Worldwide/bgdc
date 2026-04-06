@@ -2,4 +2,4 @@
 buildCommand = "npm run build"
 
 [deploy]
-startCommand = "HOSTNAME=0.0.0.0 node .next/standalone/server.js"
+startCommand = "npm run start"
