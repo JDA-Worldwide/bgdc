@@ -41,16 +41,18 @@
 }
 
 /* ── Base Styles ── */
-body {
-  background: var(--color-brand-background);
-  color: var(--color-brand-text);
-  font-family: var(--font-body);
-}
+@layer base {
+  body {
+    background: var(--color-brand-background);
+    color: var(--color-brand-text);
+    font-family: var(--font-body);
+  }
 
-h1, h2, h3, h4, h5, h6 {
-  color: var(--color-brand-text-heading);
-  font-family: var(--font-heading);
-  font-weight: 500;
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-brand-text-heading);
+    font-family: var(--font-heading);
+    font-weight: 500;
+  }
 }
 
 /* ── Typography Scale ──
