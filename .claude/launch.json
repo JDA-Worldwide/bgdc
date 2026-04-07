@@ -3,13 +3,10 @@
   "configurations": [
     {
       "name": "dev",
-      "runtimeExecutable": "/Users/ben.goshow/.nvm/versions/node/v22.22.2/bin/npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": ["-c", "export PATH=/Users/ben.goshow/.nvm/versions/node/v22.12.0/bin:$PATH && npm run dev"],
       "port": 3000,
-      "autoPort": true,
-      "env": {
-        "PATH": "/Users/ben.goshow/.nvm/versions/node/v22.22.2/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-      }
+      "autoPort": true
     }
   ]
 }

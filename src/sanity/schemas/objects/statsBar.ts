@@ -22,11 +22,29 @@ export default defineType({
           type: "object",
           fields: [
             defineField({
-              name: "value",
-              title: "Value",
+              name: "number",
+              title: "Number",
+              type: "number",
+              description: "Numeric value for count-up animation (e.g. 13000, 15.1, 438900)",
+            }),
+            defineField({
+              name: "prefix",
+              title: "Prefix",
               type: "string",
-              description: 'Display value, e.g. "13,000+", "$438,900", "Top 10"',
-              validation: (rule) => rule.required(),
+              description: 'Text before the number, e.g. "$"',
+            }),
+            defineField({
+              name: "suffix",
+              title: "Suffix",
+              type: "string",
+              description: 'Text after the number, e.g. "+", "%"',
+            }),
+            defineField({
+              name: "textValue",
+              title: "Text Value (override)",
+              type: "string",
+              description:
+                'Use instead of number for non-numeric stats, e.g. "Top 10". Overrides the count-up animation.',
             }),
             defineField({
               name: "label",
@@ -36,9 +54,17 @@ export default defineType({
             }),
           ],
           preview: {
-            select: { value: "value", label: "label" },
-            prepare({ value, label }) {
-              return { title: value, subtitle: label };
+            select: {
+              number: "number",
+              prefix: "prefix",
+              suffix: "suffix",
+              textValue: "textValue",
+              label: "label",
+            },
+            prepare({ number, prefix, suffix, textValue, label }) {
+              const display =
+                textValue || `${prefix ?? ""}${number ?? ""}${suffix ?? ""}`;
+              return { title: display, subtitle: label };
             },
           },
         }),

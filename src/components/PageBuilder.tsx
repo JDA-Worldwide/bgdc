@@ -18,6 +18,7 @@ import LocationSection from "./home/LocationSection";
 import GrowthSection from "./home/GrowthSection";
 import IncentivesSection from "./home/IncentivesSection";
 import CtaBanner from "./home/CtaBanner";
+import StatsSection from "./home/StatsSection";
 import { JsonLd, faqPageSchema } from "@/lib/jsonLd";
 import { toPlainText, type PortableTextBlock } from "@portabletext/react";
 
@@ -56,6 +57,7 @@ const moduleMap: Record<string, ComponentType<any>> = {
   projectsGrid: GrowthSection,
   incentivesGrid: IncentivesSection,
   ctaBanner: CtaBanner,
+  statsBar: StatsSection,
 };
 
 const fullBleedModules = new Set([
@@ -65,6 +67,7 @@ const fullBleedModules = new Set([
   "partnersTicker",
   "locationMap",
   "ctaBanner",
+  "statsBar",
 ]);
 
 function buildFaqJsonLd(module: FAQModule) {
@@ -103,7 +106,7 @@ export default function PageBuilder({ modules }: PageBuilderProps) {
         }
 
         return (
-          <section key={module._key} className="py-section">
+          <section key={module._key} className="mx-auto max-w-[var(--container-max)] py-section">
             {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
             <Component {...module} />
           </section>
