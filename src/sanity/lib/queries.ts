@@ -100,8 +100,7 @@ export const homepageDataQuery = groq`
       callout,
       heading,
       body,
-      primaryCta,
-      secondaryCta,
+      ctas[] { _key, label, url, isExternal, variant },
       backgroundImage
     },
     "stats": modules[_type == "statsBar"][0] {
