@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Montserrat, Merriweather } from "next/font/google";
-import { draftMode } from "next/headers";
-import { VisualEditing } from "next-sanity/visual-editing";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+import { sanityFetch } from "@/sanity/lib/live";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import { JsonLd, organizationSchema } from "@/lib/jsonLd";
@@ -91,8 +89,6 @@ export default async function RootLayout({
           />
         )}
         {children}
-        <SanityLive />
-        {(await draftMode()).isEnabled && <VisualEditing />}
         <Analytics />
         <SpeedInsights />
       </body>
