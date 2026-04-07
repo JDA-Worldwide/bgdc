@@ -1,3 +1,7 @@
+"use client";
+
+import { gsap } from "@/lib/gsap";
+import { useGsap } from "@/hooks/useGsap";
 import { cn } from "@/lib/utils";
 import SanityImage from "@/components/ui/SanityImage";
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
@@ -32,8 +36,19 @@ export default function HeroSection({
   ctas,
   backgroundImage,
 }: HeroSectionProps) {
+  const sectionRef = useGsap<HTMLElement>((el) => {
+    gsap.fromTo(
+      el.querySelectorAll("[data-hero-animate]"),
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", stagger: 0.15 }
+    );
+  });
+
   return (
-    <section className="relative flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-6 py-section md:min-h-[85vh] md:px-16 lg:min-h-[971px] lg:px-[175px]">
+    <section
+      ref={sectionRef}
+      className="relative flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-6 py-section md:min-h-[85vh] md:px-16 lg:min-h-[971px] lg:px-[175px]"
+    >
       {/* Background */}
       <div className="absolute inset-0 -z-10">
         {backgroundImage?.asset ? (
@@ -51,26 +66,26 @@ export default function HeroSection({
       </div>
 
       {callout && (
-        <p className="font-accent text-xl italic leading-7 text-brand-sun">
+        <p data-hero-animate className="font-accent text-xl italic leading-7 text-brand-sun">
           {callout}
         </p>
       )}
 
       <div className="mt-10 flex max-w-[1378px] flex-col gap-8 text-center text-white md:mt-[60px] md:gap-[54px]">
         {heading && (
-          <h1 className="text-3xl font-medium leading-tight text-white sm:text-5xl md:text-[70px] md:leading-[55px]">
+          <h1 data-hero-animate className="text-3xl font-medium text-white sm:text-5xl md:text-[70px] md:leading-[1.15]">
             {heading}
           </h1>
         )}
         {body && (
-          <p className="text-base leading-relaxed sm:text-lg md:text-[22px] md:leading-[33px]">
+          <p data-hero-animate className="text-base leading-relaxed sm:text-lg md:text-[22px] md:leading-[33px]">
             {body}
           </p>
         )}
       </div>
 
       {ctas?.length ? (
-        <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:gap-[60px] md:mt-[60px]">
+        <div data-hero-animate className="mt-10 flex flex-col gap-4 sm:flex-row sm:gap-[60px] md:mt-[60px]">
           {ctas.map((cta) => (
             <a
               key={cta._key}
