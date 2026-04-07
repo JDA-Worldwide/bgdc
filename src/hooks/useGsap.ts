@@ -1,22 +1,25 @@
 "use client";
 
-import { useRef, useEffect, useCallback } from "react";
+import { useRef, useEffect } from "react";
 import { gsap } from "@/lib/gsap";
 
 export function useGsap<T extends HTMLElement = HTMLDivElement>(
   animation: (el: T) => void
 ) {
   const ref = useRef<T>(null);
+  const animationRef = useRef(animation);
 
-  const stableAnimation = useCallback(animation, []);
+  useEffect(() => {
+    animationRef.current = animation;
+  });
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    const ctx = gsap.context(() => stableAnimation(el), el);
+    const ctx = gsap.context(() => animationRef.current(el), el);
     return () => ctx.revert();
-  }, [stableAnimation]);
+  }, []);
 
   return ref;
 }
