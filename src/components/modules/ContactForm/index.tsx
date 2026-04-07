@@ -154,7 +154,7 @@ export default function ContactForm({
     <Container>
       <div className="mx-auto max-w-2xl">
         {heading && (
-          <h2 className="mb-4 text-center font-display text-3xl font-bold sm:text-4xl">
+          <h2 className="mb-4 text-center font-heading text-3xl font-bold sm:text-4xl">
             {heading}
           </h2>
         )}

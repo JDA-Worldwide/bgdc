@@ -8,7 +8,7 @@ export default function TeamGrid({ heading, members }: TeamGridProps) {
   return (
     <Container>
       {heading && (
-        <h2 className="mb-12 text-center font-display text-3xl font-bold sm:text-4xl">
+        <h2 className="mb-12 text-center font-heading text-3xl font-bold sm:text-4xl">
           {heading}
         </h2>
       )}
@@ -26,7 +26,7 @@ export default function TeamGrid({ heading, members }: TeamGridProps) {
                 />
               </div>
             )}
-            <h3 className="font-display text-lg font-semibold">{member.name}</h3>
+            <h3 className="font-heading text-lg font-semibold">{member.name}</h3>
             {member.jobTitle && (
               <p className="mt-1 text-sm text-brand-muted">{member.jobTitle}</p>
             )}

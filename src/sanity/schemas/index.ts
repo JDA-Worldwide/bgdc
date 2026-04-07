@@ -33,6 +33,14 @@ import incentivesGrid from "./objects/incentivesGrid";
 import ctaBanner from "./objects/ctaBanner";
 import pageBuilder from "./objects/pageBuilder";
 
+// New homepage modules
+import statsBar from "./objects/statsBar";
+import communitySection from "./objects/communitySection";
+import valueProps from "./objects/valueProps";
+import mapSection from "./objects/mapSection";
+import industriesGrid from "./objects/industriesGrid";
+import momentumSection from "./objects/momentumSection";
+
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Documents
   globalSettings,
@@ -66,4 +74,12 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   incentivesGrid,
   ctaBanner,
   pageBuilder,
+
+  // New homepage modules
+  statsBar,
+  communitySection,
+  valueProps,
+  mapSection,
+  industriesGrid,
+  momentumSection,
 ];

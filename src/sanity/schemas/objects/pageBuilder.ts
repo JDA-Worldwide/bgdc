@@ -24,5 +24,12 @@ export default defineType({
     defineArrayMember({ type: "projectsGrid" }),
     defineArrayMember({ type: "incentivesGrid" }),
     defineArrayMember({ type: "ctaBanner" }),
+    // New homepage modules
+    defineArrayMember({ type: "statsBar" }),
+    defineArrayMember({ type: "communitySection" }),
+    defineArrayMember({ type: "valueProps" }),
+    defineArrayMember({ type: "mapSection" }),
+    defineArrayMember({ type: "industriesGrid" }),
+    defineArrayMember({ type: "momentumSection" }),
   ],
 });

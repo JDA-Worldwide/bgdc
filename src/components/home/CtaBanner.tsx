@@ -1,87 +1,66 @@
-interface LinkField {
-  label?: string;
-  url?: string;
-  isExternal?: boolean;
-}
+import SanityImage from "@/components/ui/SanityImage";
+import type { SanityImageSource } from "@/components/ui/SanityImage/types";
 
 interface CtaBannerProps {
-  sectionLabel?: string;
+  callout?: string;
   heading?: string;
-  description?: string;
-  primaryButton?: LinkField;
-  secondaryButton?: LinkField;
+  body?: string;
+  cta?: { label: string; url: string; isExternal?: boolean };
+  backgroundImage?: SanityImageSource;
 }
 
 export default function CtaBanner({
-  sectionLabel = "Let\u2019s Talk",
-  heading = "Ready to explore Bargersville for your next investment?",
-  description = "Jane Jankowski and the Bargersville Economic Development team work directly with businesses considering the region. Reach out to start the conversation.",
-  primaryButton = { label: "Contact Jane Jankowski", url: "/contact" },
-  secondaryButton = { label: "View Available Parcels", url: "/available-land" },
+  callout = "Let\u2019s Talk",
+  heading = "Ready to Take the Next Step?",
+  body = "Devoted to the good of our town, Bargersville Economic Development partners with entrepreneurs, business leaders, and community stakeholders to drive long-term economic growth. Through hands-on guidance and practical resources, we help businesses turn what they start here into lasting success\u2014going beyond permits and paperwork to support real growth.",
+  cta = { label: "Get in Touch", url: "#get-in-touch" },
+  backgroundImage,
 }: CtaBannerProps) {
   return (
-    <section className="relative bg-brand-olive overflow-hidden">
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(192,202,128,0.3) 0%, transparent 70%)",
-        }}
-      />
-
-      <div className="relative mx-auto max-w-2xl px-6 lg:px-8 py-[72px] text-center">
-        {sectionLabel && (
-          <span className="text-[10.5px] font-semibold uppercase tracking-[2.3px] text-white/65">
-            {sectionLabel}
-          </span>
+    <section
+      id="contact"
+      className="relative flex flex-col items-center justify-center px-6 py-16 text-center sm:px-10 md:px-[170px] md:py-section"
+    >
+      {/* Background */}
+      <div className="absolute inset-0 -z-10">
+        {backgroundImage?.asset ? (
+          <SanityImage
+            image={backgroundImage}
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-brand-surface" />
         )}
+      </div>
 
-        <h2 className="mt-6 font-display text-3xl sm:text-[38px] font-bold leading-[1.2] text-white">
-          {heading}
-        </h2>
-
-        {description && (
-          <p className="mt-6 text-base leading-[1.65] text-white/72 font-light">
-            {description}
+      <div className="mx-auto max-w-[816px]">
+        {callout && (
+          <p className="font-accent text-xl italic leading-7 text-brand-blue">
+            {callout}
           </p>
         )}
-
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          {primaryButton?.url && (
+        {heading && (
+          <h2 className="mt-8 text-3xl font-medium leading-tight text-brand-blue md:text-[43px] md:leading-[60px]">
+            {heading}
+          </h2>
+        )}
+        {body && (
+          <p className="mt-8 text-base leading-7 text-brand-black">{body}</p>
+        )}
+        {cta?.url && (
+          <div className="mt-8">
             <a
-              href={primaryButton.url}
-              target={primaryButton.isExternal ? "_blank" : undefined}
-              rel={primaryButton.isExternal ? "noopener noreferrer" : undefined}
-              className="inline-flex items-center gap-2.5 rounded-[3px] bg-white px-6 py-3.5 text-[13px] font-semibold uppercase tracking-[0.65px] text-brand-olive transition-colors hover:bg-white/90"
+              href={cta.url}
+              target={cta.isExternal ? "_blank" : undefined}
+              rel={cta.isExternal ? "noopener noreferrer" : undefined}
+              className="inline-block rounded-button bg-brand-blue px-5 py-[15px] text-base font-semibold leading-[21px] text-white transition-colors hover:bg-brand-navy-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 active:bg-brand-navy-dark/90"
             >
-              {primaryButton.label}
-              <svg
-                className="size-3.5 shrink-0"
-                viewBox="0 0 14 14"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M1 7h12M8 2l5 5-5 5" />
-              </svg>
+              {cta.label}
             </a>
-          )}
-          {secondaryButton?.url && (
-            <a
-              href={secondaryButton.url}
-              target={secondaryButton.isExternal ? "_blank" : undefined}
-              rel={
-                secondaryButton.isExternal ? "noopener noreferrer" : undefined
-              }
-              className="inline-flex items-center rounded-[3px] border border-white/50 px-6 py-3.5 text-[13px] font-medium uppercase tracking-[0.65px] text-white transition-colors hover:bg-white/10"
-            >
-              {secondaryButton.label}
-            </a>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );

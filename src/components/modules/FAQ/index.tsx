@@ -13,7 +13,7 @@ export default function FAQ({ heading, items }: FAQProps) {
     <Container>
       <div className="mx-auto max-w-3xl">
         {heading && (
-          <h2 className="mb-10 text-center font-display text-3xl font-bold sm:text-4xl">
+          <h2 className="mb-10 text-center font-heading text-3xl font-bold sm:text-4xl">
             {heading}
           </h2>
         )}
@@ -44,7 +44,7 @@ function AccordionItem({ item }: { item: FAQItem }) {
           onClick={() => setOpen(!open)}
           className="flex w-full items-center justify-between py-5 text-left"
         >
-          <span className="font-display text-lg font-semibold text-brand-text-heading">
+          <span className="font-heading text-lg font-semibold text-brand-text-heading">
             {item.question}
           </span>
           <svg

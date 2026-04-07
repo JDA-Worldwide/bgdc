@@ -112,7 +112,7 @@ export default function IncentivesSection({
           <div>
             {sectionLabel && <SectionLabel>{sectionLabel}</SectionLabel>}
 
-            <h2 className="mt-5 font-display text-3xl sm:text-4xl lg:text-[44px] font-bold leading-[1.15] text-brand-primary">
+            <h2 className="mt-5 font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold leading-[1.15] text-brand-primary">
               {heading}
             </h2>
 

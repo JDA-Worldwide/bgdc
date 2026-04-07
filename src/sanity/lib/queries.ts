@@ -92,6 +92,60 @@ export const homepageQuery = groq`
   }
 `;
 
+export const homepageDataQuery = groq`
+  *[_type == "page" && slug.current == "home"][0] {
+    title,
+    seo,
+    "hero": modules[_type == "homepageHero"][0] {
+      callout,
+      heading,
+      body,
+      primaryCta,
+      secondaryCta,
+      backgroundImage
+    },
+    "stats": modules[_type == "statsBar"][0] {
+      heading,
+      stats[] { value, label }
+    },
+    "community": modules[_type == "communitySection"][0] {
+      heading,
+      leadText,
+      body,
+      images[] { ..., alt }
+    },
+    "valueProps": modules[_type == "valueProps"][0] {
+      heading,
+      cards[] { icon, title, body }
+    },
+    "map": modules[_type == "mapSection"][0] {
+      heading,
+      body,
+      mapImage,
+      destinations[] { time, label }
+    },
+    "industries": modules[_type == "industriesGrid"][0] {
+      heading,
+      body,
+      industries[] { name, image, link },
+      cta
+    },
+    "momentum": modules[_type == "momentumSection"][0] {
+      heading,
+      body,
+      projects[] { title, description, link },
+      cta
+    },
+    "ctaBanner": modules[_type == "ctaBanner"][0] {
+      callout,
+      heading,
+      body,
+      cta,
+      backgroundImage
+    }
+  }
+`;
+
 // --- Blog ---
 
 export const allBlogPostsQuery = groq`

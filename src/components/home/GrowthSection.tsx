@@ -81,7 +81,7 @@ export default function GrowthSection({
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
           <div>
             {sectionLabel && <SectionLabel>{sectionLabel}</SectionLabel>}
-            <h2 className="mt-5 font-display text-3xl sm:text-4xl lg:text-[44px] font-bold leading-[1.15] text-brand-primary">
+            <h2 className="mt-5 font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold leading-[1.15] text-brand-primary">
               {heading}
             </h2>
           </div>
@@ -120,7 +120,7 @@ export default function GrowthSection({
                 {project.tag}
               </span>
 
-              <h3 className="mt-5 font-display text-[19px] font-semibold leading-snug text-brand-primary">
+              <h3 className="mt-5 font-heading text-[19px] font-semibold leading-snug text-brand-primary">
                 {project.title}
               </h3>
 
