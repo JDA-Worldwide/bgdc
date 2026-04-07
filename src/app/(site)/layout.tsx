@@ -1,4 +1,6 @@
-import { sanityFetch } from "@/sanity/lib/live";
+import { draftMode } from "next/headers";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+import VisualEditingClient from "@/components/global/VisualEditingClient";
 import { navigationQuery } from "@/sanity/lib/queries";
 import Navigation from "@/components/global/Navigation";
 import Footer from "@/components/global/Footer";
@@ -35,6 +37,8 @@ export default async function SiteLayout({
       <Navigation items={(navigation as NavigationData | null)?.items} />
       <main id="main-content">{children}</main>
       <Footer />
+      <SanityLive />
+      {(await draftMode()).isEnabled && <VisualEditingClient />}
     </>
   );
 }

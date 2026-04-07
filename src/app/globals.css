@@ -33,6 +33,7 @@
   --spacing-gutter: 3.75rem;      /* 60px — page side padding */
 
   /* ── Layout ── */
+  --container-max: 108rem;          /* 1728px — global max content width */
   --container-content: 74rem;
 
   /* ── Border Radius ── */

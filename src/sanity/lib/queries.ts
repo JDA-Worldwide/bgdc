@@ -105,7 +105,7 @@ export const homepageDataQuery = groq`
     },
     "stats": modules[_type == "statsBar"][0] {
       heading,
-      stats[] { value, label }
+      stats[] { number, prefix, suffix, textValue, label }
     },
     "community": modules[_type == "communitySection"][0] {
       heading,

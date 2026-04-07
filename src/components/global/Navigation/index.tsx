@@ -130,7 +130,7 @@ export default function Navigation({ items }: NavigationProps) {
     <header className="sticky top-0 z-50 bg-white">
       <nav
         aria-label="Main navigation"
-        className="flex items-center justify-between px-6 py-5 min-[1400px]:px-gutter"
+        className="mx-auto flex max-w-[var(--container-max)] items-center justify-between px-6 py-5 sm:px-10 lg:px-gutter"
       >
         {/* Brand / Logo */}
         <Link href="/" className="shrink-0">
