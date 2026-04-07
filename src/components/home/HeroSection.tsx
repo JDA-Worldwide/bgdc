@@ -1,6 +1,6 @@
 "use client";
 
-import { gsap } from "@/lib/gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useGsap } from "@/hooks/useGsap";
 import { cn } from "@/lib/utils";
 import SanityImage from "@/components/ui/SanityImage";
@@ -42,6 +42,20 @@ export default function HeroSection({
       { opacity: 0, y: 30 },
       { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", stagger: 0.15 }
     );
+
+    const bg = el.querySelector("[data-hero-bg]");
+    if (bg) {
+      gsap.to(bg, {
+        yPercent: 20,
+        ease: "none",
+        scrollTrigger: {
+          trigger: el,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    }
   });
 
   return (
@@ -50,7 +64,7 @@ export default function HeroSection({
       className="relative flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-6 py-section md:min-h-[85vh] md:px-16 lg:min-h-[971px] lg:px-[175px]"
     >
       {/* Background */}
-      <div className="absolute inset-0 -z-10">
+      <div data-hero-bg className="absolute inset-0 -z-10">
         {backgroundImage?.asset ? (
           <SanityImage
             image={backgroundImage}
