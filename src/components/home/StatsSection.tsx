@@ -1,6 +1,8 @@
 "use client";
 
 import CountUp from "react-countup";
+import { gsap } from "@/lib/gsap";
+import { useGsap } from "@/hooks/useGsap";
 
 interface Stat {
   _key?: string;
@@ -65,17 +67,37 @@ export default function StatsSection({
 }: StatsSectionProps) {
   const resolvedStats = stats?.length ? stats : defaultStats;
 
+  const sectionRef = useGsap<HTMLElement>((el) => {
+    gsap.fromTo(
+      el.querySelectorAll("[data-stats-animate]"),
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: "power2.out",
+        stagger: 0.15,
+        scrollTrigger: {
+          trigger: el,
+          start: "top 80%",
+        },
+      }
+    );
+  });
+
   return (
-    <section className="bg-brand-blue py-16 md:py-section">
-      <div className="mx-auto max-w-[var(--container-max)] px-6 sm:px-10 md:px-[170px]">
+    <section ref={sectionRef} className="bg-brand-blue py-16 md:py-section">
+      <div className="mx-auto max-w-[var(--container-max)] px-6 sm:px-10 lg:px-gutter">
         {heading && (
-          <h2 className="mb-10 text-center text-2xl font-medium leading-tight text-white sm:text-3xl md:mb-[60px] md:text-[43px] md:leading-[60px]">
+          <h2 data-stats-animate className="mb-10 text-center text-2xl font-medium leading-tight text-white sm:text-3xl md:mb-[60px] md:text-[43px] md:leading-[60px]">
             {heading}
           </h2>
         )}
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:gap-x-16 md:gap-x-20 lg:grid-cols-4 lg:gap-[150px]">
           {resolvedStats.map((stat, i) => (
-            <StatItem key={stat._key ?? i} stat={stat} />
+            <div key={stat._key ?? i} data-stats-animate>
+              <StatItem stat={stat} />
+            </div>
           ))}
         </div>
       </div>
