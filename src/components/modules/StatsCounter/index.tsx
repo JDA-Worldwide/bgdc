@@ -58,7 +58,7 @@ function AnimatedStat({ stat }: { stat: Stat }) {
 
   return (
     <div ref={ref} className="text-center">
-      <p className="font-display text-4xl font-bold text-brand-text-heading sm:text-5xl" aria-hidden="true">
+      <p className="font-heading text-4xl font-bold text-brand-text-heading sm:text-5xl" aria-hidden="true">
         {displayValue}
       </p>
       <p className="sr-only" aria-live="polite">

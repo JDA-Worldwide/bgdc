@@ -1,26 +1,32 @@
 import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/live";
-import { homepageQuery, settingsQuery } from "@/sanity/lib/queries";
+import { homepageDataQuery, settingsQuery } from "@/sanity/lib/queries";
 import { buildMetadata } from "@/lib/metadata";
 import { JsonLd, webPageSchema } from "@/lib/jsonLd";
-import PageBuilder from "@/components/PageBuilder";
 import HeroSection from "@/components/home/HeroSection";
-import TickerSection from "@/components/home/TickerSection";
-import WhySection from "@/components/home/WhySection";
-import LocationSection from "@/components/home/LocationSection";
-import GrowthSection from "@/components/home/GrowthSection";
-import IncentivesSection from "@/components/home/IncentivesSection";
+import StatsSection from "@/components/home/StatsSection";
+import CommunitySection from "@/components/home/CommunitySection";
+import ValuePropsSection from "@/components/home/ValuePropsSection";
+import MapSection from "@/components/home/MapSection";
+import IndustriesSection from "@/components/home/IndustriesSection";
+import MomentumSection from "@/components/home/MomentumSection";
 import CtaBanner from "@/components/home/CtaBanner";
 
-interface PageData {
-  title: string;
-  slug: string;
+interface HomepageData {
+  title?: string;
   seo?: {
     metaTitle?: string;
     metaDescription?: string;
     ogImage?: { asset: { _ref: string } };
   };
-  modules?: Array<{ _type: string; _key: string; [key: string]: unknown }>;
+  hero?: Record<string, unknown>;
+  stats?: Record<string, unknown>;
+  community?: Record<string, unknown>;
+  valueProps?: Record<string, unknown>;
+  map?: Record<string, unknown>;
+  industries?: Record<string, unknown>;
+  momentum?: Record<string, unknown>;
+  ctaBanner?: Record<string, unknown>;
 }
 
 interface GlobalSettings {
@@ -30,74 +36,64 @@ interface GlobalSettings {
 
 export async function generateMetadata(): Promise<Metadata> {
   const [{ data: page }, { data: settings }] = await Promise.all([
-    sanityFetch({ query: homepageQuery, tags: ["page"] }),
+    sanityFetch({ query: homepageDataQuery, tags: ["page"] }),
     sanityFetch({ query: settingsQuery, tags: ["globalSettings"] }),
   ]);
 
-  const typedPage = page as PageData | null;
+  const typedPage = page as HomepageData | null;
   const typedSettings = settings as GlobalSettings | null;
-
-  if (!typedPage) {
-    return {
-      title:
-        "Bargersville Economic Development — Grow Where Access Meets Opportunity",
-      description:
-        "Bargersville sits at the crossroads of Indiana\u2019s future — where I-69 and SR 144 converge, where Indianapolis is 25 minutes away, and where a community committed to pro-business growth is ready to welcome you.",
-    };
-  }
-
   const siteUrl =
     typedSettings?.siteUrl ||
     process.env.NEXT_PUBLIC_SITE_URL ||
     "http://localhost:3000";
-  return buildMetadata(typedPage, siteUrl);
+
+  if (!typedPage?.title) {
+    return {
+      title: "Bargersville Economic Development — Cultivating Long-Term Success",
+      description:
+        "Rooted in community and built for business, Bargersville offers the location, infrastructure, and support to help your business grow.",
+    };
+  }
+
+  return buildMetadata({ title: typedPage.title, seo: typedPage.seo }, siteUrl);
 }
 
 export default async function HomePage() {
   const [{ data: page }, { data: settings }] = await Promise.all([
-    sanityFetch({ query: homepageQuery, tags: ["page"] }),
+    sanityFetch({ query: homepageDataQuery, tags: ["page"] }),
     sanityFetch({ query: settingsQuery, tags: ["globalSettings"] }),
   ]);
 
-  const typedPage = page as PageData | null;
+  const data = (page ?? {}) as HomepageData;
   const typedSettings = settings as GlobalSettings | null;
+  const siteUrl =
+    typedSettings?.siteUrl ||
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    "http://localhost:3000";
 
-  // If a "home" page exists in Sanity with modules, render via PageBuilder
-  if (typedPage?.modules?.length) {
-    const siteUrl =
-      typedSettings?.siteUrl ||
-      process.env.NEXT_PUBLIC_SITE_URL ||
-      "http://localhost:3000";
-
-    return (
-      <>
+  return (
+    <>
+      {data.seo && (
         <JsonLd
           data={webPageSchema({
-            title: typedPage.seo?.metaTitle || typedPage.title,
-            description: typedPage.seo?.metaDescription,
+            title: data.seo.metaTitle || data.title || "Bargersville Economic Development",
+            description: data.seo.metaDescription,
             url: siteUrl,
             organizationName: typedSettings?.siteTitle,
           })}
         />
-        <h1 className="sr-only">{typedPage.title}</h1>
-        <PageBuilder modules={typedPage.modules} />
-      </>
-    );
-  }
-
-  // Fallback: render static homepage with default content
-  return (
-    <>
+      )}
       <h1 className="sr-only">
-        Bargersville Economic Development — Grow Where Access Meets Opportunity
+        Bargersville Economic Development — Cultivating Long-Term Success
       </h1>
-      <HeroSection />
-      <TickerSection />
-      <WhySection />
-      <LocationSection />
-      <GrowthSection />
-      <IncentivesSection />
-      <CtaBanner />
+      <HeroSection {...(data.hero as Record<string, never>)} />
+      <StatsSection {...(data.stats as Record<string, never>)} />
+      <CommunitySection {...(data.community as Record<string, never>)} />
+      <ValuePropsSection {...(data.valueProps as Record<string, never>)} />
+      <MapSection {...(data.map as Record<string, never>)} />
+      <IndustriesSection {...(data.industries as Record<string, never>)} />
+      <MomentumSection {...(data.momentum as Record<string, never>)} />
+      <CtaBanner {...(data.ctaBanner as Record<string, never>)} />
     </>
   );
 }

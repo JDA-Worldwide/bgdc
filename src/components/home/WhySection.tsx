@@ -96,7 +96,7 @@ export default function WhySection({
         <div className="max-w-3xl">
           {sectionLabel && <SectionLabel>{sectionLabel}</SectionLabel>}
 
-          <h2 className="mt-5 font-display text-3xl sm:text-4xl lg:text-[44px] font-bold leading-[1.15] text-brand-primary">
+          <h2 className="mt-5 font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold leading-[1.15] text-brand-primary">
             {heading}
           </h2>
 
@@ -118,7 +118,7 @@ export default function WhySection({
               {pillar.icon && iconMap[pillar.icon] && (
                 <div className="mb-6">{iconMap[pillar.icon]}</div>
               )}
-              <h3 className="font-display text-[19px] font-semibold text-brand-primary leading-snug">
+              <h3 className="font-heading text-[19px] font-semibold text-brand-primary leading-snug">
                 {pillar.title}
               </h3>
               {pillar.description && (

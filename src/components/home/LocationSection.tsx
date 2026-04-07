@@ -58,7 +58,7 @@ export default function LocationSection({
               <SectionLabel variant="light">{sectionLabel}</SectionLabel>
             )}
 
-            <h2 className="mt-5 font-display text-3xl sm:text-[40px] font-bold leading-[1.15] text-white">
+            <h2 className="mt-5 font-heading text-3xl sm:text-[40px] font-bold leading-[1.15] text-white">
               {heading}
             </h2>
 

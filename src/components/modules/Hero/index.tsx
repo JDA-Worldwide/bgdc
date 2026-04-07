@@ -30,7 +30,7 @@ export default function Hero({
           backgroundImage?.asset ? "text-white" : "text-brand-text-heading"
         )}
       >
-        <h1 className="font-display text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+        <h1 className="font-heading text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
           {heading}
         </h1>
 

@@ -24,7 +24,7 @@ export default function CTA({
         <div className="mx-auto max-w-3xl text-center">
           <h2
             className={cn(
-              "font-display text-3xl font-bold sm:text-4xl",
+              "font-heading text-3xl font-bold sm:text-4xl",
               isPrimary ? "text-white" : "text-brand-text-heading"
             )}
           >

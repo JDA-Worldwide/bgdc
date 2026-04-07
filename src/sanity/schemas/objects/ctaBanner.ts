@@ -8,10 +8,10 @@ export default defineType({
   icon: BulbOutlineIcon,
   fields: [
     defineField({
-      name: "sectionLabel",
-      title: "Section Label",
+      name: "callout",
+      title: "Callout",
       type: "string",
-      description: 'e.g. "Let\'s Talk"',
+      description: 'Italic accent text, e.g. "Let\'s Talk"',
     }),
     defineField({
       name: "heading",
@@ -20,20 +20,29 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "description",
-      title: "Description",
+      name: "body",
+      title: "Body Text",
       type: "text",
-      rows: 3,
+      rows: 4,
     }),
     defineField({
-      name: "primaryButton",
-      title: "Primary Button",
+      name: "cta",
+      title: "CTA Button",
       type: "link",
     }),
     defineField({
-      name: "secondaryButton",
-      title: "Secondary Button",
-      type: "link",
+      name: "backgroundImage",
+      title: "Background Image",
+      type: "image",
+      options: { hotspot: true },
+      fields: [
+        defineField({
+          name: "alt",
+          title: "Alt Text",
+          type: "string",
+          validation: (rule) => rule.required(),
+        }),
+      ],
     }),
   ],
   preview: {

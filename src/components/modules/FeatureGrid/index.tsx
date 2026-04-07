@@ -7,7 +7,7 @@ export default function FeatureGrid({ heading, features }: FeatureGridProps) {
   return (
     <Container>
       {heading && (
-        <h2 className="mb-12 text-center font-display text-3xl font-bold sm:text-4xl">
+        <h2 className="mb-12 text-center font-heading text-3xl font-bold sm:text-4xl">
           {heading}
         </h2>
       )}
@@ -23,7 +23,7 @@ export default function FeatureGrid({ heading, features }: FeatureGridProps) {
                 {feature.icon}
               </span>
             )}
-            <h3 className="font-display text-xl font-semibold">
+            <h3 className="font-heading text-xl font-semibold">
               {feature.title}
             </h3>
             {feature.description && (

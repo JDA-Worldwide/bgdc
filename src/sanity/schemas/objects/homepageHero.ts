@@ -1,4 +1,4 @@
-import { defineType, defineField, defineArrayMember } from "sanity";
+import { defineType, defineField } from "sanity";
 import { HomeIcon } from "@sanity/icons";
 
 export default defineType({
@@ -8,100 +8,84 @@ export default defineType({
   icon: HomeIcon,
   fields: [
     defineField({
-      name: "sectionLabel",
-      title: "Section Label",
+      name: "callout",
+      title: "Callout",
       type: "string",
-      description: 'Small uppercase label above the heading, e.g. "Connected & Growing"',
+      description: 'Italic accent text above the heading, e.g. "Connected & Growing"',
     }),
     defineField({
       name: "heading",
       title: "Heading",
       type: "string",
-      description: 'Full heading text, e.g. "Grow Where Access Meets Opportunity"',
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "accentPhrase",
-      title: "Accent Phrase",
-      type: "string",
-      description:
-        "The portion of the heading to highlight in gold. Must match text within the heading exactly.",
-    }),
-    defineField({
-      name: "description",
-      title: "Description",
+      name: "body",
+      title: "Body Text",
       type: "text",
       rows: 4,
     }),
     defineField({
-      name: "primaryCta",
-      title: "Primary Button",
-      type: "link",
-    }),
-    defineField({
-      name: "secondaryCta",
-      title: "Secondary Link",
-      type: "link",
-    }),
-    defineField({
-      name: "stats",
-      title: "Stats",
+      name: "ctas",
+      title: "Buttons",
       type: "array",
+      validation: (rule) => rule.max(3),
       of: [
-        defineArrayMember({
+        {
           type: "object",
+          name: "ctaButton",
+          title: "Button",
           fields: [
             defineField({
-              name: "value",
-              title: "Value",
+              name: "label",
+              title: "Label",
               type: "string",
-              description: 'Main number or text, e.g. "11", "25", "I", "Pro"',
               validation: (rule) => rule.required(),
             }),
             defineField({
-              name: "suffix",
-              title: "Suffix",
+              name: "url",
+              title: "URL",
               type: "string",
-              description: 'Unit or modifier, e.g. "K+", "mi", "-69", "+"',
+              validation: (rule) => rule.required(),
             }),
             defineField({
-              name: "description",
-              title: "Description",
+              name: "isExternal",
+              title: "Open in New Tab",
+              type: "boolean",
+              initialValue: false,
+            }),
+            defineField({
+              name: "variant",
+              title: "Style",
               type: "string",
+              options: {
+                list: [
+                  { title: "Primary (Filled)", value: "primary" },
+                  { title: "Outline", value: "outline" },
+                ],
+                layout: "radio",
+              },
+              initialValue: "primary",
             }),
           ],
           preview: {
-            select: { value: "value", suffix: "suffix", description: "description" },
-            prepare({ value, suffix, description }) {
-              return {
-                title: `${value}${suffix || ""}`,
-                subtitle: description,
-              };
-            },
+            select: { title: "label", subtitle: "variant" },
           },
-        }),
+        },
       ],
-      validation: (rule) => rule.max(4),
     }),
     defineField({
       name: "backgroundImage",
       title: "Background Image",
       type: "image",
       options: { hotspot: true },
-      fields: [
-        defineField({
-          name: "alt",
-          title: "Alt Text",
-          type: "string",
-          validation: (rule) => rule.required(),
-        }),
-      ],
+      description: "Decorative background image — no alt text needed.",
     }),
   ],
   preview: {
     select: { title: "heading" },
     prepare({ title }) {
-      return { title: title || "Homepage Hero", subtitle: "Homepage Hero" };
+      return { title: title || "Homepage Hero", subtitle: "Hero Section" };
     },
   },
 });

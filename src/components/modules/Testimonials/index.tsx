@@ -16,7 +16,7 @@ export default function Testimonials({
   return (
     <Container>
       {heading && (
-        <h2 className="mb-12 text-center font-display text-3xl font-bold sm:text-4xl">
+        <h2 className="mb-12 text-center font-heading text-3xl font-bold sm:text-4xl">
           {heading}
         </h2>
       )}

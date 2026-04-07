@@ -28,7 +28,7 @@ export default async function BlogListingPage() {
 
   return (
     <section className="mx-auto max-w-[var(--container-content)] px-4 py-section">
-      <h1 className="mb-12 font-display text-4xl font-bold">Blog</h1>
+      <h1 className="mb-12 font-heading text-4xl font-bold">Blog</h1>
       {typedPosts.length === 0 ? (
         <p className="text-brand-muted">No posts yet.</p>
       ) : (
@@ -47,7 +47,7 @@ export default async function BlogListingPage() {
                     />
                   </div>
                 )}
-                <h2 className="font-display text-xl font-semibold group-hover:text-brand-secondary">
+                <h2 className="font-heading text-xl font-semibold group-hover:text-brand-secondary">
                   {post.title}
                 </h2>
                 <time dateTime={post.publishedAt} className="mt-1 block text-sm text-brand-muted">
