@@ -3,6 +3,7 @@
 import CountUp from "react-countup";
 import { gsap } from "@/lib/gsap";
 import { useGsap } from "@/hooks/useGsap";
+import { cn } from "@/lib/utils";
 
 interface Stat {
   _key?: string;
@@ -66,6 +67,7 @@ export default function StatsSection({
   stats,
 }: StatsSectionProps) {
   const resolvedStats = stats?.length ? stats : defaultStats;
+  const count = resolvedStats.length;
 
   const sectionRef = useGsap<HTMLElement>((el) => {
     gsap.fromTo(
@@ -86,21 +88,46 @@ export default function StatsSection({
   });
 
   return (
-    <section ref={sectionRef} className="bg-brand-blue py-16 md:py-section">
-      <div className="mx-auto max-w-[var(--container-max)] px-6 sm:px-10 lg:px-gutter">
-        {heading && (
-          <h2 data-stats-animate className="mb-10 text-center text-2xl font-medium leading-tight text-white sm:text-3xl md:mb-[60px] md:text-[43px] md:leading-[60px]">
-            {heading}
-          </h2>
-        )}
-        <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:gap-x-16 md:gap-x-20 lg:grid-cols-4 lg:gap-[150px]">
-          {resolvedStats.map((stat, i) => (
-            <div key={stat._key ?? i} data-stats-animate>
-              <StatItem stat={stat} />
-            </div>
-          ))}
+    <>
+      <section ref={sectionRef} className="border-t-[5px] border-white bg-brand-blue py-16 md:py-section">
+        <div className="mx-auto max-w-[var(--container-max)] px-6 sm:px-10 lg:px-gutter">
+          {heading && (
+            <h2 data-stats-animate className="mb-10 text-center text-2xl font-medium leading-tight text-white sm:text-3xl md:mb-[60px] md:text-[43px] md:leading-[60px]">
+              {heading}
+            </h2>
+          )}
+          <div
+            className={cn(
+              "grid gap-x-6 gap-y-10 sm:gap-x-16 md:gap-x-20",
+              count === 1 && "grid-cols-1 justify-items-center",
+              count === 2 && "grid-cols-2",
+              count === 3 && "grid-cols-2 lg:grid-cols-3 lg:gap-x-[120px]",
+              count >= 4 && "grid-cols-2 lg:grid-cols-4 lg:gap-x-[150px]",
+            )}
+          >
+            {resolvedStats.map((stat, i) => (
+              <div
+                key={stat._key ?? i}
+                data-stats-animate
+                className={cn(
+                  count === 1 && "max-w-md",
+                  count === 3 && i === 2 && "col-span-2 lg:col-span-1 justify-self-center",
+                )}
+              >
+                <StatItem stat={stat} />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <div
+        aria-hidden="true"
+        className="h-[31px] w-full rotate-180"
+        style={{
+          background:
+            "linear-gradient(to right, #8B9A72, #96A07E, #A8AE7C, #94A8AF, #8FA3AD)",
+        }}
+      />
+    </>
   );
 }
