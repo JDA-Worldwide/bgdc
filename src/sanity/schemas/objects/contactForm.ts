@@ -29,6 +29,19 @@ export default defineType({
       type: "string",
       initialValue: "Thank you! Your message has been sent.",
     }),
+    defineField({
+      name: "inquiryTypes",
+      title: "Inquiry Type Options",
+      type: "array",
+      of: [{ type: "string" }],
+      description: "Options shown in the 'How can we help you?' dropdown. Leave empty to hide the dropdown.",
+    }),
+    defineField({
+      name: "showNewsletterOptIn",
+      title: "Show Newsletter Opt-In",
+      type: "boolean",
+      initialValue: false,
+    }),
   ],
   preview: {
     select: { title: "heading" },

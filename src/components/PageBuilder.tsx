@@ -11,6 +11,8 @@ import Testimonials from "./modules/Testimonials";
 import FAQ from "./modules/FAQ";
 import TeamGrid from "./modules/TeamGrid";
 import ContactForm from "./modules/ContactForm";
+import ContactInfo from "./modules/ContactInfo";
+import DetailedStats from "./modules/DetailedStats";
 import HeroSection from "./home/HeroSection";
 import TickerSection from "./home/TickerSection";
 import WhySection from "./home/WhySection";
@@ -50,6 +52,8 @@ const moduleMap: Record<string, ComponentType<any>> = {
   faq: FAQ,
   teamGrid: TeamGrid,
   contactForm: ContactForm,
+  contactInfo: ContactInfo,
+  detailedStats: DetailedStats,
   homepageHero: HeroSection,
   partnersTicker: TickerSection,
   whyPillars: WhySection,

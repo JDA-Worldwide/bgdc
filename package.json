@@ -9,7 +9,9 @@
     "prod-start": "NODE_ENV=production next start",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "seed": "node -r dotenv/config scripts/seed.mjs dotenv_config_path=.env.local",
+    "seed:pages": "node -r dotenv/config scripts/seed-inner-pages.mjs dotenv_config_path=.env.local"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.2",

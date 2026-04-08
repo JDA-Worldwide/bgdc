@@ -41,6 +41,10 @@ import mapSection from "./objects/mapSection";
 import industriesGrid from "./objects/industriesGrid";
 import momentumSection from "./objects/momentumSection";
 
+// Inner page modules
+import contactInfo from "./objects/contactInfo";
+import detailedStats from "./objects/detailedStats";
+
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Documents
   globalSettings,
@@ -82,4 +86,8 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   mapSection,
   industriesGrid,
   momentumSection,
+
+  // Inner page modules
+  contactInfo,
+  detailedStats,
 ];
