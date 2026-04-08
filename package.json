@@ -11,7 +11,9 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "seed": "node -r dotenv/config scripts/seed.mjs dotenv_config_path=.env.local",
-    "seed:pages": "node -r dotenv/config scripts/seed-inner-pages.mjs dotenv_config_path=.env.local"
+    "seed:pages": "node -r dotenv/config scripts/seed-inner-pages.mjs dotenv_config_path=.env.local",
+    "seed:phase3": "node -r dotenv/config scripts/seed-phase3-pages.mjs dotenv_config_path=.env.local",
+    "seed:phase4": "node -r dotenv/config scripts/seed-phase4-pages.mjs dotenv_config_path=.env.local"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.2",

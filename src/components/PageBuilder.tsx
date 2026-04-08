@@ -13,6 +13,11 @@ import TeamGrid from "./modules/TeamGrid";
 import ContactForm from "./modules/ContactForm";
 import ContactInfo from "./modules/ContactInfo";
 import DetailedStats from "./modules/DetailedStats";
+import ProjectShowcase from "./modules/ProjectShowcase";
+import DevelopmentAreaShowcase from "./modules/DevelopmentAreaShowcase";
+import IncentiveCards from "./modules/IncentiveCards";
+import TIFSection from "./modules/TIFSection";
+import ResourceHub from "./modules/ResourceHub";
 import HeroSection from "./home/HeroSection";
 import TickerSection from "./home/TickerSection";
 import WhySection from "./home/WhySection";
@@ -54,6 +59,11 @@ const moduleMap: Record<string, ComponentType<any>> = {
   contactForm: ContactForm,
   contactInfo: ContactInfo,
   detailedStats: DetailedStats,
+  projectShowcase: ProjectShowcase,
+  developmentAreaShowcase: DevelopmentAreaShowcase,
+  incentiveCards: IncentiveCards,
+  tifSection: TIFSection,
+  resourceHub: ResourceHub,
   homepageHero: HeroSection,
   partnersTicker: TickerSection,
   whyPillars: WhySection,
