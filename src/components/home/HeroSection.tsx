@@ -1,6 +1,6 @@
 "use client";
 
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { useGsap } from "@/hooks/useGsap";
 import { cn } from "@/lib/utils";
 import SanityImage from "@/components/ui/SanityImage";
@@ -61,7 +61,7 @@ export default function HeroSection({
   return (
     <section
       ref={sectionRef}
-      className="relative flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-6 py-section md:min-h-[85vh] md:px-16 lg:min-h-[971px] lg:px-[175px]"
+      className="relative flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-6 py-section sm:px-10 md:min-h-[85vh] lg:min-h-[971px] lg:px-gutter"
     >
       {/* Background */}
       <div data-hero-bg className="absolute inset-0 -z-10">
@@ -85,7 +85,7 @@ export default function HeroSection({
         </p>
       )}
 
-      <div className="mt-10 flex max-w-[1378px] flex-col gap-8 text-center text-white md:mt-[60px] md:gap-[54px]">
+      <div className="mt-10 flex max-w-[var(--container-max)] flex-col gap-8 text-center text-white md:mt-[60px] md:gap-[54px]">
         {heading && (
           <h1 data-hero-animate className="text-3xl font-medium text-white sm:text-5xl md:text-[70px] md:leading-[1.15]">
             {heading}

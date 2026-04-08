@@ -76,7 +76,7 @@ export default function GrowthSection({
 
   return (
     <section className="border-y border-brand-border bg-brand-surface py-section">
-      <div className="mx-auto max-w-[var(--container-content)] px-6 lg:px-8">
+      <div className="mx-auto max-w-[var(--container-max)] px-6 sm:px-10 lg:px-gutter">
         {/* Header */}
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
           <div>

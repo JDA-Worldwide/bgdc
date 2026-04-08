@@ -35,7 +35,7 @@ export default function ValuePropsSection({
 
   return (
     <section className="bg-brand-blue py-section">
-      <div className="flex flex-col gap-10 px-6 sm:px-gutter lg:flex-row">
+      <div className="mx-auto flex max-w-[var(--container-max)] flex-col gap-10 px-6 sm:px-10 lg:flex-row lg:px-gutter">
         {/* Left heading */}
         <div className="flex-shrink-0 pt-2.5 lg:w-[36%]">
           <h2 className="text-2xl font-medium leading-tight text-white sm:text-3xl md:text-[43px] md:leading-[60px]">

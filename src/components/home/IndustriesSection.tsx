@@ -30,8 +30,8 @@ export default function IndustriesSection({
   const resolvedIndustries = industries?.length ? industries : defaultIndustries;
 
   return (
-    <section className="bg-brand-limestone px-6 py-section sm:px-gutter">
-      <div className="mx-auto max-w-[1390px]">
+    <section className="bg-brand-limestone py-section">
+      <div className="mx-auto max-w-[var(--container-max)] px-6 sm:px-10 lg:px-gutter">
         <div className="mb-10 px-0 md:mb-[60px] lg:px-[109px]">
           {heading && (
             <h2 className="mb-[35px] text-3xl font-medium leading-tight text-brand-blue md:text-[43px] md:leading-[60px]">

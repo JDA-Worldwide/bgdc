@@ -90,7 +90,7 @@ export default function StatsSection({
   return (
     <>
       <section ref={sectionRef} className="border-t-[5px] border-white bg-brand-blue py-16 md:py-section">
-        <div className="mx-auto max-w-[var(--container-max)] px-6 sm:px-10 lg:px-gutter">
+        <div className="@container mx-auto max-w-[var(--container-max)] px-6 sm:px-10 lg:px-gutter">
           {heading && (
             <h2 data-stats-animate className="mb-10 text-center text-2xl font-medium leading-tight text-white sm:text-3xl md:mb-[60px] md:text-[43px] md:leading-[60px]">
               {heading}
@@ -98,11 +98,11 @@ export default function StatsSection({
           )}
           <div
             className={cn(
-              "grid gap-x-6 gap-y-10 sm:gap-x-16 md:gap-x-20",
+              "grid gap-x-16 gap-y-10 @[36rem]:gap-x-6 @[56rem]:gap-x-4",
               count === 1 && "grid-cols-1 justify-items-center",
               count === 2 && "grid-cols-2",
-              count === 3 && "grid-cols-2 lg:grid-cols-3 lg:gap-x-[120px]",
-              count >= 4 && "grid-cols-2 lg:grid-cols-4 lg:gap-x-[150px]",
+              count === 3 && "grid-cols-2 @[56rem]:grid-cols-3 justify-between",
+              count >= 4 && "grid-cols-2 @[75rem]:grid-cols-4 justify-between",
             )}
           >
             {resolvedStats.map((stat, i) => (
@@ -111,7 +111,7 @@ export default function StatsSection({
                 data-stats-animate
                 className={cn(
                   count === 1 && "max-w-md",
-                  count === 3 && i === 2 && "col-span-2 lg:col-span-1 justify-self-center",
+                  count === 3 && i === 2 && "col-span-2 @[56rem]:col-span-1 justify-self-center",
                 )}
               >
                 <StatItem stat={stat} />

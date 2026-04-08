@@ -50,7 +50,7 @@ export default function LocationSection({
         }}
       />
 
-      <div className="relative mx-auto max-w-[var(--container-content)] px-6 lg:px-8 py-section">
+      <div className="relative mx-auto max-w-[var(--container-max)] px-6 py-section sm:px-10 lg:px-gutter">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Left content */}
           <div>

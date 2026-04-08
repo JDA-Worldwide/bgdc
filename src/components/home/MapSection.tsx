@@ -30,8 +30,8 @@ export default function MapSection({
   const resolvedDestinations = destinations?.length ? destinations : defaultDestinations;
 
   return (
-    <section className="px-6 py-section sm:px-gutter">
-      <div className="flex flex-col gap-[60px]">
+    <section className="py-section">
+      <div className="mx-auto flex max-w-[var(--container-max)] flex-col gap-[60px] px-6 sm:px-10 lg:px-gutter">
         {/* Map image */}
         <div className="relative aspect-[1320/487] w-full overflow-hidden bg-brand-limestone">
           {mapImage?.asset ? (

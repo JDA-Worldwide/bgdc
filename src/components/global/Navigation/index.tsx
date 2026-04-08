@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -134,10 +135,13 @@ export default function Navigation({ items }: NavigationProps) {
       >
         {/* Brand / Logo */}
         <Link href="/" className="shrink-0">
-          <img
+          <Image
             src="/images/logo.svg"
             alt="Bargersville Economic Development"
-            className="h-10 w-auto sm:h-[63px]"
+            width={309}
+            height={63}
+            className="h-10 sm:h-[63px]"
+            style={{ width: "auto" }}
           />
         </Link>
 

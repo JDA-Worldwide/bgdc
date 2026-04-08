@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
@@ -9,10 +10,13 @@ export default function Footer() {
         {/* Top row: logo + address */}
         <div className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-start">
           <Link href="/" className="shrink-0">
-            <img
+            <Image
               src="/images/logo-white.svg"
               alt="Bargersville Economic Development"
-              className="h-[63px] w-auto"
+              width={309}
+              height={63}
+              className="h-[63px]"
+              style={{ width: "auto" }}
             />
           </Link>
           <div className="text-base leading-7 text-white sm:text-right">

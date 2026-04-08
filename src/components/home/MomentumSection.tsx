@@ -38,8 +38,8 @@ export default function MomentumSection({
   const resolvedProjects = projects?.length ? projects : defaultProjects;
 
   return (
-    <section className="bg-brand-sky px-6 py-section sm:px-gutter">
-      <div className="mx-auto max-w-[1390px]">
+    <section className="bg-brand-sky py-section">
+      <div className="mx-auto max-w-[var(--container-max)] px-6 sm:px-10 lg:px-gutter">
         <div className="mb-10 px-0 md:mb-[60px] lg:px-[109px]">
           {heading && (
             <h2 className="mb-10 text-3xl font-medium leading-tight text-brand-blue md:text-[43px] md:leading-[60px]">
