@@ -42,8 +42,12 @@ export default async function SiteLayout({
       <Navigation items={nav?.items} ctaLabel={nav?.ctaLabel} ctaUrl={nav?.ctaUrl} />
       <main id="main-content">{children}</main>
       <Footer />
-      <SanityLive />
-      {(await draftMode()).isEnabled && <VisualEditingClient />}
+      {(await draftMode()).isEnabled && (
+        <>
+          <SanityLive />
+          <VisualEditingClient />
+        </>
+      )}
     </>
   );
 }
