@@ -23,6 +23,8 @@ interface NavItem {
 
 interface NavigationProps {
   items?: NavItem[];
+  ctaLabel?: string;
+  ctaUrl?: string;
 }
 
 /* ---------- Fallback data ---------- */
@@ -63,7 +65,7 @@ function NavLink({
 
 /* ---------- Component ---------- */
 
-export default function Navigation({ items }: NavigationProps) {
+export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = "/get-in-touch" }: NavigationProps) {
   const resolvedItems = items?.length ? items : fallbackItems;
 
   const pathname = usePathname();
@@ -244,10 +246,10 @@ export default function Navigation({ items }: NavigationProps) {
           </div>
 
           <Link
-            href="/contact"
+            href={ctaUrl}
             className="rounded-button bg-brand-blue px-5 py-[15px] text-base font-semibold leading-[21px] text-white transition-colors hover:bg-brand-navy-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 active:bg-brand-navy-dark/90"
           >
-            Get in Touch
+            {ctaLabel}
           </Link>
         </div>
 
@@ -366,10 +368,10 @@ export default function Navigation({ items }: NavigationProps) {
               );
             })}
             <Link
-              href="/contact"
+              href={ctaUrl}
               className="mt-4 block rounded-button bg-brand-blue px-5 py-4 text-center text-base font-semibold text-white transition-colors hover:bg-brand-navy-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 active:bg-brand-navy-dark/90"
             >
-              Get in Touch
+              {ctaLabel}
             </Link>
           </div>
         </div>

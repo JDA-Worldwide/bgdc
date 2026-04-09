@@ -26,6 +26,11 @@ import GrowthSection from "./home/GrowthSection";
 import IncentivesSection from "./home/IncentivesSection";
 import CtaBanner from "./home/CtaBanner";
 import StatsSection from "./home/StatsSection";
+import CommunitySection from "./home/CommunitySection";
+import ValuePropsSection from "./home/ValuePropsSection";
+import MapSection from "./home/MapSection";
+import IndustriesSection from "./home/IndustriesSection";
+import MomentumSection from "./home/MomentumSection";
 import { JsonLd, faqPageSchema } from "@/lib/jsonLd";
 import { toPlainText, type PortableTextBlock } from "@portabletext/react";
 
@@ -72,6 +77,11 @@ const moduleMap: Record<string, ComponentType<any>> = {
   incentivesGrid: IncentivesSection,
   ctaBanner: CtaBanner,
   statsBar: StatsSection,
+  communitySection: CommunitySection,
+  valueProps: ValuePropsSection,
+  mapSection: MapSection,
+  industriesGrid: IndustriesSection,
+  momentumSection: MomentumSection,
 };
 
 const fullBleedModules = new Set([
@@ -82,6 +92,11 @@ const fullBleedModules = new Set([
   "locationMap",
   "ctaBanner",
   "statsBar",
+  "communitySection",
+  "valueProps",
+  "mapSection",
+  "industriesGrid",
+  "momentumSection",
 ]);
 
 function buildFaqJsonLd(module: FAQModule) {

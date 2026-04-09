@@ -19,6 +19,8 @@ interface NavItem {
 }
 
 interface NavigationData {
+  ctaLabel?: string;
+  ctaUrl?: string;
   items?: NavItem[];
 }
 
@@ -32,9 +34,11 @@ export default async function SiteLayout({
     tags: ["navigation"],
   });
 
+  const nav = navigation as NavigationData | null;
+
   return (
     <>
-      <Navigation items={(navigation as NavigationData | null)?.items} />
+      <Navigation items={nav?.items} ctaLabel={nav?.ctaLabel} ctaUrl={nav?.ctaUrl} />
       <main id="main-content">{children}</main>
       <Footer />
       <SanityLive />
