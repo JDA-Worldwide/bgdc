@@ -1,3 +1,4 @@
+import MapboxMapClient from "@/components/ui/MapboxMap/MapboxMapClient";
 import SectionLabel from "./SectionLabel";
 import ArrowIcon from "./ArrowIcon";
 
@@ -13,6 +14,11 @@ interface LinkField {
   isExternal?: boolean;
 }
 
+interface SanityMapCenter {
+  lng?: number;
+  lat?: number;
+}
+
 interface LocationSectionProps {
   sectionLabel?: string;
   heading?: string;
@@ -20,6 +26,8 @@ interface LocationSectionProps {
   reachItems?: ReachItem[];
   extraLine?: string;
   ctaButton?: LinkField;
+  mapCenter?: [number, number] | SanityMapCenter;
+  mapZoom?: number;
 }
 
 const defaultReachItems: ReachItem[] = [
@@ -30,6 +38,16 @@ const defaultReachItems: ReachItem[] = [
   { time: "90 min", place: "Purdue University (West Lafayette)" },
 ];
 
+// Bargersville, IN coordinates
+const BARGERSVILLE_LNG = -86.1581;
+const BARGERSVILLE_LAT = 39.5534;
+
+const DEFAULT_MARKERS = [
+  { lng: BARGERSVILLE_LNG, lat: BARGERSVILLE_LAT, label: "Bargersville", isPrimary: true },
+  { lng: -86.2944, lat: 39.7684, label: "Indianapolis" },
+  { lng: -86.1336, lat: 39.7684, label: "Indianapolis Int'l Airport (IND)" },
+];
+
 export default function LocationSection({
   sectionLabel = "Access & Infrastructure",
   heading = "The center of Indiana\u2019s regional corridor network",
@@ -37,8 +55,16 @@ export default function LocationSection({
   reachItems,
   extraLine = "Active rail line with freight access",
   ctaButton = { label: "View Available Parcels", url: "/available-land" },
+  mapCenter,
+  mapZoom = 9,
 }: LocationSectionProps) {
   const resolvedReach = reachItems?.length ? reachItems : defaultReachItems;
+
+  const resolvedCenter: [number, number] = Array.isArray(mapCenter)
+    ? mapCenter
+    : mapCenter?.lng != null && mapCenter?.lat != null
+      ? [mapCenter.lng, mapCenter.lat]
+      : [BARGERSVILLE_LNG, BARGERSVILLE_LAT];
 
   return (
     <section className="relative bg-brand-primary overflow-hidden">
@@ -105,46 +131,14 @@ export default function LocationSection({
             )}
           </div>
 
-          {/* Right — Map placeholder */}
-          <div className="rounded-lg border border-white/[0.12] bg-white/[0.06] overflow-hidden flex items-center justify-center min-h-[376px]">
-            <div className="relative w-full h-full min-h-[376px] p-8 flex items-center justify-center">
-              <svg
-                className="absolute inset-0 w-full h-full"
-                preserveAspectRatio="none"
-                aria-hidden="true"
-              >
-                <line x1="50%" y1="0" x2="50%" y2="100%" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                <line x1="0" y1="50%" x2="100%" y2="50%" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                <line x1="25%" y1="0" x2="75%" y2="100%" stroke="rgba(255,191,60,0.15)" strokeWidth="1.5" />
-                <line x1="0" y1="62%" x2="100%" y2="62%" stroke="rgba(183,199,211,0.12)" strokeWidth="1" />
-              </svg>
-              <div className="relative text-center">
-                <div className="absolute -top-24 left-1/2 -translate-x-1/2">
-                  <div className="size-3 rounded-full border-2 border-brand-steel/50 mx-auto" />
-                  <span className="block mt-1 text-[10px] text-brand-steel/75">
-                    Indianapolis
-                  </span>
-                </div>
-                <div>
-                  <div className="size-4 rounded-full bg-brand-secondary/80 border-2 border-brand-secondary mx-auto" />
-                  <span className="block mt-1.5 text-[11px] text-white font-medium">
-                    Bargersville
-                  </span>
-                </div>
-                <div className="absolute -left-20 top-4">
-                  <span className="text-[9px] font-bold text-brand-secondary">I-69</span>
-                </div>
-                <div className="absolute -right-16 top-6">
-                  <span className="text-[9px] text-brand-steel">SR 144</span>
-                </div>
-                <div className="absolute -top-32 -left-24">
-                  <span className="text-[11px] text-brand-steel/40">N</span>
-                  <svg className="w-px h-3 mx-auto mt-0.5" aria-hidden="true">
-                    <line x1="0.5" y1="0" x2="0.5" y2="12" stroke="rgba(183,199,211,0.3)" strokeWidth="1" />
-                  </svg>
-                </div>
-              </div>
-            </div>
+          {/* Right — Mapbox interactive map */}
+          <div className="rounded-lg border border-white/12 overflow-hidden min-h-[376px]">
+            <MapboxMapClient
+              center={resolvedCenter}
+              zoom={mapZoom}
+              markers={DEFAULT_MARKERS}
+              className="w-full h-full min-h-[376px]"
+            />
           </div>
         </div>
       </div>

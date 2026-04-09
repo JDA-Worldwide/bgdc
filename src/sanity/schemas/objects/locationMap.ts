@@ -68,9 +68,40 @@ export default defineType({
       type: "link",
     }),
     defineField({
+      name: "mapCenter",
+      title: "Map Center",
+      type: "object",
+      description: "Longitude/latitude for the map center point. Defaults to Bargersville, IN.",
+      fields: [
+        defineField({
+          name: "lng",
+          title: "Longitude",
+          type: "number",
+          initialValue: -86.1581,
+          validation: (rule) => rule.min(-180).max(180),
+        }),
+        defineField({
+          name: "lat",
+          title: "Latitude",
+          type: "number",
+          initialValue: 39.5534,
+          validation: (rule) => rule.min(-90).max(90),
+        }),
+      ],
+    }),
+    defineField({
+      name: "mapZoom",
+      title: "Map Zoom Level",
+      type: "number",
+      description: "1 (world) – 20 (street level). Default: 9.",
+      initialValue: 9,
+      validation: (rule) => rule.min(1).max(20),
+    }),
+    defineField({
       name: "mapImage",
-      title: "Map Image",
+      title: "Map Image (Fallback)",
       type: "image",
+      description: "Static fallback image shown when Mapbox token is not configured.",
       options: { hotspot: true },
       fields: [
         defineField({
