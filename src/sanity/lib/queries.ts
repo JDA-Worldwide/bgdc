@@ -14,15 +14,15 @@ export const settingsQuery = groq`
 
 export const navigationQuery = groq`
   *[_type == "navigation"][0] {
-    ctaLabel,
-    ctaUrl,
+    "ctaLabel": coalesce(ctaLabel, ctaPage->title),
+    "ctaUrl": "/" + ctaPage->slug.current,
     items[] {
-      label,
-      url,
+      "label": coalesce(label, pageRef->title),
+      "url": select(isExternal == true => url, "/" + pageRef->slug.current),
       isExternal,
       children[] {
-        label,
-        url,
+        "label": coalesce(label, pageRef->title),
+        "url": select(isExternal == true => url, "/" + pageRef->slug.current),
         isExternal
       }
     }
