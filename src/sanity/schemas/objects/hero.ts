@@ -23,7 +23,7 @@ export default defineType({
       type: "link",
     }),
     defineField({
-      name: "backgroundImage",
+      name: "image",
       title: "Background Image",
       description: "Decorative background — no alt text required.",
       type: "image",

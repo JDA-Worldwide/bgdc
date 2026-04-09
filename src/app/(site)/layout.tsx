@@ -1,5 +1,6 @@
 import { draftMode } from "next/headers";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+import { stegaClean } from "@sanity/client/stega";
 import VisualEditingClient from "@/components/global/VisualEditingClient";
 import { navigationQuery } from "@/sanity/lib/queries";
 import Navigation from "@/components/global/Navigation";
@@ -34,7 +35,7 @@ export default async function SiteLayout({
     tags: ["navigation"],
   });
 
-  const nav = navigation as NavigationData | null;
+  const nav = stegaClean(navigation) as NavigationData | null;
 
   return (
     <>

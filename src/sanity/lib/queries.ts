@@ -59,6 +59,10 @@ export const pageBySlugQuery = groq`
     seo,
     modules[] {
       ...,
+      _type == "hero" => {
+        ...,
+        "backgroundImage": image
+      },
       _type == "teamGrid" => {
         heading,
         members[]-> {
@@ -80,6 +84,10 @@ export const homepageQuery = groq`
     seo,
     modules[] {
       ...,
+      _type == "hero" => {
+        ...,
+        "backgroundImage": image
+      },
       _type == "teamGrid" => {
         heading,
         members[]-> {
@@ -101,6 +109,10 @@ export const homepageDataQuery = groq`
     seo,
     modules[] {
       ...,
+      _type == "hero" => {
+        ...,
+        "backgroundImage": image
+      },
       _type == "teamGrid" => {
         heading,
         members[]-> {
