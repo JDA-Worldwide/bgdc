@@ -72,6 +72,7 @@ export default function HeroSection({
             sizes="100vw"
             priority
             className="object-cover"
+            decorative
           />
         ) : (
           <div className="absolute inset-0 bg-brand-navy-dark" />

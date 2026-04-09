@@ -11,6 +11,7 @@ export default function SanityImage({
   className,
   priority = false,
   fill = false,
+  decorative = false,
 }: SanityImageProps) {
   if (!image?.asset) return null;
 
@@ -23,7 +24,8 @@ export default function SanityImage({
   return (
     <Image
       src={src}
-      alt={image.alt || ""}
+      alt={decorative ? "" : (image.alt ?? "")}
+      role={decorative ? "presentation" : undefined}
       width={fill ? undefined : width}
       height={fill ? undefined : height}
       sizes={sizes}

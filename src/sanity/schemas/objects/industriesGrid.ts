@@ -35,16 +35,9 @@ export default defineType({
             defineField({
               name: "image",
               title: "Background Image",
+              description: "Decorative background — no alt text required.",
               type: "image",
               options: { hotspot: true },
-              fields: [
-                defineField({
-                  name: "alt",
-                  title: "Alt Text",
-                  type: "string",
-                  validation: (rule) => rule.required(),
-                }),
-              ],
             }),
             defineField({
               name: "link",

@@ -16,7 +16,7 @@ export interface SanityImageSource {
     left: number;
     right: number;
   };
-  alt: string;
+  alt?: string;
 }
 
 export interface SanityImageProps {
@@ -27,4 +27,6 @@ export interface SanityImageProps {
   className?: string;
   priority?: boolean;
   fill?: boolean;
+  /** Mark as decorative: renders alt="" and role="presentation" so screen readers skip it. Use for background images that convey no information. */
+  decorative?: boolean;
 }

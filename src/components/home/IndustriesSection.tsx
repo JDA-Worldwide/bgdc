@@ -57,6 +57,7 @@ export default function IndustriesSection({
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-cover"
+                      decorative
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70" />
                   </>
