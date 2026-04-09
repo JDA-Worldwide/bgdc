@@ -76,7 +76,7 @@ export default function LocationSection({
         }}
       />
 
-      <div className="relative mx-auto max-w-[var(--container-max)] px-6 py-section sm:px-10 lg:px-gutter">
+      <div className="relative mx-auto max-w-container px-6 py-section sm:px-10 lg:px-gutter">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Left content */}
           <div>
@@ -95,38 +95,41 @@ export default function LocationSection({
             )}
 
             {/* Reach items */}
-            <div className="mt-10 space-y-3">
+            <ul className="mt-10 space-y-3 list-none">
               {resolvedReach.map((item, i) => (
-                <div
+                <li
                   key={item._key || `reach-${i}`}
                   className="flex items-center gap-4"
                 >
-                  <div className="size-1.5 rounded-full bg-brand-secondary shrink-0" />
+                  <div aria-hidden="true" className="size-1.5 rounded-full bg-brand-secondary shrink-0" />
                   <div className="flex items-baseline gap-2 text-sm">
                     <span className="font-semibold text-white whitespace-nowrap">
                       {item.time}
                     </span>
                     <span className="text-white/78 font-light">{item.place}</span>
                   </div>
-                </div>
+                </li>
               ))}
               {extraLine && (
-                <div className="flex items-center gap-4">
-                  <div className="size-1.5 rounded-full bg-brand-secondary shrink-0" />
-                  <p className="text-sm text-white/78 font-light">{extraLine}</p>
-                </div>
+                <li className="flex items-center gap-4">
+                  <div aria-hidden="true" className="size-1.5 rounded-full bg-brand-secondary shrink-0" />
+                  <span className="text-sm text-white/78 font-light">{extraLine}</span>
+                </li>
               )}
-            </div>
+            </ul>
 
             {ctaButton?.url && (
               <a
                 href={ctaButton.url}
                 target={ctaButton.isExternal ? "_blank" : undefined}
                 rel={ctaButton.isExternal ? "noopener noreferrer" : undefined}
-                className="mt-10 inline-flex items-center gap-2.5 rounded-[3px] border border-white/35 px-6 py-3 text-[13px] font-medium uppercase tracking-[0.78px] text-white transition-colors hover:border-white/60 hover:bg-white/5"
-              >
-                {ctaButton.label}
-                <ArrowIcon className="size-3" />
+              className="mt-10 inline-flex items-center gap-2.5 rounded-[3px] border border-white/35 px-6 py-3 text-[13px] font-medium uppercase tracking-[0.78px] text-white transition-colors hover:border-white/60 hover:bg-white/5"
+            >
+              {ctaButton.label}
+              <ArrowIcon className="size-3" />
+              {ctaButton.isExternal && (
+                <span className="sr-only"> (opens in new tab)</span>
+              )}
               </a>
             )}
           </div>

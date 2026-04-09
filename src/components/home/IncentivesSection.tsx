@@ -106,7 +106,7 @@ export default function IncentivesSection({
 
   return (
     <section className="py-section">
-      <div className="mx-auto max-w-[var(--container-max)] px-6 sm:px-10 lg:px-gutter">
+      <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
         <div className="grid lg:grid-cols-[2fr_3fr] gap-12 lg:gap-16">
           {/* Left intro */}
           <div>

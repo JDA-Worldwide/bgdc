@@ -135,7 +135,7 @@ export default function PageBuilder({ modules }: PageBuilderProps) {
         }
 
         return (
-          <section key={module._key} className="mx-auto max-w-[var(--container-max)] py-section">
+          <section key={module._key} className="mx-auto max-w-container py-section">
             {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
             <Component {...module} />
           </section>

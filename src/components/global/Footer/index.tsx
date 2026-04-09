@@ -6,7 +6,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-brand-blue pb-10 pt-[50px]">
-      <div className="mx-auto flex max-w-[var(--container-max)] flex-col gap-[52px] px-6 sm:px-10 lg:px-gutter">
+      <div className="mx-auto flex max-w-container flex-col gap-[52px] px-6 sm:px-10 lg:px-gutter">
         {/* Top row: logo + address */}
         <div className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-start">
           <Link href="/" className="shrink-0">

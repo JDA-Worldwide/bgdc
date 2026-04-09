@@ -59,6 +59,9 @@ export default function CtaBanner({
               className="inline-block rounded-button bg-brand-blue px-5 py-[15px] text-base font-semibold leading-[21px] text-white transition-colors hover:bg-brand-navy-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 active:bg-brand-navy-dark/90"
             >
               {cta.label}
+              {cta.isExternal && (
+                <span className="sr-only"> (opens in new tab)</span>
+              )}
             </a>
           </div>
         )}

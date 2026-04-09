@@ -37,7 +37,7 @@ export default function TickerSection({
 
       {/* Partners ticker */}
       <div className="border-b border-brand-border bg-brand-surface">
-        <div className="mx-auto flex max-w-[var(--container-max)] items-center gap-6 overflow-x-auto px-6 py-6 sm:px-10 lg:px-gutter">
+        <div className="mx-auto flex max-w-container items-center gap-6 overflow-x-auto px-6 py-6 sm:px-10 lg:px-gutter">
           {label && (
             <span className="shrink-0 text-[10px] font-semibold uppercase tracking-[2px] text-brand-muted">
               {label}

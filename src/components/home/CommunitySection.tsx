@@ -70,7 +70,7 @@ export default function CommunitySection({
 
   return (
     <section ref={sectionRef} className="py-section">
-      <div className="@container mx-auto max-w-[var(--container-max)] px-6 sm:px-10 lg:px-gutter">
+      <div className="@container mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
         <div className="flex flex-col gap-10 @[68rem]:flex-row @[68rem]:gap-[65px]">
         {/* Image collage — images stack as user scrolls */}
         <div className="relative w-full max-w-[660px] shrink-0">
@@ -95,6 +95,7 @@ export default function CommunitySection({
                     />
                   ) : (
                     <div
+                      aria-hidden="true"
                       className={`h-full w-full ${
                         i % 2 === 0 ? "bg-brand-sky" : "bg-brand-limestone"
                       }`}

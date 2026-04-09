@@ -90,7 +90,7 @@ export default function StatsSection({
   return (
     <>
       <section ref={sectionRef} className="border-t-[5px] border-white bg-brand-blue py-16 md:py-section">
-        <div className="@container mx-auto max-w-[var(--container-max)] px-6 sm:px-10 lg:px-gutter">
+        <div className="@container mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
           {heading && (
             <h2 data-stats-animate className="mb-10 text-center text-2xl font-medium leading-tight text-white sm:text-3xl md:mb-[60px] md:text-[43px] md:leading-[60px]">
               {heading}

@@ -106,7 +106,7 @@ export default function DetailedStats({
       </Container>
 
       {categories && categories.length > 0 && (
-        <div className="mx-auto max-w-[var(--container-max)] px-6 sm:px-10 lg:px-gutter">
+        <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
           <div className="grid grid-cols-1 gap-px bg-brand-border sm:grid-cols-2">
             {categories.map((category, index) => (
               <CategoryCard key={category._key} category={category} index={index} />

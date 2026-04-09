@@ -27,11 +27,14 @@ export default function Hero({
 
       <div
         className={cn(
-          "relative z-10 mx-auto max-w-[var(--container-content)] px-4 py-20 text-center sm:px-6 lg:px-8",
+          "relative z-10 mx-auto max-w-content px-4 py-20 text-center sm:px-6 lg:px-8",
           backgroundImage?.asset ? "text-white" : "text-brand-text-heading"
         )}
       >
-        <h1 className="font-heading text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+        <h1 className={cn(
+            "font-heading text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl",
+            backgroundImage?.asset ? "text-white" : "text-brand-text-heading"
+          )}>
           {heading}
         </h1>
 

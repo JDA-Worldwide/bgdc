@@ -33,6 +33,19 @@ export default defineType({
       ],
     }),
     defineField({
+      name: "mapCenterAddress",
+      title: "Map Center — Location",
+      type: "string",
+      description:
+        'Address or place name for the primary pin, e.g. "Bargersville, IN". Leave blank to use the default.',
+    }),
+    defineField({
+      name: "mapCenterLabel",
+      title: "Map Center — Pin Label",
+      type: "string",
+      description: "Label shown on the primary pin popup.",
+    }),
+    defineField({
       name: "destinations",
       title: "Travel Times",
       type: "array",
@@ -49,9 +62,17 @@ export default defineType({
             }),
             defineField({
               name: "label",
-              title: "Destination",
+              title: "Destination Label",
               type: "string",
+              description: "Display name shown in the travel-times list.",
               validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "address",
+              title: "Location",
+              type: "string",
+              description:
+                'Address or place name used to plot the map marker, e.g. "Indianapolis International Airport, IN". Leave blank to omit the pin.',
             }),
           ],
           preview: {

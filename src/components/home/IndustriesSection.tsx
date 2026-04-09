@@ -31,7 +31,7 @@ export default function IndustriesSection({
 
   return (
     <section className="bg-brand-limestone py-section">
-      <div className="mx-auto max-w-[var(--container-max)] px-6 sm:px-10 lg:px-gutter">
+      <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
         <div className="mb-10 px-0 md:mb-[60px] lg:px-[109px]">
           {heading && (
             <h2 className="mb-[35px] text-3xl font-medium leading-tight text-brand-blue md:text-[43px] md:leading-[60px]">
@@ -49,7 +49,7 @@ export default function IndustriesSection({
               key={industry.name}
               className="relative flex min-h-[200px] flex-col justify-end gap-[30px] overflow-hidden p-6 sm:min-h-[325px] sm:p-10"
             >
-              <div className="absolute inset-0 -z-10">
+              <div className="absolute inset-0">
                 {industry.image?.asset ? (
                   <>
                     <SanityImage
@@ -68,10 +68,10 @@ export default function IndustriesSection({
                   </>
                 )}
               </div>
-              <h3 className="text-2xl font-medium leading-[35px] text-brand-sun md:text-[28px]">
+              <h3 className="relative z-10 text-2xl font-medium leading-[35px] text-brand-sun md:text-[28px]">
                 {industry.name}
               </h3>
-              <hr className="border-brand-sun/40" />
+              <hr aria-hidden="true" className="relative z-10 border-brand-sun/40" />
             </div>
           ))}
         </div>
@@ -85,6 +85,9 @@ export default function IndustriesSection({
               className="rounded-button bg-brand-blue px-5 py-[15px] text-base font-semibold leading-[21px] text-white transition-colors hover:bg-brand-navy-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 active:bg-brand-navy-dark/90"
             >
               {cta.label}
+              {cta.isExternal && (
+                <span className="sr-only"> (opens in new tab)</span>
+              )}
             </a>
           </div>
         )}
