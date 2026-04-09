@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -22,6 +23,8 @@ interface NavItem {
 
 interface NavigationProps {
   items?: NavItem[];
+  ctaLabel?: string;
+  ctaUrl?: string;
 }
 
 /* ---------- Fallback data ---------- */
@@ -62,7 +65,7 @@ function NavLink({
 
 /* ---------- Component ---------- */
 
-export default function Navigation({ items }: NavigationProps) {
+export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = "/get-in-touch" }: NavigationProps) {
   const resolvedItems = items?.length ? items : fallbackItems;
 
   const pathname = usePathname();
@@ -134,10 +137,13 @@ export default function Navigation({ items }: NavigationProps) {
       >
         {/* Brand / Logo */}
         <Link href="/" className="shrink-0">
-          <img
+          <Image
             src="/images/logo.svg"
             alt="Bargersville Economic Development"
-            className="h-10 w-auto sm:h-[63px]"
+            width={309}
+            height={63}
+            className="h-10 sm:h-[63px]"
+            style={{ width: "auto" }}
           />
         </Link>
 
@@ -240,10 +246,10 @@ export default function Navigation({ items }: NavigationProps) {
           </div>
 
           <Link
-            href="/contact"
+            href={ctaUrl}
             className="rounded-button bg-brand-blue px-5 py-[15px] text-base font-semibold leading-[21px] text-white transition-colors hover:bg-brand-navy-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 active:bg-brand-navy-dark/90"
           >
-            Get in Touch
+            {ctaLabel}
           </Link>
         </div>
 
@@ -362,10 +368,10 @@ export default function Navigation({ items }: NavigationProps) {
               );
             })}
             <Link
-              href="/contact"
+              href={ctaUrl}
               className="mt-4 block rounded-button bg-brand-blue px-5 py-4 text-center text-base font-semibold text-white transition-colors hover:bg-brand-navy-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 active:bg-brand-navy-dark/90"
             >
-              Get in Touch
+              {ctaLabel}
             </Link>
           </div>
         </div>

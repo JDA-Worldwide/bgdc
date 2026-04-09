@@ -16,8 +16,14 @@ const sanityClient = createClient({
 
 interface ContactBody {
   name: string;
+  firstName?: string;
+  lastName?: string;
+  company?: string;
   email: string;
+  phone?: string;
+  inquiryType?: string;
   message: string;
+  newsletterOptIn?: boolean;
   recipientEmail?: string;
   sourcePage?: string;
   turnstileToken?: string;
@@ -26,7 +32,18 @@ interface ContactBody {
 export async function POST(request: Request) {
   try {
     const body: ContactBody = await request.json();
-    const { name, email, message, recipientEmail, sourcePage, turnstileToken } = body;
+    const {
+      name,
+      company,
+      email,
+      phone,
+      inquiryType,
+      message,
+      newsletterOptIn,
+      recipientEmail,
+      sourcePage,
+      turnstileToken,
+    } = body;
 
     // Turnstile verification (required when configured)
     if (process.env.TURNSTILE_SECRET_KEY) {
@@ -90,9 +107,13 @@ export async function POST(request: Request) {
         html: `
           <h2>New Contact Form Submission</h2>
           <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+          ${company ? `<p><strong>Company / Organization:</strong> ${escapeHtml(company)}</p>` : ""}
           <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+          ${phone ? `<p><strong>Phone:</strong> ${escapeHtml(phone)}</p>` : ""}
+          ${inquiryType ? `<p><strong>Inquiry Type:</strong> ${escapeHtml(inquiryType)}</p>` : ""}
           <p><strong>Message:</strong></p>
           <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
+          ${newsletterOptIn ? `<p><strong>Newsletter Opt-In:</strong> Yes</p>` : ""}
           <hr>
           <p><small>Submitted from: ${escapeHtml(sourcePage || "Unknown")}</small></p>
         `,
@@ -105,7 +126,15 @@ export async function POST(request: Request) {
         _type: "formSubmission",
         name,
         email,
-        message,
+        message: [
+          company ? `Company: ${company}` : null,
+          phone ? `Phone: ${phone}` : null,
+          inquiryType ? `Inquiry Type: ${inquiryType}` : null,
+          message,
+          newsletterOptIn ? "Newsletter Opt-In: Yes" : null,
+        ]
+          .filter(Boolean)
+          .join("\n\n"),
         sourcePage: sourcePage || "",
         submittedAt: new Date().toISOString(),
       });

@@ -26,27 +26,46 @@ declare global {
 }
 
 interface FormState {
-  name: string;
+  firstName: string;
+  lastName: string;
+  company: string;
   email: string;
+  phone: string;
+  inquiryType: string;
   message: string;
+  newsletterOptIn: boolean;
 }
 
 interface FormErrors {
-  name?: string;
+  firstName?: string;
+  lastName?: string;
   email?: string;
   message?: string;
 }
+
+const inputClass = (error?: string) =>
+  cn(
+    "w-full rounded border px-4 py-3 text-brand-text outline-none transition-colors focus-visible:border-brand-secondary focus-visible:ring-1 focus-visible:ring-brand-secondary",
+    error ? "border-red-500" : "border-brand-border"
+  );
 
 export default function ContactForm({
   heading,
   description,
   recipientEmail,
   successMessage = "Thank you! Your message has been sent.",
+  inquiryTypes,
+  showNewsletterOptIn = false,
 }: ContactFormProps) {
   const [values, setValues] = useState<FormState>({
-    name: "",
+    firstName: "",
+    lastName: "",
+    company: "",
     email: "",
+    phone: "",
+    inquiryType: "",
     message: "",
+    newsletterOptIn: false,
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -93,7 +112,8 @@ export default function ContactForm({
 
   function validate(): FormErrors {
     const errs: FormErrors = {};
-    if (!values.name.trim()) errs.name = "Name is required";
+    if (!values.firstName.trim()) errs.firstName = "First name is required";
+    if (!values.lastName.trim()) errs.lastName = "Last name is required";
     if (!values.email.trim()) errs.email = "Email is required";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email))
       errs.email = "Please enter a valid email";
@@ -120,7 +140,15 @@ export default function ContactForm({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...values,
+          name: `${values.firstName} ${values.lastName}`,
+          firstName: values.firstName,
+          lastName: values.lastName,
+          company: values.company,
+          email: values.email,
+          phone: values.phone,
+          inquiryType: values.inquiryType,
+          message: values.message,
+          newsletterOptIn: values.newsletterOptIn,
           recipientEmail,
           turnstileToken,
           sourcePage: window.location.pathname,
@@ -133,7 +161,16 @@ export default function ContactForm({
       }
 
       setStatus("success");
-      setValues({ name: "", email: "", message: "" });
+      setValues({
+        firstName: "",
+        lastName: "",
+        company: "",
+        email: "",
+        phone: "",
+        inquiryType: "",
+        message: "",
+        newsletterOptIn: false,
+      });
       setTurnstileToken(null);
     } catch (err) {
       setStatus("error");
@@ -145,9 +182,9 @@ export default function ContactForm({
     }
   }
 
-  function handleChange(field: keyof FormState, value: string) {
+  function handleChange<K extends keyof FormState>(field: K, value: FormState[K]) {
     setValues((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
+    if (field in errors) setErrors((prev) => ({ ...prev, [field]: undefined }));
   }
 
   return (
@@ -183,52 +220,88 @@ export default function ContactForm({
             )}
 
             <div className="space-y-6">
-              <FormField
-                id="contact-name"
-                label="Name"
-                required
-                error={errors.name}
-              >
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <FormField id="contact-first-name" label="First Name" required error={errors.firstName}>
+                  <input
+                    id="contact-first-name"
+                    type="text"
+                    autoComplete="given-name"
+                    value={values.firstName}
+                    onChange={(e) => handleChange("firstName", e.target.value)}
+                    aria-invalid={!!errors.firstName}
+                    aria-describedby={errors.firstName ? "contact-first-name-error" : undefined}
+                    className={inputClass(errors.firstName)}
+                  />
+                </FormField>
+
+                <FormField id="contact-last-name" label="Last Name" required error={errors.lastName}>
+                  <input
+                    id="contact-last-name"
+                    type="text"
+                    autoComplete="family-name"
+                    value={values.lastName}
+                    onChange={(e) => handleChange("lastName", e.target.value)}
+                    aria-invalid={!!errors.lastName}
+                    aria-describedby={errors.lastName ? "contact-last-name-error" : undefined}
+                    className={inputClass(errors.lastName)}
+                  />
+                </FormField>
+              </div>
+
+              <FormField id="contact-company" label="Company / Organization">
                 <input
-                  id="contact-name"
+                  id="contact-company"
                   type="text"
-                  value={values.name}
-                  onChange={(e) => handleChange("name", e.target.value)}
-                  aria-invalid={!!errors.name}
-                  aria-describedby={errors.name ? "contact-name-error" : undefined}
-                  className={cn(
-                    "w-full rounded border px-4 py-3 text-brand-text outline-none transition-colors focus-visible:border-brand-secondary focus-visible:ring-1 focus-visible:ring-brand-secondary",
-                    errors.name ? "border-red-500" : "border-brand-border"
-                  )}
+                  autoComplete="organization"
+                  value={values.company}
+                  onChange={(e) => handleChange("company", e.target.value)}
+                  className={inputClass()}
                 />
               </FormField>
 
-              <FormField
-                id="contact-email"
-                label="Email"
-                required
-                error={errors.email}
-              >
+              <FormField id="contact-email" label="Email Address" required error={errors.email}>
                 <input
                   id="contact-email"
                   type="email"
+                  autoComplete="email"
                   value={values.email}
                   onChange={(e) => handleChange("email", e.target.value)}
                   aria-invalid={!!errors.email}
                   aria-describedby={errors.email ? "contact-email-error" : undefined}
-                  className={cn(
-                    "w-full rounded border px-4 py-3 text-brand-text outline-none transition-colors focus-visible:border-brand-secondary focus-visible:ring-1 focus-visible:ring-brand-secondary",
-                    errors.email ? "border-red-500" : "border-brand-border"
-                  )}
+                  className={inputClass(errors.email)}
                 />
               </FormField>
 
-              <FormField
-                id="contact-message"
-                label="Message"
-                required
-                error={errors.message}
-              >
+              <FormField id="contact-phone" label="Phone Number">
+                <input
+                  id="contact-phone"
+                  type="tel"
+                  autoComplete="tel"
+                  value={values.phone}
+                  onChange={(e) => handleChange("phone", e.target.value)}
+                  className={inputClass()}
+                />
+              </FormField>
+
+              {inquiryTypes && inquiryTypes.length > 0 && (
+                <FormField id="contact-inquiry" label="How can we help you?">
+                  <select
+                    id="contact-inquiry"
+                    value={values.inquiryType}
+                    onChange={(e) => handleChange("inquiryType", e.target.value)}
+                    className={inputClass()}
+                  >
+                    <option value="">Select one…</option>
+                    {inquiryTypes.map((type) => (
+                      <option key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                </FormField>
+              )}
+
+              <FormField id="contact-message" label="Tell us about your project or question" required error={errors.message}>
                 <textarea
                   id="contact-message"
                   rows={5}
@@ -236,12 +309,24 @@ export default function ContactForm({
                   onChange={(e) => handleChange("message", e.target.value)}
                   aria-invalid={!!errors.message}
                   aria-describedby={errors.message ? "contact-message-error" : undefined}
-                  className={cn(
-                    "w-full resize-y rounded border px-4 py-3 text-brand-text outline-none transition-colors focus-visible:border-brand-secondary focus-visible:ring-1 focus-visible:ring-brand-secondary",
-                    errors.message ? "border-red-500" : "border-brand-border"
-                  )}
+                  className={cn(inputClass(errors.message), "resize-y")}
                 />
               </FormField>
+
+              {showNewsletterOptIn && (
+                <div className="flex items-start gap-3">
+                  <input
+                    id="contact-newsletter"
+                    type="checkbox"
+                    checked={values.newsletterOptIn}
+                    onChange={(e) => handleChange("newsletterOptIn", e.target.checked)}
+                    className="mt-1 h-4 w-4 rounded border-brand-border text-brand-secondary focus:ring-brand-secondary"
+                  />
+                  <label htmlFor="contact-newsletter" className="text-sm text-brand-muted">
+                    I&apos;d like to receive updates from Bargersville Economic Development
+                  </label>
+                </div>
+              )}
 
               {siteKey && (
                 <div ref={turnstileRef} className="flex justify-center" />
@@ -254,7 +339,7 @@ export default function ContactForm({
                 aria-disabled={status === "submitting"}
                 className="w-full"
               >
-                {status === "submitting" ? "Sending..." : "Send Message"}
+                {status === "submitting" ? "Sending…" : "Send Message"}
               </Button>
             </div>
           </form>

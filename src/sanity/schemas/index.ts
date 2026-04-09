@@ -41,6 +41,15 @@ import mapSection from "./objects/mapSection";
 import industriesGrid from "./objects/industriesGrid";
 import momentumSection from "./objects/momentumSection";
 
+// Inner page modules
+import contactInfo from "./objects/contactInfo";
+import detailedStats from "./objects/detailedStats";
+import projectShowcase from "./objects/projectShowcase";
+import developmentAreaShowcase from "./objects/developmentAreaShowcase";
+import incentiveCards from "./objects/incentiveCards";
+import tifSection from "./objects/tifSection";
+import resourceHub from "./objects/resourceHub";
+
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Documents
   globalSettings,
@@ -82,4 +91,13 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   mapSection,
   industriesGrid,
   momentumSection,
+
+  // Inner page modules
+  contactInfo,
+  detailedStats,
+  projectShowcase,
+  developmentAreaShowcase,
+  incentiveCards,
+  tifSection,
+  resourceHub,
 ];

@@ -6,6 +6,12 @@ export default defineType({
   type: "object",
   fields: [
     defineField({
+      name: "heading",
+      title: "Section Heading",
+      type: "string",
+      description: "Optional heading displayed above the body text",
+    }),
+    defineField({
       name: "body",
       title: "Body",
       type: "array",
@@ -52,9 +58,9 @@ export default defineType({
     }),
   ],
   preview: {
-    select: { body: "body" },
-    prepare({ body }) {
-      const text = body?.[0]?.children?.[0]?.text ?? "Text Block";
+    select: { heading: "heading", body: "body" },
+    prepare({ heading, body }) {
+      const text = heading ?? body?.[0]?.children?.[0]?.text ?? "Text Block";
       return { title: text };
     },
   },

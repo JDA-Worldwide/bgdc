@@ -6,6 +6,21 @@ export default defineType({
   type: "document",
   fields: [
     defineField({
+      name: "ctaLabel",
+      title: "CTA Button Label",
+      description: "Optional — defaults to the linked page title if left blank.",
+      type: "string",
+    }),
+    defineField({
+      name: "ctaPage",
+      title: "CTA Button Page",
+      description: "The page the CTA button links to.",
+      type: "reference",
+      to: [{ type: "page" }],
+      weak: true,
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: "items",
       title: "Navigation Items",
       type: "array",
@@ -16,14 +31,22 @@ export default defineType({
             defineField({
               name: "label",
               title: "Label",
+              description: "Optional — defaults to the linked page title if left blank.",
               type: "string",
-              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "pageRef",
+              title: "Page",
+              description: "Link to an internal page. Leave blank for external URLs.",
+              type: "reference",
+              to: [{ type: "page" }],
+              weak: true,
             }),
             defineField({
               name: "url",
-              title: "URL",
+              title: "External URL",
+              description: "Only used when linking to an external site.",
               type: "string",
-              validation: (rule) => rule.required(),
             }),
             defineField({
               name: "isExternal",
@@ -38,8 +61,26 @@ export default defineType({
               of: [{ type: "link" }],
             }),
           ],
+          validation: (rule) =>
+            rule.custom((value: { pageRef?: unknown; url?: string } | undefined) => {
+              if (!value) return true;
+              if (!value.pageRef && !value.url) {
+                return "Either a page reference or an external URL is required.";
+              }
+              return true;
+            }),
           preview: {
-            select: { title: "label", subtitle: "url" },
+            select: {
+              label: "label",
+              pageTitle: "pageRef.title",
+              url: "url",
+            },
+            prepare({ label, pageTitle, url }) {
+              return {
+                title: label || pageTitle || url || "Untitled",
+                subtitle: pageTitle ? `→ ${pageTitle}` : url,
+              };
+            },
           },
         }),
       ],

@@ -3,30 +3,17 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { homepageDataQuery, settingsQuery } from "@/sanity/lib/queries";
 import { buildMetadata } from "@/lib/metadata";
 import { JsonLd, webPageSchema } from "@/lib/jsonLd";
-import HeroSection from "@/components/home/HeroSection";
-import StatsSection from "@/components/home/StatsSection";
-import CommunitySection from "@/components/home/CommunitySection";
-import ValuePropsSection from "@/components/home/ValuePropsSection";
-import MapSection from "@/components/home/MapSection";
-import IndustriesSection from "@/components/home/IndustriesSection";
-import MomentumSection from "@/components/home/MomentumSection";
-import CtaBanner from "@/components/home/CtaBanner";
+import PageBuilder from "@/components/PageBuilder";
 
 interface HomepageData {
   title?: string;
+  slug?: string;
   seo?: {
     metaTitle?: string;
     metaDescription?: string;
     ogImage?: { asset: { _ref: string } };
   };
-  hero?: Record<string, unknown>;
-  stats?: Record<string, unknown>;
-  community?: Record<string, unknown>;
-  valueProps?: Record<string, unknown>;
-  map?: Record<string, unknown>;
-  industries?: Record<string, unknown>;
-  momentum?: Record<string, unknown>;
-  ctaBanner?: Record<string, unknown>;
+  modules?: Array<{ _type: string; _key: string; [key: string]: unknown }>;
 }
 
 interface GlobalSettings {
@@ -86,14 +73,7 @@ export default async function HomePage() {
       <h1 className="sr-only">
         Bargersville Economic Development — Cultivating Long-Term Success
       </h1>
-      <HeroSection {...(data.hero as Record<string, never>)} />
-      <StatsSection {...(data.stats as Record<string, never>)} />
-      <CommunitySection {...(data.community as Record<string, never>)} />
-      <ValuePropsSection {...(data.valueProps as Record<string, never>)} />
-      <MapSection {...(data.map as Record<string, never>)} />
-      <IndustriesSection {...(data.industries as Record<string, never>)} />
-      <MomentumSection {...(data.momentum as Record<string, never>)} />
-      <CtaBanner {...(data.ctaBanner as Record<string, never>)} />
+      <PageBuilder modules={data.modules} />
     </>
   );
 }

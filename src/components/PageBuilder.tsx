@@ -11,6 +11,13 @@ import Testimonials from "./modules/Testimonials";
 import FAQ from "./modules/FAQ";
 import TeamGrid from "./modules/TeamGrid";
 import ContactForm from "./modules/ContactForm";
+import ContactInfo from "./modules/ContactInfo";
+import DetailedStats from "./modules/DetailedStats";
+import ProjectShowcase from "./modules/ProjectShowcase";
+import DevelopmentAreaShowcase from "./modules/DevelopmentAreaShowcase";
+import IncentiveCards from "./modules/IncentiveCards";
+import TIFSection from "./modules/TIFSection";
+import ResourceHub from "./modules/ResourceHub";
 import HeroSection from "./home/HeroSection";
 import TickerSection from "./home/TickerSection";
 import WhySection from "./home/WhySection";
@@ -19,6 +26,11 @@ import GrowthSection from "./home/GrowthSection";
 import IncentivesSection from "./home/IncentivesSection";
 import CtaBanner from "./home/CtaBanner";
 import StatsSection from "./home/StatsSection";
+import CommunitySection from "./home/CommunitySection";
+import ValuePropsSection from "./home/ValuePropsSection";
+import MapSection from "./home/MapSection";
+import IndustriesSection from "./home/IndustriesSection";
+import MomentumSection from "./home/MomentumSection";
 import { JsonLd, faqPageSchema } from "@/lib/jsonLd";
 import { toPlainText, type PortableTextBlock } from "@portabletext/react";
 
@@ -50,6 +62,13 @@ const moduleMap: Record<string, ComponentType<any>> = {
   faq: FAQ,
   teamGrid: TeamGrid,
   contactForm: ContactForm,
+  contactInfo: ContactInfo,
+  detailedStats: DetailedStats,
+  projectShowcase: ProjectShowcase,
+  developmentAreaShowcase: DevelopmentAreaShowcase,
+  incentiveCards: IncentiveCards,
+  tifSection: TIFSection,
+  resourceHub: ResourceHub,
   homepageHero: HeroSection,
   partnersTicker: TickerSection,
   whyPillars: WhySection,
@@ -58,6 +77,11 @@ const moduleMap: Record<string, ComponentType<any>> = {
   incentivesGrid: IncentivesSection,
   ctaBanner: CtaBanner,
   statsBar: StatsSection,
+  communitySection: CommunitySection,
+  valueProps: ValuePropsSection,
+  mapSection: MapSection,
+  industriesGrid: IndustriesSection,
+  momentumSection: MomentumSection,
 };
 
 const fullBleedModules = new Set([
@@ -68,6 +92,11 @@ const fullBleedModules = new Set([
   "locationMap",
   "ctaBanner",
   "statsBar",
+  "communitySection",
+  "valueProps",
+  "mapSection",
+  "industriesGrid",
+  "momentumSection",
 ]);
 
 function buildFaqJsonLd(module: FAQModule) {

@@ -5,4 +5,6 @@ export interface ContactFormProps {
   description?: string;
   recipientEmail: string;
   successMessage?: string;
+  inquiryTypes?: string[];
+  showNewsletterOptIn?: boolean;
 }

@@ -19,6 +19,7 @@ export default function Hero({
             priority
             sizes="100vw"
             className="h-full w-full"
+            decorative
           />
           <div className="absolute inset-0 bg-brand-primary/60" />
         </div>

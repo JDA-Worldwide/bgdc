@@ -29,6 +29,7 @@ export default function CtaBanner({
             fill
             sizes="100vw"
             className="object-cover"
+            decorative
           />
         ) : (
           <div className="absolute inset-0 bg-brand-surface" />

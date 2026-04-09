@@ -42,13 +42,22 @@ export const locations = {
   globalSettings: defineLocations({
     message: "This document is used on all pages",
     tone: "caution",
+    resolve: () => ({
+      locations: [{ title: "Home", href: "/" }],
+    }),
   }),
   navigation: defineLocations({
     message: "This document is used on all pages",
     tone: "caution",
+    resolve: () => ({
+      locations: [{ title: "Home", href: "/" }],
+    }),
   }),
   footer: defineLocations({
     message: "This document is used on all pages",
     tone: "caution",
+    resolve: () => ({
+      locations: [{ title: "Home", href: "/" }],
+    }),
   }),
 };

@@ -31,5 +31,14 @@ export default defineType({
     defineArrayMember({ type: "mapSection" }),
     defineArrayMember({ type: "industriesGrid" }),
     defineArrayMember({ type: "momentumSection" }),
+
+    // Inner page modules
+    defineArrayMember({ type: "contactInfo" }),
+    defineArrayMember({ type: "detailedStats" }),
+    defineArrayMember({ type: "projectShowcase" }),
+    defineArrayMember({ type: "developmentAreaShowcase" }),
+    defineArrayMember({ type: "incentiveCards" }),
+    defineArrayMember({ type: "tifSection" }),
+    defineArrayMember({ type: "resourceHub" }),
   ],
 });
