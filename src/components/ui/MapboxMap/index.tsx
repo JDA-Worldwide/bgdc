@@ -28,7 +28,7 @@ interface MapboxMapProps {
 function getBrandStyle(): Record<string, unknown> {
   return {
     version: 8,
-    glyphs: "mapbox://fonts/mapbox/{fontstack}/{range}",
+    glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
     sources: {
       osm: {
         type: "raster",
@@ -130,7 +130,7 @@ function getBrandStyle(): Record<string, unknown> {
         minzoom: 12,
         layout: {
           "text-field": ["get", "name"],
-          "text-font": ["DIN Offc Pro Regular", "Arial Unicode MS Regular"],
+          "text-font": ["Open Sans Regular", "Noto Sans Regular"],
           "text-size": 10,
           "symbol-placement": "line",
         },
@@ -148,7 +148,7 @@ function getBrandStyle(): Record<string, unknown> {
         "source-layer": "place_label",
         layout: {
           "text-field": ["get", "name"],
-          "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Regular"],
+          "text-font": ["Open Sans Regular"],
           "text-size": ["interpolate", ["linear"], ["zoom"], 8, 10, 14, 14],
         },
         paint: {
@@ -175,94 +175,138 @@ export default function MapboxMap({
     if (!token || !containerRef.current || mapRef.current) return;
 
     let map: unknown;
+    let cancelled = false;
 
-    import("mapbox-gl").then((mapboxgl) => {
-      import("mapbox-gl/dist/mapbox-gl.css");
-
-      if (!containerRef.current) return;
-
-      mapboxgl.default.accessToken = token;
-
-      const m = new mapboxgl.default.Map({
-        container: containerRef.current,
-        style: getBrandStyle() as mapboxgl.default.StyleSpecification,
-        center,
-        zoom,
-        attributionControl: false,
-        logoPosition: "bottom-right",
-        scrollZoom: false,
+    /** Ensure mapbox-gl.css is loaded before creating the map so the
+     *  library's built-in CSS check doesn't fire a warning. */
+    function ensureCSS(): Promise<void> {
+      if (document.querySelector('link[href*="mapbox-gl"]')) {
+        return Promise.resolve();
+      }
+      return new Promise((resolve) => {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href =
+          "https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.css";
+        link.onload = () => resolve();
+        link.onerror = () => resolve(); // proceed even if CDN fails
+        document.head.appendChild(link);
       });
+    }
 
-      m.addControl(
-        new mapboxgl.default.AttributionControl({ compact: true }),
-        "bottom-left"
-      );
+    /** Verify the token is accepted before handing it to mapbox-gl,
+     *  which would spam console.error on every retry. */
+    async function validateToken(): Promise<boolean> {
+      try {
+        const res = await fetch(
+          `https://api.mapbox.com/v4/mapbox.mapbox-streets-v8.json?secure&access_token=${token}`,
+        );
+        return res.ok;
+      } catch {
+        return false;
+      }
+    }
 
-      m.addControl(
-        new mapboxgl.default.NavigationControl({ showCompass: false }),
-        "top-right"
-      );
+    Promise.all([import("mapbox-gl"), ensureCSS(), validateToken()]).then(
+      ([mapboxgl, , tokenValid]) => {
+        if (cancelled || !containerRef.current) return;
 
-      m.on("load", () => {
-        markers.forEach((marker) => {
-          const el = document.createElement("div");
-          el.className = "mapbox-marker";
-          el.setAttribute("role", "img");
-          el.setAttribute(
-            "aria-label",
-            marker.label
-              ? `Map marker: ${marker.label}`
-              : marker.isPrimary
-                ? "Primary location marker"
-                : "Location marker"
+        if (!tokenValid) {
+          console.warn(
+            "Mapbox token is invalid or expired — map will not load. " +
+              "Update NEXT_PUBLIC_MAPBOX_TOKEN in .env.local.",
           );
+          return;
+        }
 
-          if (marker.isPrimary) {
-            el.style.cssText = `
-              width: 18px;
-              height: 18px;
-              border-radius: 50%;
-              background: #FFBF3C;
-              border: 3px solid #FFBF3C;
-              box-shadow: 0 0 0 4px rgba(255,191,60,0.25), 0 2px 8px rgba(0,0,0,0.4);
-              cursor: pointer;
-            `;
-          } else {
-            el.style.cssText = `
-              width: 10px;
-              height: 10px;
-              border-radius: 50%;
-              background: #B7C7D3;
-              border: 2px solid rgba(183,199,211,0.5);
-              box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-              cursor: pointer;
-            `;
-          }
+        mapboxgl.default.accessToken = token;
 
-          const mkr = new mapboxgl.default.Marker({ element: el })
-            .setLngLat([marker.lng, marker.lat]);
-
-          if (marker.label) {
-            mkr.setPopup(
-              new mapboxgl.default.Popup({
-                offset: 16,
-                closeButton: false,
-                className: "mapbox-brand-popup",
-              }).setHTML(
-                `<span style="font-family:Montserrat,sans-serif;font-size:12px;font-weight:600;color:#003B71;">${marker.label}</span>`
-              )
-            );
-          }
-
-          mkr.addTo(m);
+        const m = new mapboxgl.default.Map({
+          container: containerRef.current,
+          style: getBrandStyle() as mapboxgl.default.StyleSpecification,
+          center,
+          zoom,
+          attributionControl: false,
+          logoPosition: "bottom-right",
+          scrollZoom: false,
         });
-      });
 
-      map = m;
-      mapRef.current = m;
+        m.addControl(
+          new mapboxgl.default.AttributionControl({ compact: true }),
+          "bottom-left",
+        );
+
+        m.addControl(
+          new mapboxgl.default.NavigationControl({ showCompass: false }),
+          "top-right",
+        );
+
+        m.on("load", () => {
+          markers.forEach((marker) => {
+            const el = document.createElement("div");
+            el.className = "mapbox-marker";
+            el.setAttribute("role", "img");
+            el.setAttribute(
+              "aria-label",
+              marker.label
+                ? `Map marker: ${marker.label}`
+                : marker.isPrimary
+                  ? "Primary location marker"
+                  : "Location marker",
+            );
+
+            if (marker.isPrimary) {
+              el.style.cssText = `
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background: #FFBF3C;
+                border: 3px solid #FFBF3C;
+                box-shadow: 0 0 0 4px rgba(255,191,60,0.25), 0 2px 8px rgba(0,0,0,0.4);
+                cursor: pointer;
+              `;
+            } else {
+              el.style.cssText = `
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: #B7C7D3;
+                border: 2px solid rgba(183,199,211,0.5);
+                box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+                cursor: pointer;
+              `;
+            }
+
+            const mkr = new mapboxgl.default.Marker({ element: el }).setLngLat([
+              marker.lng,
+              marker.lat,
+            ]);
+
+            if (marker.label) {
+              mkr.setPopup(
+                new mapboxgl.default.Popup({
+                  offset: 16,
+                  closeButton: false,
+                  className: "mapbox-brand-popup",
+                }).setHTML(
+                  `<span style="font-family:Montserrat,sans-serif;font-size:12px;font-weight:600;color:#003B71;">${marker.label}</span>`,
+                ),
+              );
+            }
+
+            mkr.addTo(m);
+          });
+        });
+
+        map = m;
+        mapRef.current = m;
+      },
+    ).catch((err) => {
+      console.warn("Mapbox GL failed to load:", err);
     });
 
     return () => {
+      cancelled = true;
       if (map && typeof (map as { remove: () => void }).remove === "function") {
         (map as { remove: () => void }).remove();
       }

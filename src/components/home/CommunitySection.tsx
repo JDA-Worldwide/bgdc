@@ -13,15 +13,34 @@ interface CommunitySectionProps {
   images?: SanityImageSource[];
 }
 
-const rotations = ["-1.5deg", "-1.7deg", "2.8deg", "-2.9deg"];
-
 const NAV_OFFSET = 32;
 
-const imagePositions = [
-  { col: "1", row: "1", align: "start", size: "lg" },
-  { col: "2", row: "1", align: "end", size: "sm" },
-  { col: "1", row: "2", align: "start", size: "lg" },
-  { col: "2", row: "2", align: "end", size: "sm" },
+/**
+ * Each image is absolutely positioned within the collage container
+ * to create an overlapping, cascading layout per the design.
+ * Coordinates are percentages of the container.
+ */
+const imageLayout = [
+  {
+    // Top-left — large aerial photo
+    style: { top: "0%", left: "0%", width: "58%", rotate: "-1.5deg" },
+    aspect: "aspect-[4/3.5]",
+  },
+  {
+    // Top-right — smaller, offset down, overlaps image 1
+    style: { top: "12%", left: "48%", width: "52%", rotate: "2.8deg" },
+    aspect: "aspect-[4/3]",
+  },
+  {
+    // Middle-left — large, overlaps above images
+    style: { top: "42%", left: "-2%", width: "60%", rotate: "-2.9deg" },
+    aspect: "aspect-[4/3.2]",
+  },
+  {
+    // Bottom-center — overlaps image 3
+    style: { top: "62%", left: "22%", width: "55%", rotate: "1.8deg" },
+    aspect: "aspect-[4/3]",
+  },
 ] as const;
 
 export default function CommunitySection({
@@ -43,10 +62,8 @@ export default function CommunitySection({
     const cards = el.querySelectorAll<HTMLElement>("[data-community-card]");
     if (!cards.length) return;
 
-    // Each card starts hidden and stacked, then reveals sequentially
-    cards.forEach((card, i) => {
-      if (i === 0) return; // First card is already visible
-
+    // Each card starts hidden, then fades in sequentially on scroll
+    cards.forEach((card) => {
       gsap.set(card, { opacity: 0, y: 60, scale: 0.95 });
 
       gsap.to(card, {
@@ -72,35 +89,42 @@ export default function CommunitySection({
     <section ref={sectionRef} className="py-section">
       <div className="@container mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
         <div className="flex flex-col gap-10 @[68rem]:flex-row @[68rem]:gap-[65px]">
-        {/* Image collage — images stack as user scrolls */}
+        {/* Image collage — overlapping, cascading layout */}
         <div className="relative w-full max-w-[660px] shrink-0">
-          <div className="grid grid-cols-2 gap-4">
+          {/* Padding-bottom sets the aspect ratio of the collage container */}
+          <div className="relative" style={{ paddingBottom: "130%" }}>
             {resolvedImages.slice(0, 4).map((img, i) => {
-              const pos = imagePositions[i];
+              const layout = imageLayout[i];
               return (
                 <div
                   key={i}
                   data-community-card
-                  className={`aspect-square overflow-hidden ${
-                    pos.align === "end" ? (i === 1 ? "mt-16" : "mt-10") : ""
-                  } ${pos.size === "sm" ? "w-[85%] justify-self-end" : ""}`}
-                  style={{ rotate: rotations[i] }}
+                  className="absolute overflow-hidden"
+                  style={{
+                    top: layout.style.top,
+                    left: layout.style.left,
+                    width: layout.style.width,
+                    rotate: layout.style.rotate,
+                    zIndex: i,
+                  }}
                 >
-                  {img?.asset ? (
-                    <SanityImage
-                      image={img}
-                      width={444}
-                      height={444}
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <div
-                      aria-hidden="true"
-                      className={`h-full w-full ${
-                        i % 2 === 0 ? "bg-brand-sky" : "bg-brand-limestone"
-                      }`}
-                    />
-                  )}
+                  <div className={layout.aspect}>
+                    {img?.asset ? (
+                      <SanityImage
+                        image={img}
+                        width={444}
+                        height={444}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div
+                        aria-hidden="true"
+                        className={`h-full w-full ${
+                          i % 2 === 0 ? "bg-brand-sky" : "bg-brand-limestone"
+                        }`}
+                      />
+                    )}
+                  </div>
                 </div>
               );
             })}
