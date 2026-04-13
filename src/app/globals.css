@@ -93,3 +93,17 @@
  *  Numbers:   60px / 55px  Montserrat Bold (700)
  *  CTA:       16px / 28px  Montserrat SemiBold (600)
  */
+
+/* Pre-hide hero elements to prevent FOUC before GSAP fires */
+[data-hero-animate] {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* Restore visibility for no-JS environments */
+@media (scripting: none) {
+  [data-hero-animate] {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -71,18 +71,37 @@ export default function MomentumSection({
           )}
         </div>
 
-        <div className="mx-auto grid grid-cols-1 gap-10 px-0 sm:grid-cols-2 lg:grid-cols-3 lg:px-[111px]">
-          {resolvedProjects.map((project) => (
-            <div data-momentum-animate key={project.title} className="flex flex-col gap-[30px] bg-white p-10">
-              <h3 className="text-[23px] font-medium leading-[30px] text-brand-blue">
-                {project.title}
-              </h3>
-              <hr className="border-brand-sky" />
-              <p className="text-base leading-7 text-brand-blue">
-                {project.description}
-              </p>
-            </div>
-          ))}
+        <div className="mx-auto grid grid-cols-1 gap-10 px-0 sm:grid-cols-2 lg:px-[111px]">
+          {resolvedProjects.map((project, i) => {
+            // Determine col-span for this card based on total count
+            const count = resolvedProjects.length;
+            let spanFull = false;
+
+            if (count === 1) {
+              // Single card always spans both columns
+              spanFull = true;
+            } else if (count % 3 === 0) {
+              // Groups of 3: every 3rd card (index 2, 5, 8…) spans full width
+              spanFull = (i + 1) % 3 === 0;
+            }
+            // count % 2 === 0 (or other): plain 2-col, no spanning
+
+            return (
+              <div
+                data-momentum-animate
+                key={project.title}
+                className={`flex flex-col gap-[30px] bg-white p-10${spanFull ? " sm:col-span-2" : ""}`}
+              >
+                <h3 className="text-[23px] font-medium leading-[30px] text-brand-blue">
+                  {project.title}
+                </h3>
+                <hr className="border-brand-sky" />
+                <p className="text-base leading-7 text-brand-blue">
+                  {project.description}
+                </p>
+              </div>
+            );
+          })}
         </div>
 
         {cta?.url && (
