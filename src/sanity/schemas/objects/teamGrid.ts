@@ -1,4 +1,5 @@
 import { defineType, defineField } from "sanity";
+import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "teamGrid",
@@ -22,6 +23,7 @@ export default defineType({
       ],
       validation: (rule) => rule.min(1),
     }),
+    colorSchemeField,
   ],
   preview: {
     select: { title: "heading", members: "members" },

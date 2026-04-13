@@ -27,7 +27,7 @@ export default async function BlogListingPage() {
   const typedPosts = (posts as BlogPostPreview[] | null) ?? [];
 
   return (
-    <section className="mx-auto max-w-[var(--container-content)] px-4 py-section">
+    <section className="mx-auto max-w-content px-4 py-section">
       <h1 className="mb-12 font-heading text-4xl font-bold">Blog</h1>
       {typedPosts.length === 0 ? (
         <p className="text-brand-muted">No posts yet.</p>

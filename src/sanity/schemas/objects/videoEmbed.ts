@@ -1,4 +1,5 @@
 import { defineType, defineField } from "sanity";
+import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "videoEmbed",
@@ -27,6 +28,7 @@ export default defineType({
         }),
       ],
     }),
+    colorSchemeField,
   ],
   preview: {
     select: { url: "url" },

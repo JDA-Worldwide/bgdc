@@ -86,7 +86,7 @@ export default function HeroSection({
         </p>
       )}
 
-      <div className="mt-10 flex max-w-[var(--container-max)] flex-col gap-8 text-center text-white md:mt-[60px] md:gap-[54px]">
+      <div className="mt-10 flex max-w-container flex-col gap-8 text-center text-white md:mt-[60px] md:gap-[54px]">
         {heading && (
           <h1 data-hero-animate className="text-3xl font-medium text-white sm:text-5xl md:text-[70px] md:leading-[1.15]">
             {heading}
@@ -113,6 +113,9 @@ export default function HeroSection({
               )}
             >
               {cta.label}
+              {cta.isExternal && (
+                <span className="sr-only"> (opens in new tab)</span>
+              )}
             </a>
           ))}
         </div>

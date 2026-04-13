@@ -1,4 +1,5 @@
 import { defineType, defineField } from "sanity";
+import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "contactForm",
@@ -42,6 +43,7 @@ export default defineType({
       type: "boolean",
       initialValue: false,
     }),
+    colorSchemeField,
   ],
   preview: {
     select: { title: "heading" },

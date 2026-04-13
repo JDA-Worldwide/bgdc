@@ -4,23 +4,42 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import Container from "@/components/ui/Container";
 import PortableText from "@/components/ui/PortableText";
+import { useGsap } from "@/hooks/useGsap";
+import { gsap } from "@/lib/gsap";
 import type { FAQProps, FAQItem } from "./types";
 
 export default function FAQ({ heading, items }: FAQProps) {
+  const ref = useGsap<HTMLDivElement>((el) => {
+    gsap.fromTo(
+      el.querySelectorAll("[data-faq-animate]"),
+      { opacity: 0, y: 20 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.45,
+        ease: "power2.out",
+        stagger: 0.07,
+        scrollTrigger: { trigger: el, start: "top 85%" },
+      }
+    );
+  });
+
   if (!items?.length) return null;
 
   return (
     <Container>
-      <div className="mx-auto max-w-3xl">
+      <div ref={ref} className="mx-auto max-w-3xl">
         {heading && (
-          <h2 className="mb-10 text-center font-heading text-3xl font-bold sm:text-4xl">
+          <h2 data-faq-animate className="mb-10 text-center font-heading text-3xl font-bold sm:text-4xl">
             {heading}
           </h2>
         )}
 
         <dl className="divide-y divide-brand-border">
           {items.map((item) => (
-            <AccordionItem key={item._key} item={item} />
+            <div key={item._key} data-faq-animate>
+              <AccordionItem item={item} />
+            </div>
           ))}
         </dl>
       </div>

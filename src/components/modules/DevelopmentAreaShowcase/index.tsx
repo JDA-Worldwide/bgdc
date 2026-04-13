@@ -2,6 +2,7 @@ import Container from "@/components/ui/Container";
 import PortableText from "@/components/ui/PortableText";
 import SanityImage from "@/components/ui/SanityImage";
 import Button from "@/components/ui/Button";
+import AnimateIn from "@/components/ui/AnimateIn";
 import type { DevelopmentAreaShowcaseProps, DevelopmentArea } from "./types";
 
 function MapPlaceholder() {
@@ -132,7 +133,9 @@ export default function DevelopmentAreaShowcase({
       {areas && areas.length > 0 && (
         <div className="space-y-16">
           {areas.map((area, index) => (
-            <AreaSection key={area._key} area={area} index={index} />
+            <AnimateIn key={area._key} delay={index * 0.05}>
+              <AreaSection area={area} index={index} />
+            </AnimateIn>
           ))}
         </div>
       )}

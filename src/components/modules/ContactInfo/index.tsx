@@ -1,4 +1,5 @@
 import Container from "@/components/ui/Container";
+import AnimateIn from "@/components/ui/AnimateIn";
 import type { ContactInfoProps } from "./types";
 
 function PhoneIcon() {
@@ -95,7 +96,7 @@ export default function ContactInfo({
 
   return (
     <Container>
-      <div className="lg:grid lg:grid-cols-2 lg:gap-16">
+      <AnimateIn className="lg:grid lg:grid-cols-2 lg:gap-16">
         <div>
           {heading && (
             <h2 className="mb-4 font-heading text-2xl font-medium text-brand-text-heading sm:text-3xl md:text-[43px] md:leading-[60px]">
@@ -229,7 +230,7 @@ export default function ContactInfo({
             </div>
           )}
         </div>
-      </div>
+      </AnimateIn>
     </Container>
   );
 }

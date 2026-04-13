@@ -13,7 +13,7 @@ export default function Container({
 }: ContainerProps) {
   return (
     <Component
-      className={cn("mx-auto max-w-[var(--container-content)] px-4 sm:px-6 lg:px-8", className)}
+      className={cn("mx-auto max-w-content px-4 sm:px-6 lg:px-8", className)}
     >
       {children}
     </Component>

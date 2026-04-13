@@ -1,4 +1,5 @@
 import { defineType, defineField } from "sanity";
+import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "detailedStats",
@@ -71,6 +72,7 @@ export default defineType({
         },
       ],
     }),
+    colorSchemeField,
   ],
   preview: {
     select: { heading: "heading" },

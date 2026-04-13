@@ -1,14 +1,7 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import MapboxMap from "./index";
 import type { MapMarker } from "./index";
-
-const MapboxMap = dynamic(() => import("./index"), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-full min-h-[376px] animate-pulse bg-white/4 rounded-lg" />
-  ),
-});
 
 interface MapboxMapClientProps {
   center?: [number, number];

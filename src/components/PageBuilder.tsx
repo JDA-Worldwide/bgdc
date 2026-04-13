@@ -37,6 +37,7 @@ import { toPlainText, type PortableTextBlock } from "@portabletext/react";
 interface Module {
   _type: string;
   _key: string;
+  colorScheme?: "light" | "dark";
   [key: string]: unknown;
 }
 
@@ -97,6 +98,9 @@ const fullBleedModules = new Set([
   "mapSection",
   "industriesGrid",
   "momentumSection",
+  "whyPillars",
+  "projectsGrid",
+  "incentivesGrid",
 ]);
 
 function buildFaqJsonLd(module: FAQModule) {
@@ -134,8 +138,21 @@ export default function PageBuilder({ modules }: PageBuilderProps) {
           );
         }
 
+        const isDark = module.colorScheme === "dark";
+
+        if (isDark) {
+          return (
+            <div key={module._key} className="scheme-dark">
+              <section className="mx-auto max-w-container py-section">
+                {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
+                <Component {...module} />
+              </section>
+            </div>
+          );
+        }
+
         return (
-          <section key={module._key} className="mx-auto max-w-[var(--container-max)] py-section">
+          <section key={module._key} className="mx-auto max-w-container py-section">
             {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
             <Component {...module} />
           </section>

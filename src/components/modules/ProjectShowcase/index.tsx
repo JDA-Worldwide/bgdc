@@ -2,6 +2,7 @@ import Container from "@/components/ui/Container";
 import PortableText from "@/components/ui/PortableText";
 import SanityImage from "@/components/ui/SanityImage";
 import Button from "@/components/ui/Button";
+import AnimateIn from "@/components/ui/AnimateIn";
 import type { ProjectShowcaseProps, Project } from "./types";
 
 const statusColors: Record<string, string> = {
@@ -155,8 +156,10 @@ export default function ProjectShowcase({
 
       {projects && projects.length > 0 && (
         <div className="space-y-8">
-          {projects.map((project) => (
-            <ProjectCard key={project._key} project={project} />
+          {projects.map((project, i) => (
+            <AnimateIn key={project._key} delay={i * 0.05}>
+              <ProjectCard project={project} />
+            </AnimateIn>
           ))}
         </div>
       )}

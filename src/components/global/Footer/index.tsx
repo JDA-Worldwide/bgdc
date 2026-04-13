@@ -6,7 +6,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-brand-blue pb-10 pt-[50px]">
-      <div className="mx-auto flex max-w-[var(--container-max)] flex-col gap-[52px] px-6 sm:px-10 lg:px-gutter">
+      <div className="mx-auto flex max-w-container flex-col gap-[52px] px-6 sm:px-10 lg:px-gutter">
         {/* Top row: logo + address */}
         <div className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-start">
           <Link href="/" className="shrink-0">
@@ -33,7 +33,7 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-[25px]">
             <a
-              href="https://facebook.com"
+              href="https://facebook.com/bargersvilletown"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
@@ -44,7 +44,7 @@ export default function Footer() {
               </svg>
             </a>
             <a
-              href="https://twitter.com"
+              href="https://x.com/BargersvilleIN"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="X (Twitter)"
@@ -55,7 +55,7 @@ export default function Footer() {
               </svg>
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://linkedin.com/company/town-of-bargersville/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -66,7 +66,7 @@ export default function Footer() {
               </svg>
             </a>
             <a
-              href="https://instagram.com"
+              href="https://instagram.com/bargersvilletown/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"

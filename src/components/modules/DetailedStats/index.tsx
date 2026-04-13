@@ -1,4 +1,5 @@
 import Container from "@/components/ui/Container";
+import AnimateIn from "@/components/ui/AnimateIn";
 import type { DetailedStatsProps, StatCategory } from "./types";
 
 const categoryIcons: Record<string, React.ReactNode> = {
@@ -43,10 +44,13 @@ function getCategoryIcon(name: string): React.ReactNode {
 }
 
 function CategoryCard({ category, index }: { category: StatCategory; index: number }) {
-  const isEven = index % 2 === 0;
+  // Mobile (1-col): alternate every row — even index = white, odd = surface
+  // Desktop (2-col): checkerboard — (row + col) % 2 determines shade
+  const mobileLight = index % 2 === 0;
+  const desktopLight = (Math.floor(index / 2) + (index % 2)) % 2 === 0;
 
   return (
-    <div className={`p-8 ${isEven ? "bg-white" : "bg-brand-surface"}`}>
+    <div className={`p-8 ${mobileLight ? "bg-white" : "bg-brand-surface"} ${desktopLight ? "sm:bg-white" : "sm:bg-brand-surface"}`}>
       <div className="mb-5 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded bg-brand-primary/10 text-brand-primary">
           {getCategoryIcon(category.categoryName)}
@@ -106,12 +110,12 @@ export default function DetailedStats({
       </Container>
 
       {categories && categories.length > 0 && (
-        <div className="mx-auto max-w-[var(--container-max)] px-6 sm:px-10 lg:px-gutter">
-          <div className="grid grid-cols-1 gap-px bg-brand-border sm:grid-cols-2">
+        <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
+          <AnimateIn stagger className="grid grid-cols-1 gap-px bg-brand-border sm:grid-cols-2">
             {categories.map((category, index) => (
               <CategoryCard key={category._key} category={category} index={index} />
             ))}
-          </div>
+          </AnimateIn>
         </div>
       )}
     </section>

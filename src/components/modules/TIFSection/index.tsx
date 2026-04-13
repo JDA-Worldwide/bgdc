@@ -1,6 +1,7 @@
 import Container from "@/components/ui/Container";
 import SanityImage from "@/components/ui/SanityImage";
 import Button from "@/components/ui/Button";
+import AnimateIn from "@/components/ui/AnimateIn";
 import type { TIFSectionProps } from "./types";
 
 function MapPlaceholder() {
@@ -39,7 +40,7 @@ export default function TIFSection({
 
   return (
     <Container>
-      <div className="lg:grid lg:grid-cols-2 lg:gap-16 lg:items-start">
+      <AnimateIn className="lg:grid lg:grid-cols-2 lg:gap-16 lg:items-start">
         <div>
           {heading && (
             <h2 className="mb-4 font-heading text-2xl font-medium text-brand-text-heading sm:text-3xl md:text-[43px] md:leading-[60px]">
@@ -106,7 +107,7 @@ export default function TIFSection({
             <MapPlaceholder />
           )}
         </div>
-      </div>
+      </AnimateIn>
     </Container>
   );
 }

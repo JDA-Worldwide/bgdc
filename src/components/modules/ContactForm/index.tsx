@@ -4,6 +4,8 @@ import { useState, useRef, useCallback, useEffect, type FormEvent } from "react"
 import { cn } from "@/lib/utils";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
+import { useGsap } from "@/hooks/useGsap";
+import { gsap } from "@/lib/gsap";
 import type { ContactFormProps } from "./types";
 
 declare global {
@@ -75,6 +77,14 @@ export default function ContactForm({
   const widgetIdRef = useRef<string | null>(null);
 
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
+  const containerRef = useGsap<HTMLDivElement>((el) => {
+    gsap.fromTo(
+      el,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 85%" } }
+    );
+  });
 
   const renderWidget = useCallback(() => {
     if (!siteKey || !turnstileRef.current || !window.turnstile) return;
@@ -189,7 +199,7 @@ export default function ContactForm({
 
   return (
     <Container>
-      <div className="mx-auto max-w-2xl">
+      <div ref={containerRef} className="mx-auto max-w-2xl">
         {heading && (
           <h2 className="mb-4 text-center font-heading text-3xl font-bold sm:text-4xl">
             {heading}
