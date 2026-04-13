@@ -4,6 +4,8 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import Container from "@/components/ui/Container";
 import SanityImage from "@/components/ui/SanityImage";
+import { useGsap } from "@/hooks/useGsap";
+import { gsap } from "@/lib/gsap";
 import type { TestimonialsProps, Testimonial } from "./types";
 
 export default function Testimonials({
@@ -11,21 +13,40 @@ export default function Testimonials({
   layout = "grid",
   items,
 }: TestimonialsProps) {
+  const ref = useGsap<HTMLDivElement>((el) => {
+    gsap.fromTo(
+      el.querySelectorAll("[data-testimonial-animate]"),
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.55,
+        ease: "power2.out",
+        stagger: 0.1,
+        scrollTrigger: { trigger: el, start: "top 85%" },
+      }
+    );
+  });
+
   if (!items?.length) return null;
 
   return (
     <Container>
-      {heading && (
-        <h2 className="mb-12 text-center font-heading text-3xl font-bold sm:text-4xl">
-          {heading}
-        </h2>
-      )}
+      <div ref={ref}>
+        {heading && (
+          <h2 data-testimonial-animate className="mb-12 text-center font-heading text-3xl font-bold sm:text-4xl">
+            {heading}
+          </h2>
+        )}
 
-      {layout === "carousel" ? (
-        <TestimonialCarousel items={items} />
-      ) : (
-        <TestimonialGrid items={items} />
-      )}
+        {layout === "carousel" ? (
+          <div data-testimonial-animate>
+            <TestimonialCarousel items={items} />
+          </div>
+        ) : (
+          <TestimonialGrid items={items} />
+        )}
+      </div>
     </Container>
   );
 }
@@ -41,7 +62,9 @@ function TestimonialGrid({ items }: { items: Testimonial[] }) {
   return (
     <div className={`grid gap-8 ${columns}`}>
       {items.map((item) => (
-        <TestimonialCard key={item._key} item={item} />
+        <div key={item._key} data-testimonial-animate>
+          <TestimonialCard item={item} />
+        </div>
       ))}
     </div>
   );

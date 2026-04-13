@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
+import AnimateIn from "@/components/ui/AnimateIn";
 import type { IncentiveCardsProps, IncentiveProgram } from "./types";
 
 function ProgramCard({ program }: { program: IncentiveProgram }) {
@@ -82,11 +83,11 @@ export default function IncentiveCards({
       )}
 
       {programs && programs.length > 0 ? (
-        <div className="grid gap-px bg-brand-border sm:grid-cols-2 lg:grid-cols-3">
+        <AnimateIn stagger className="grid gap-px bg-brand-border sm:grid-cols-2 lg:grid-cols-3">
           {programs.map((program) => (
             <ProgramCard key={program._key} program={program} />
           ))}
-        </div>
+        </AnimateIn>
       ) : (
         <div className="flex items-center justify-center rounded border-2 border-dashed border-brand-border bg-brand-surface p-12 text-center">
           <div>

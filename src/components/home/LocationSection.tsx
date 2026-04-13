@@ -1,3 +1,7 @@
+"use client";
+
+import { useGsap } from "@/hooks/useGsap";
+import { gsap } from "@/lib/gsap";
 import MapboxMapClient from "@/components/ui/MapboxMap/MapboxMapClient";
 import SectionLabel from "./SectionLabel";
 import ArrowIcon from "./ArrowIcon";
@@ -66,8 +70,23 @@ export default function LocationSection({
       ? [mapCenter.lng, mapCenter.lat]
       : [BARGERSVILLE_LNG, BARGERSVILLE_LAT];
 
+  const sectionRef = useGsap<HTMLElement>((el) => {
+    gsap.fromTo(
+      el.querySelectorAll("[data-location-animate]"),
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        stagger: 0.1,
+        scrollTrigger: { trigger: el, start: "top 80%" },
+      }
+    );
+  });
+
   return (
-    <section className="relative bg-brand-primary overflow-hidden">
+    <section ref={sectionRef} className="relative bg-brand-primary overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -79,7 +98,7 @@ export default function LocationSection({
       <div className="relative mx-auto max-w-container px-6 py-section sm:px-10 lg:px-gutter">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Left content */}
-          <div>
+          <div data-location-animate>
             {sectionLabel && (
               <SectionLabel variant="light">{sectionLabel}</SectionLabel>
             )}
@@ -135,7 +154,7 @@ export default function LocationSection({
           </div>
 
           {/* Right — Mapbox interactive map */}
-          <div className="rounded-lg border border-white/12 overflow-hidden min-h-[376px]">
+          <div data-location-animate className="rounded-lg border border-white/12 overflow-hidden min-h-[376px]">
             <MapboxMapClient
               center={resolvedCenter}
               zoom={mapZoom}

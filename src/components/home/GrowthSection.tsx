@@ -1,3 +1,7 @@
+"use client";
+
+import { useGsap } from "@/hooks/useGsap";
+import { gsap } from "@/lib/gsap";
 import SectionLabel from "./SectionLabel";
 import ArrowIcon from "./ArrowIcon";
 
@@ -74,11 +78,26 @@ export default function GrowthSection({
 }: GrowthSectionProps) {
   const resolvedProjects = projects?.length ? projects : defaultProjects;
 
+  const sectionRef = useGsap<HTMLElement>((el) => {
+    gsap.fromTo(
+      el.querySelectorAll("[data-growth-animate]"),
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.55,
+        ease: "power2.out",
+        stagger: 0.1,
+        scrollTrigger: { trigger: el, start: "top 80%" },
+      }
+    );
+  });
+
   return (
-    <section className="border-y border-brand-border bg-brand-surface py-section">
+    <section ref={sectionRef} className="border-y border-brand-border bg-brand-surface py-section">
       <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
         {/* Header */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
+        <div data-growth-animate className="grid lg:grid-cols-2 gap-8 lg:gap-16">
           <div>
             {sectionLabel && <SectionLabel>{sectionLabel}</SectionLabel>}
             <h2 className="mt-5 font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold leading-[1.15] text-brand-primary">
@@ -109,6 +128,7 @@ export default function GrowthSection({
         <div className="mt-12 grid sm:grid-cols-2 gap-5">
           {resolvedProjects.map((project, i) => (
             <div
+              data-growth-animate
               key={project._key || `project-${i}`}
               className="rounded-lg border border-brand-border bg-white p-7"
             >

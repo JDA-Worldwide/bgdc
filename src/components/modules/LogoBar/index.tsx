@@ -1,5 +1,6 @@
 import Container from "@/components/ui/Container";
 import SanityImage from "@/components/ui/SanityImage";
+import AnimateIn from "@/components/ui/AnimateIn";
 import type { LogoBarProps } from "./types";
 
 export default function LogoBar({ heading, logos }: LogoBarProps) {
@@ -8,11 +9,13 @@ export default function LogoBar({ heading, logos }: LogoBarProps) {
   return (
     <Container>
       {heading && (
-        <p className="mb-8 text-center text-sm font-medium uppercase tracking-wider text-brand-muted">
-          {heading}
-        </p>
+        <AnimateIn>
+          <p className="mb-8 text-center text-sm font-medium uppercase tracking-wider text-brand-muted">
+            {heading}
+          </p>
+        </AnimateIn>
       )}
-      <div className="flex flex-wrap items-center justify-center gap-8 lg:gap-12">
+      <AnimateIn stagger className="flex flex-wrap items-center justify-center gap-8 lg:gap-12">
         {logos.map((logo, i) => (
           <div
             key={logo.asset?._ref ?? i}
@@ -26,7 +29,7 @@ export default function LogoBar({ heading, logos }: LogoBarProps) {
             />
           </div>
         ))}
-      </div>
+      </AnimateIn>
     </Container>
   );
 }

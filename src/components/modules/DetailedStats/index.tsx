@@ -1,4 +1,5 @@
 import Container from "@/components/ui/Container";
+import AnimateIn from "@/components/ui/AnimateIn";
 import type { DetailedStatsProps, StatCategory } from "./types";
 
 const categoryIcons: Record<string, React.ReactNode> = {
@@ -110,11 +111,11 @@ export default function DetailedStats({
 
       {categories && categories.length > 0 && (
         <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
-          <div className="grid grid-cols-1 gap-px bg-brand-border sm:grid-cols-2">
+          <AnimateIn stagger className="grid grid-cols-1 gap-px bg-brand-border sm:grid-cols-2">
             {categories.map((category, index) => (
               <CategoryCard key={category._key} category={category} index={index} />
             ))}
-          </div>
+          </AnimateIn>
         </div>
       )}
     </section>

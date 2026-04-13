@@ -1,5 +1,6 @@
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
+import AnimateIn from "@/components/ui/AnimateIn";
 import type { ResourceHubProps, Resource } from "./types";
 
 function ResourceCard({ resource }: { resource: Resource }) {
@@ -63,11 +64,11 @@ export default function ResourceHub({
       )}
 
       {resources && resources.length > 0 && (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <AnimateIn stagger className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {resources.map((resource) => (
             <ResourceCard key={resource._key} resource={resource} />
           ))}
-        </div>
+        </AnimateIn>
       )}
     </Container>
   );

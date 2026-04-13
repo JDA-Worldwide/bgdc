@@ -1,5 +1,6 @@
 import Container from "@/components/ui/Container";
 import SanityImage from "@/components/ui/SanityImage";
+import AnimateIn from "@/components/ui/AnimateIn";
 import type { TeamGridProps } from "./types";
 
 export default function TeamGrid({ heading, members }: TeamGridProps) {
@@ -13,7 +14,7 @@ export default function TeamGrid({ heading, members }: TeamGridProps) {
         </h2>
       )}
 
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <AnimateIn stagger className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {members.map((member) => (
           <div key={member._id} className="text-center">
             {member.photo?.asset && (
@@ -35,7 +36,7 @@ export default function TeamGrid({ heading, members }: TeamGridProps) {
             )}
           </div>
         ))}
-      </div>
+      </AnimateIn>
     </Container>
   );
 }

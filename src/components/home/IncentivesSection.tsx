@@ -1,3 +1,7 @@
+"use client";
+
+import { useGsap } from "@/hooks/useGsap";
+import { gsap } from "@/lib/gsap";
 import SectionLabel from "./SectionLabel";
 import ArrowIcon from "./ArrowIcon";
 
@@ -104,12 +108,27 @@ export default function IncentivesSection({
 }: IncentivesSectionProps) {
   const resolvedIncentives = incentives?.length ? incentives : defaultIncentives;
 
+  const sectionRef = useGsap<HTMLElement>((el) => {
+    gsap.fromTo(
+      el.querySelectorAll("[data-incentives-animate]"),
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.55,
+        ease: "power2.out",
+        stagger: 0.1,
+        scrollTrigger: { trigger: el, start: "top 80%" },
+      }
+    );
+  });
+
   return (
-    <section className="py-section">
+    <section ref={sectionRef} className="py-section">
       <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
         <div className="grid lg:grid-cols-[2fr_3fr] gap-12 lg:gap-16">
           {/* Left intro */}
-          <div>
+          <div data-incentives-animate>
             {sectionLabel && <SectionLabel>{sectionLabel}</SectionLabel>}
 
             <h2 className="mt-5 font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold leading-[1.15] text-brand-primary">
@@ -139,6 +158,7 @@ export default function IncentivesSection({
           <div className="grid sm:grid-cols-2 border border-brand-border rounded-lg overflow-hidden bg-brand-border gap-px">
             {resolvedIncentives.map((item, i) => (
               <div
+                data-incentives-animate
                 key={item._key || `incentive-${i}`}
                 className="bg-white p-6 lg:p-7"
               >

@@ -1,3 +1,7 @@
+"use client";
+
+import { useGsap } from "@/hooks/useGsap";
+import { gsap } from "@/lib/gsap";
 import SectionLabel from "./SectionLabel";
 
 interface Pillar {
@@ -90,10 +94,25 @@ export default function WhySection({
 }: WhySectionProps) {
   const resolvedPillars = pillars?.length ? pillars : defaultPillars;
 
+  const sectionRef = useGsap<HTMLElement>((el) => {
+    gsap.fromTo(
+      el.querySelectorAll("[data-why-animate]"),
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        stagger: 0.1,
+        scrollTrigger: { trigger: el, start: "top 80%" },
+      }
+    );
+  });
+
   return (
-    <section className="py-section">
+    <section ref={sectionRef} className="py-section">
       <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
-        <div className="max-w-3xl">
+        <div data-why-animate className="max-w-3xl">
           {sectionLabel && <SectionLabel>{sectionLabel}</SectionLabel>}
 
           <h2 className="mt-5 font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold leading-[1.15] text-brand-primary">
@@ -108,7 +127,7 @@ export default function WhySection({
         </div>
 
         {/* Three pillars */}
-        <div className="mt-14 grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-brand-border border border-brand-border rounded-lg">
+        <div data-why-animate className="mt-14 grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-brand-border border border-brand-border rounded-lg">
           {resolvedPillars.map((pillar, i) => (
             <div
               key={pillar._key || `pillar-${i}`}

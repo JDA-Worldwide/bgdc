@@ -1,3 +1,7 @@
+"use client";
+
+import { useGsap } from "@/hooks/useGsap";
+import { gsap } from "@/lib/gsap";
 import SanityImage from "@/components/ui/SanityImage";
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
 
@@ -16,8 +20,24 @@ export default function CtaBanner({
   cta = { label: "Get in Touch", url: "#get-in-touch" },
   backgroundImage,
 }: CtaBannerProps) {
+  const ref = useGsap<HTMLElement>((el) => {
+    gsap.fromTo(
+      el.querySelectorAll("[data-cta-animate]"),
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        stagger: 0.12,
+        scrollTrigger: { trigger: el, start: "top 85%" },
+      }
+    );
+  });
+
   return (
     <section
+      ref={ref}
       id="contact"
       className="relative flex flex-col items-center justify-center px-6 py-16 text-center sm:px-10 md:px-[170px] md:py-section"
     >
@@ -38,20 +58,20 @@ export default function CtaBanner({
 
       <div className="mx-auto max-w-[816px]">
         {callout && (
-          <p className="font-accent text-xl italic leading-7 text-brand-blue">
+          <p data-cta-animate className="font-accent text-xl italic leading-7 text-brand-blue">
             {callout}
           </p>
         )}
         {heading && (
-          <h2 className="mt-8 text-3xl font-medium leading-tight text-brand-blue md:text-[43px] md:leading-[60px]">
+          <h2 data-cta-animate className="mt-8 text-3xl font-medium leading-tight text-brand-blue md:text-[43px] md:leading-[60px]">
             {heading}
           </h2>
         )}
         {body && (
-          <p className="mt-8 text-base leading-7 text-brand-black">{body}</p>
+          <p data-cta-animate className="mt-8 text-base leading-7 text-brand-black">{body}</p>
         )}
         {cta?.url && (
-          <div className="mt-8">
+          <div data-cta-animate className="mt-8">
             <a
               href={cta.url}
               target={cta.isExternal ? "_blank" : undefined}

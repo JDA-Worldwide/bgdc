@@ -1,4 +1,5 @@
 import Container from "@/components/ui/Container";
+import AnimateIn from "@/components/ui/AnimateIn";
 import type { FeatureGridProps } from "./types";
 
 export default function FeatureGrid({ heading, features }: FeatureGridProps) {
@@ -7,12 +8,14 @@ export default function FeatureGrid({ heading, features }: FeatureGridProps) {
   return (
     <Container>
       {heading && (
-        <h2 className="mb-12 text-center font-heading text-3xl font-bold sm:text-4xl">
-          {heading}
-        </h2>
+        <AnimateIn>
+          <h2 className="mb-12 text-center font-heading text-3xl font-bold sm:text-4xl">
+            {heading}
+          </h2>
+        </AnimateIn>
       )}
 
-      <div className="grid gap-8 sm:grid-cols-2">
+      <AnimateIn stagger className="grid gap-8 sm:grid-cols-2">
         {features.map((feature) => (
           <div
             key={feature._key}
@@ -26,7 +29,7 @@ export default function FeatureGrid({ heading, features }: FeatureGridProps) {
             )}
           </div>
         ))}
-      </div>
+      </AnimateIn>
     </Container>
   );
 }

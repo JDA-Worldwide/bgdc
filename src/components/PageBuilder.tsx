@@ -98,6 +98,9 @@ const fullBleedModules = new Set([
   "mapSection",
   "industriesGrid",
   "momentumSection",
+  "whyPillars",
+  "projectsGrid",
+  "incentivesGrid",
 ]);
 
 function buildFaqJsonLd(module: FAQModule) {

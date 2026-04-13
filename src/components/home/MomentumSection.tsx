@@ -1,3 +1,8 @@
+"use client";
+
+import { useGsap } from "@/hooks/useGsap";
+import { gsap } from "@/lib/gsap";
+
 interface Project {
   title: string;
   description: string;
@@ -37,10 +42,25 @@ export default function MomentumSection({
 }: MomentumSectionProps) {
   const resolvedProjects = projects?.length ? projects : defaultProjects;
 
+  const sectionRef = useGsap<HTMLElement>((el) => {
+    gsap.fromTo(
+      el.querySelectorAll("[data-momentum-animate]"),
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.55,
+        ease: "power2.out",
+        stagger: 0.1,
+        scrollTrigger: { trigger: el, start: "top 80%" },
+      }
+    );
+  });
+
   return (
-    <section className="bg-brand-sky py-section">
+    <section ref={sectionRef} className="bg-brand-sky py-section">
       <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
-        <div className="mb-10 px-0 md:mb-[60px] lg:px-[109px]">
+        <div data-momentum-animate className="mb-10 px-0 md:mb-[60px] lg:px-[109px]">
           {heading && (
             <h2 className="mb-10 text-3xl font-medium leading-tight text-brand-blue md:text-[43px] md:leading-[60px]">
               {heading}
@@ -53,7 +73,7 @@ export default function MomentumSection({
 
         <div className="mx-auto grid grid-cols-1 gap-10 px-0 sm:grid-cols-2 lg:grid-cols-3 lg:px-[111px]">
           {resolvedProjects.map((project) => (
-            <div key={project.title} className="flex flex-col gap-[30px] bg-white p-10">
+            <div data-momentum-animate key={project.title} className="flex flex-col gap-[30px] bg-white p-10">
               <h3 className="text-[23px] font-medium leading-[30px] text-brand-blue">
                 {project.title}
               </h3>
