@@ -77,11 +77,11 @@ export default function LocationSection({
       {
         opacity: 1,
         y: 0,
-        duration: 0.6,
+        duration: 0.55,
         ease: "power2.out",
-        stagger: 0.1,
+        stagger: 0.12,
         scrollTrigger: { trigger: el, start: "top 80%" },
-      }
+      },
     );
   });
 
@@ -98,26 +98,30 @@ export default function LocationSection({
       <div className="relative mx-auto max-w-container px-6 py-section sm:px-10 lg:px-gutter">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Left content */}
-          <div data-location-animate>
-            {sectionLabel && (
-              <SectionLabel variant="light">{sectionLabel}</SectionLabel>
-            )}
+          <div>
+            {/* Title + description block animates as one unit */}
+            <div data-location-animate>
+              {sectionLabel && (
+                <SectionLabel variant="light">{sectionLabel}</SectionLabel>
+              )}
 
-            <h2 className="mt-5 font-heading text-3xl sm:text-[40px] font-bold leading-[1.15] text-white">
-              {heading}
-            </h2>
+              <h2 className="mt-5 font-heading text-3xl sm:text-[40px] font-bold leading-[1.15] text-white">
+                {heading}
+              </h2>
 
-            {description && (
-              <p className="mt-6 text-base leading-[1.75] text-white/70 font-light">
-                {description}
-              </p>
-            )}
+              {description && (
+                <p className="mt-6 text-base leading-[1.75] text-white/70 font-light">
+                  {description}
+                </p>
+              )}
+            </div>
 
-            {/* Reach items */}
+            {/* Reach items — each staggered individually */}
             <ul className="mt-10 space-y-3 list-none">
               {resolvedReach.map((item, i) => (
                 <li
                   key={item._key || `reach-${i}`}
+                  data-location-animate
                   className="flex items-center gap-4"
                 >
                   <div aria-hidden="true" className="size-1.5 rounded-full bg-brand-secondary shrink-0" />
@@ -130,7 +134,7 @@ export default function LocationSection({
                 </li>
               ))}
               {extraLine && (
-                <li className="flex items-center gap-4">
+                <li data-location-animate className="flex items-center gap-4">
                   <div aria-hidden="true" className="size-1.5 rounded-full bg-brand-secondary shrink-0" />
                   <span className="text-sm text-white/78 font-light">{extraLine}</span>
                 </li>
@@ -139,22 +143,23 @@ export default function LocationSection({
 
             {ctaButton?.url && (
               <a
+                data-location-animate
                 href={ctaButton.url}
                 target={ctaButton.isExternal ? "_blank" : undefined}
                 rel={ctaButton.isExternal ? "noopener noreferrer" : undefined}
-              className="mt-10 inline-flex items-center gap-2.5 rounded-[3px] border border-white/35 px-6 py-3 text-[13px] font-medium uppercase tracking-[0.78px] text-white transition-colors hover:border-white/60 hover:bg-white/5"
-            >
-              {ctaButton.label}
-              <ArrowIcon className="size-3" />
-              {ctaButton.isExternal && (
-                <span className="sr-only"> (opens in new tab)</span>
-              )}
+                className="mt-10 inline-flex items-center gap-2.5 rounded-[3px] border border-white/35 px-6 py-3 text-[13px] font-medium uppercase tracking-[0.78px] text-white transition-colors hover:border-white/60 hover:bg-white/5"
+              >
+                {ctaButton.label}
+                <ArrowIcon className="size-3" />
+                {ctaButton.isExternal && (
+                  <span className="sr-only"> (opens in new tab)</span>
+                )}
               </a>
             )}
           </div>
 
-          {/* Right — Mapbox interactive map */}
-          <div data-location-animate className="rounded-lg border border-white/12 overflow-hidden min-h-[376px]">
+          {/* Right — Mapbox interactive map (no animation) */}
+          <div className="rounded-lg border border-white/12 overflow-hidden h-[376px] lg:h-auto lg:min-h-[376px]">
             <MapboxMapClient
               center={resolvedCenter}
               zoom={mapZoom}
