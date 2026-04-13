@@ -12,17 +12,12 @@ export default function FeatureGrid({ heading, features }: FeatureGridProps) {
         </h2>
       )}
 
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-8 sm:grid-cols-2">
         {features.map((feature) => (
           <div
             key={feature._key}
             className="rounded bg-brand-surface p-6 transition-shadow hover:shadow-md"
           >
-            {feature.icon && (
-              <span className="mb-4 block text-3xl" role="img" aria-hidden="true">
-                {feature.icon}
-              </span>
-            )}
             <h3 className="font-heading text-xl font-semibold">
               {feature.title}
             </h3>

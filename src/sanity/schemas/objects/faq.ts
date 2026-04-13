@@ -1,4 +1,5 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
+import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "faq",
@@ -39,6 +40,7 @@ export default defineType({
       ],
       validation: (rule) => rule.min(1),
     }),
+    colorSchemeField,
   ],
   preview: {
     select: { title: "heading", items: "items" },

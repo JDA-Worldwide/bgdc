@@ -37,6 +37,7 @@ import { toPlainText, type PortableTextBlock } from "@portabletext/react";
 interface Module {
   _type: string;
   _key: string;
+  colorScheme?: "light" | "dark";
   [key: string]: unknown;
 }
 
@@ -134,8 +135,13 @@ export default function PageBuilder({ modules }: PageBuilderProps) {
           );
         }
 
+        const isDark = module.colorScheme === "dark";
+
         return (
-          <section key={module._key} className="mx-auto max-w-container py-section">
+          <section
+            key={module._key}
+            className={`mx-auto max-w-container py-section${isDark ? " scheme-dark" : ""}`}
+          >
             {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
             <Component {...module} />
           </section>

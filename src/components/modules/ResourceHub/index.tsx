@@ -7,12 +7,6 @@ function ResourceCard({ resource }: { resource: Resource }) {
 
   return (
     <div className="flex flex-col bg-brand-surface p-6 transition-shadow hover:shadow-md">
-      {resource.icon && (
-        <span className="mb-3 block text-2xl" role="img" aria-hidden="true">
-          {resource.icon}
-        </span>
-      )}
-
       <h3 className="mb-1 font-heading text-base font-medium text-brand-text-heading">
         {resource.title}
       </h3>

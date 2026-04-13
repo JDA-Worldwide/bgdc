@@ -43,10 +43,13 @@ function getCategoryIcon(name: string): React.ReactNode {
 }
 
 function CategoryCard({ category, index }: { category: StatCategory; index: number }) {
-  const isEven = index % 2 === 0;
+  // Mobile (1-col): alternate every row — even index = white, odd = surface
+  // Desktop (2-col): checkerboard — (row + col) % 2 determines shade
+  const mobileLight = index % 2 === 0;
+  const desktopLight = (Math.floor(index / 2) + (index % 2)) % 2 === 0;
 
   return (
-    <div className={`p-8 ${isEven ? "bg-white" : "bg-brand-surface"}`}>
+    <div className={`p-8 ${mobileLight ? "bg-white" : "bg-brand-surface"} ${desktopLight ? "sm:bg-white" : "sm:bg-brand-surface"}`}>
       <div className="mb-5 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded bg-brand-primary/10 text-brand-primary">
           {getCategoryIcon(category.categoryName)}

@@ -8,12 +8,6 @@ function ProgramCard({ program }: { program: IncentiveProgram }) {
 
   return (
     <div className="flex flex-col bg-white p-6">
-      {program.icon && (
-        <span className="mb-4 block text-3xl" role="img" aria-hidden="true">
-          {program.icon}
-        </span>
-      )}
-
       <h3 className="mb-2 font-heading text-xl font-medium text-brand-text-heading">
         {program.name}
       </h3>

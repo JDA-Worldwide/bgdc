@@ -1,4 +1,5 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
+import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "tifSection",
@@ -86,6 +87,7 @@ export default defineType({
         }),
       ],
     }),
+    colorSchemeField,
   ],
   preview: {
     select: { heading: "heading" },

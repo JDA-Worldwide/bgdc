@@ -56,6 +56,31 @@
   }
 }
 
+/* ── Section Color Schemes ── */
+@layer utilities {
+  .scheme-dark {
+    --color-brand-background: #002550;
+    --color-brand-surface: #003B71;
+    --color-brand-border: rgba(255,255,255,0.12);
+    --color-brand-text: rgba(255,255,255,0.87);
+    --color-brand-text-heading: #FFFFFF;
+    --color-brand-muted: rgba(183,199,211,0.85);
+    --color-brand-primary: #FFBF3C;
+    --color-brand-secondary: #FFBF3C;
+    background-color: #002550;
+    color: rgba(255,255,255,0.87);
+  }
+
+  .scheme-dark h1,
+  .scheme-dark h2,
+  .scheme-dark h3,
+  .scheme-dark h4,
+  .scheme-dark h5,
+  .scheme-dark h6 {
+    color: #FFFFFF;
+  }
+}
+
 /* ── Typography Scale ──
  *  H1:        70px / 55px  Montserrat Medium (500)
  *  H2:        43px / 60px  Montserrat Medium (500)
