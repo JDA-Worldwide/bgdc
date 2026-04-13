@@ -122,6 +122,15 @@ export const homepageDataQuery = groq`
           photo,
           bio
         }
+      },
+      _type == "industriesGrid" => {
+        ...,
+        industries[] {
+          name,
+          description,
+          image,
+          link
+        }
       }
     }
   }

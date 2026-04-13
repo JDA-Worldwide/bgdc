@@ -7,6 +7,7 @@ import type { SanityImageSource } from "@/components/ui/SanityImage/types";
 
 interface Industry {
   name: string;
+  description?: string;
   image?: SanityImageSource;
   link?: { label: string; url: string; isExternal?: boolean };
 }
@@ -19,10 +20,26 @@ interface IndustriesSectionProps {
 }
 
 const defaultIndustries: Industry[] = [
-  { name: "Agribusiness" },
-  { name: "Biosciences & Healthcare" },
-  { name: "Information Technology" },
-  { name: "Corporate HQs" },
+  {
+    name: "Agribusiness",
+    description:
+      "With deep agricultural roots, available land, and access to regional markets, Bargersville offers agribusinesses the space, infrastructure, and community support needed to grow sustainably.",
+  },
+  {
+    name: "Biosciences & Healthcare",
+    description:
+      "Located near leading research, education, and healthcare institutions, Bargersville supports bioscience and healthcare organizations with access, stability, and room to expand.",
+  },
+  {
+    name: "Information Technology",
+    description:
+      "Bargersville provides tech companies with proximity to major metros and talent pipelines—Purdue, IU Indy, and IU—creating a focused environment for innovation and scalable growth.",
+  },
+  {
+    name: "Corporate HQs",
+    description:
+      "For corporate headquarters seeking connectivity, workforce retention, and long-term stability, Bargersville offers a strategic location where leadership, operations, and culture can grow together.",
+  },
 ];
 
 export default function IndustriesSection({
@@ -67,31 +84,44 @@ export default function IndustriesSection({
             <div
               data-industries-animate
               key={industry.name}
-              className="relative flex min-h-[200px] flex-col justify-end gap-[30px] overflow-hidden p-6 sm:min-h-[325px] sm:p-10"
+              tabIndex={0}
+              className="group relative flex min-h-[260px] flex-col justify-end overflow-hidden p-6 sm:min-h-[325px] sm:p-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sun focus-visible:ring-offset-2"
             >
-              <div className="absolute inset-0">
+              {/* Background image / fallback */}
+              <div className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-105 group-focus:scale-105">
                 {industry.image?.asset ? (
-                  <>
-                    <SanityImage
-                      image={industry.image}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover"
-                      decorative
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70" />
-                  </>
+                  <SanityImage
+                    image={industry.image}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                    decorative
+                  />
                 ) : (
-                  <>
-                    <div className="absolute inset-0 bg-brand-charcoal" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70" />
-                  </>
+                  <div className="absolute inset-0 bg-brand-charcoal" />
                 )}
               </div>
-              <h3 className="relative z-10 text-2xl font-medium leading-[35px] text-brand-sun md:text-[28px]">
-                {industry.name}
-              </h3>
-              <hr aria-hidden="true" className="relative z-10 border-brand-sun/40" />
+
+              {/* Rest: gradient darkens toward bottom */}
+              <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/20 to-black/70 transition-opacity duration-400 group-hover:opacity-0 group-focus:opacity-0" />
+              {/* Hover: flat dark overlay matching Figma rgba(0,0,0,0.7) */}
+              <div className="absolute inset-0 bg-black/70 opacity-0 transition-opacity duration-400 group-hover:opacity-100 group-focus:opacity-100" />
+
+              {/* Content — heading slides up to reveal description */}
+              <div className="relative z-10 flex flex-col gap-[30px]">
+                <h3 className="text-2xl font-medium leading-[35px] text-brand-sun md:text-[28px]">
+                  {industry.name}
+                </h3>
+                <hr aria-hidden="true" className="border-brand-sun/40" />
+                {/* CSS grid row trick: 0fr → 1fr reveals the description */}
+                {industry.description && (
+                  <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-400 ease-out group-hover:grid-rows-[1fr] group-focus:grid-rows-[1fr]">
+                    <p className="overflow-hidden text-base leading-7 text-white">
+                      {industry.description}
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           ))}
         </div>
