@@ -13,5 +13,4 @@ export const colorSchemeField = defineField({
   },
   initialValue: "light",
   description: "Override the section background. Dark uses the navy brand color.",
-  group: "settings",
 });

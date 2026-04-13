@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* === BARGERSVILLE ECONOMIC DEVELOPMENT — DESIGN SYSTEM === */
-@theme inline {
+@theme {
   /* ── Color Palette ── */
   --color-brand-blue: #003B71;
   --color-brand-navy-dark: #002550;

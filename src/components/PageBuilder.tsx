@@ -137,11 +137,19 @@ export default function PageBuilder({ modules }: PageBuilderProps) {
 
         const isDark = module.colorScheme === "dark";
 
+        if (isDark) {
+          return (
+            <div key={module._key} className="scheme-dark">
+              <section className="mx-auto max-w-container py-section">
+                {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
+                <Component {...module} />
+              </section>
+            </div>
+          );
+        }
+
         return (
-          <section
-            key={module._key}
-            className={`mx-auto max-w-container py-section${isDark ? " scheme-dark" : ""}`}
-          >
+          <section key={module._key} className="mx-auto max-w-container py-section">
             {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
             <Component {...module} />
           </section>
