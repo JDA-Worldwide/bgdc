@@ -7,6 +7,8 @@
   --color-brand-navy-dark: #002550;
   --color-brand-sun: #FFBF3C;
   --color-brand-sky: #B7C7D3;
+  --color-brand-prairie: #C0CA80;
+  --color-brand-soybean: #76871E;
   --color-brand-limestone: #D6D1C4;
   --color-brand-charcoal: #212322;
   --color-brand-white: #FFFFFF;
@@ -93,6 +95,91 @@
  *  Numbers:   60px / 55px  Montserrat Bold (700)
  *  CTA:       16px / 28px  Montserrat SemiBold (600)
  */
+
+/* ── CtaBanner mesh-gradient animation ── */
+@keyframes cta-blob-1 {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  33%       { transform: translate(8%, -12%) scale(1.15); }
+  66%       { transform: translate(-6%, 10%) scale(0.9); }
+}
+@keyframes cta-blob-2 {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  33%       { transform: translate(-10%, 8%) scale(0.85); }
+  66%       { transform: translate(12%, -6%) scale(1.2); }
+}
+@keyframes cta-blob-3 {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  50%       { transform: translate(6%, 14%) scale(1.1); }
+}
+@keyframes cta-blob-4 {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  40%       { transform: translate(-8%, -10%) scale(1.05); }
+  80%       { transform: translate(10%, 4%) scale(0.95); }
+}
+
+.cta-gradient-canvas {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background-color: #76871e; /* soybean fallback */
+}
+
+.cta-gradient-canvas::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background:
+    radial-gradient(ellipse 65% 55% at 25% 35%, #c0ca80ee 0%, transparent 60%),
+    radial-gradient(ellipse 55% 65% at 70% 20%, #76871ecc 0%, transparent 60%),
+    radial-gradient(ellipse 50% 45% at 50% 75%, #b7c7d399 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 85% 60%, #ffffff88 0%, transparent 50%);
+  animation: cta-blob-1 14s ease-in-out infinite;
+  will-change: transform;
+}
+
+.cta-gradient-canvas::after {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background:
+    radial-gradient(ellipse 60% 50% at 60% 45%, #76871ebb 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 15% 65%, #c0ca80dd 0%, transparent 60%),
+    radial-gradient(ellipse 45% 40% at 80% 80%, #b7c7d377 0%, transparent 50%),
+    radial-gradient(ellipse 35% 45% at 40% 10%, #ffffff77 0%, transparent 45%);
+  animation: cta-blob-2 18s ease-in-out infinite;
+  will-change: transform;
+}
+
+.cta-blob-3 {
+  position: absolute;
+  inset: -50%;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 55%, #c0ca80cc 0%, transparent 55%),
+    radial-gradient(ellipse 40% 35% at 10% 30%, #76871eaa 0%, transparent 50%),
+    radial-gradient(ellipse 30% 40% at 90% 20%, #b7c7d388 0%, transparent 45%);
+  animation: cta-blob-3 22s ease-in-out infinite;
+  will-change: transform;
+}
+
+.cta-blob-4 {
+  position: absolute;
+  inset: -50%;
+  background:
+    radial-gradient(ellipse 50% 60% at 75% 35%, #76871eaa 0%, transparent 55%),
+    radial-gradient(ellipse 55% 45% at 20% 70%, #c0ca80bb 0%, transparent 55%),
+    radial-gradient(ellipse 35% 35% at 55% 15%, #ffffff99 0%, transparent 45%);
+  animation: cta-blob-4 26s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-gradient-canvas::before,
+  .cta-gradient-canvas::after,
+  .cta-blob-3,
+  .cta-blob-4 {
+    animation: none;
+  }
+}
 
 /* Pre-hide hero elements to prevent FOUC before GSAP fires */
 [data-hero-animate] {
