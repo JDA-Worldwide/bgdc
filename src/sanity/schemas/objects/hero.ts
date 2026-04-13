@@ -9,7 +9,9 @@ export default defineType({
     defineField({
       name: "heading",
       title: "Heading",
-      type: "string",
+      type: "text",
+      rows: 3,
+      description: "Use Enter to add a line break — each line renders on its own line in the hero.",
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -24,7 +26,7 @@ export default defineType({
       type: "link",
     }),
     defineField({
-      name: "image",
+      name: "backgroundImage",
       title: "Background Image",
       description: "Decorative background — no alt text required.",
       type: "image",

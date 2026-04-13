@@ -12,6 +12,7 @@ export default function Hero({
   subheading,
   cta,
   backgroundImage,
+  colorScheme,
 }: HeroProps) {
   const ref = useGsap<HTMLDivElement>((el) => {
     gsap.to(
@@ -20,8 +21,16 @@ export default function Hero({
     );
   });
 
+  const isDark = colorScheme === "dark";
+
   return (
-    <div ref={ref} className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
+    <div
+      ref={ref}
+      className={cn(
+        "relative flex min-h-[60vh] items-center justify-center overflow-hidden",
+        !backgroundImage?.asset && isDark && "scheme-dark bg-brand-background"
+      )}
+    >
       {backgroundImage?.asset && (
         <div className="absolute inset-0">
           <SanityImage
@@ -39,25 +48,30 @@ export default function Hero({
       <div
         className={cn(
           "relative z-10 mx-auto max-w-content px-4 py-20 text-center sm:px-6 lg:px-8",
-          backgroundImage?.asset ? "text-white" : "text-brand-text-heading"
+          backgroundImage?.asset || isDark ? "text-white" : "text-brand-text-heading"
         )}
       >
         <h1
           data-hero-animate
           className={cn(
-            "font-heading text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl",
-            backgroundImage?.asset ? "text-white" : "text-brand-text-heading"
+            "font-heading text-4xl font-medium tracking-tight sm:text-5xl lg:text-6xl",
+            backgroundImage?.asset || isDark ? "text-white" : "text-brand-text-heading"
           )}
         >
-          {heading}
+          {heading?.split("\n").map((line, i, arr) => (
+            <span key={i}>
+              {line}
+              {i < arr.length - 1 && <br />}
+            </span>
+          ))}
         </h1>
 
         {subheading && (
           <p
             data-hero-animate
             className={cn(
-              "mx-auto mt-6 max-w-2xl text-lg sm:text-xl",
-              backgroundImage?.asset ? "text-white/90" : "text-brand-muted"
+              "mx-auto mt-6 max-w-4xl text-lg sm:text-xl",
+              backgroundImage?.asset || isDark ? "text-white/90" : "text-brand-muted"
             )}
           >
             {subheading}

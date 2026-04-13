@@ -1,7 +1,45 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import Container from "@/components/ui/Container";
 import AnimateIn from "@/components/ui/AnimateIn";
-import type { DetailedStatsProps, StatCategory } from "./types";
+import { useGsap } from "@/hooks/useGsap";
+import { gsap } from "@/lib/gsap";
+import type { DetailedStatsProps, StatCategory, StatItem } from "./types";
+
+function StatsList({ stats }: { stats: StatItem[] }) {
+  const ref = useGsap<HTMLUListElement>((el) => {
+    const items = el.children;
+    if (!items.length) return;
+    gsap.fromTo(
+      items,
+      { opacity: 0, y: 20 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.35,
+        ease: "power2.out",
+        stagger: 0.07,
+        scrollTrigger: { trigger: el, start: "top 85%" },
+      }
+    );
+  });
+
+  return (
+    <ul ref={ref} className="space-y-4">
+      {stats.map((stat) => (
+        <li key={stat._key} className="border-b border-brand-border pb-4 last:border-0 last:pb-0">
+          <span className="block font-heading text-2xl font-bold text-brand-primary">
+            {stat.value}
+          </span>
+          <span className="mt-0.5 block text-sm leading-5 text-brand-muted">
+            {stat.label}
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 const categoryIcons: Record<string, React.ReactNode> = {
   default: (
@@ -51,29 +89,18 @@ function CategoryCard({ category, index }: { category: StatCategory; index: numb
   const desktopLight = (Math.floor(index / 2) + (index % 2)) % 2 === 0;
 
   return (
-    <div className={cn("p-8", mobileLight ? "bg-white" : "bg-brand-surface", desktopLight ? "sm:bg-white" : "sm:bg-brand-surface")}>
-      <div className="mb-5 flex items-center gap-3">
+    <div className={cn("p-8", mobileLight ? "bg-brand-background" : "bg-brand-surface", desktopLight ? "sm:bg-brand-background" : "sm:bg-brand-surface")}>
+      <AnimateIn className="mb-5 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded bg-brand-primary/10 text-brand-primary">
           {getCategoryIcon(category.categoryName)}
         </div>
         <h3 className="font-heading text-lg font-medium text-brand-text-heading">
           {category.categoryName}
         </h3>
-      </div>
+      </AnimateIn>
 
       {category.stats && category.stats.length > 0 ? (
-        <ul className="space-y-4">
-          {category.stats.map((stat) => (
-            <li key={stat._key} className="border-b border-brand-border pb-4 last:border-0 last:pb-0">
-              <span className="block font-heading text-2xl font-bold text-brand-primary">
-                {stat.value}
-              </span>
-              <span className="mt-0.5 block text-sm leading-5 text-brand-muted">
-                {stat.label}
-              </span>
-            </li>
-          ))}
-        </ul>
+        <StatsList stats={category.stats} />
       ) : (
         <p className="text-sm text-brand-muted italic">Data coming soon</p>
       )}
@@ -92,7 +119,7 @@ export default function DetailedStats({
     <section aria-labelledby={heading ? "detailed-stats-heading" : undefined}>
       <Container>
         {(heading || introText) && (
-          <div className="mb-10 text-center">
+          <AnimateIn className="mb-10 text-center">
             {heading && (
               <h2
                 id="detailed-stats-heading"
@@ -106,17 +133,17 @@ export default function DetailedStats({
                 {introText}
               </p>
             )}
-          </div>
+          </AnimateIn>
         )}
       </Container>
 
       {categories && categories.length > 0 && (
         <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
-          <AnimateIn stagger className="grid grid-cols-1 gap-px bg-brand-border sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-px bg-brand-border sm:grid-cols-2">
             {categories.map((category, index) => (
               <CategoryCard key={category._key} category={category} index={index} />
             ))}
-          </AnimateIn>
+          </div>
         </div>
       )}
     </section>

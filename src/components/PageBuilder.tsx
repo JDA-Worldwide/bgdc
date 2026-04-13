@@ -129,33 +129,25 @@ export default function PageBuilder({ modules }: PageBuilderProps) {
           return null;
         }
 
-        if (fullBleedModules.has(module._type)) {
+        const isDark = module.colorScheme === "dark";
+        const isFullBleed = fullBleedModules.has(module._type);
+
+        if (isFullBleed) {
           return (
-            <div key={module._key}>
+            <div key={module._key} className={isDark ? "scheme-dark" : undefined}>
               {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
               <Component {...module} />
             </div>
           );
         }
 
-        const isDark = module.colorScheme === "dark";
-
-        if (isDark) {
-          return (
-            <div key={module._key} className="scheme-dark">
-              <section className="mx-auto max-w-container py-section">
-                {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
-                <Component {...module} />
-              </section>
-            </div>
-          );
-        }
-
         return (
-          <section key={module._key} className="mx-auto max-w-container py-section">
-            {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
-            <Component {...module} />
-          </section>
+          <div key={module._key} className={isDark ? "scheme-dark" : undefined}>
+            <section className="mx-auto max-w-container py-section">
+              {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
+              <Component {...module} />
+            </section>
+          </div>
         );
       })}
     </>

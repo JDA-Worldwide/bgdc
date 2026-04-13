@@ -21,7 +21,7 @@ export default function CTA({
   return (
     <div className={cn("py-section", bgStyles[backgroundColor])}>
       <Container>
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-4xl text-center">
           <h2
             className={cn(
               "font-heading text-3xl font-bold sm:text-4xl",
