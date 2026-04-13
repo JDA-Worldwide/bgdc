@@ -85,7 +85,7 @@ export default function IndustriesSection({
               data-industries-animate
               key={industry.name}
               tabIndex={0}
-              className="group relative flex min-h-[260px] flex-col justify-end overflow-hidden p-6 sm:min-h-[325px] sm:p-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sun focus-visible:ring-offset-2"
+              className="group relative flex min-h-[260px] flex-col justify-end overflow-hidden p-10 sm:min-h-[325px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sun focus-visible:ring-offset-2"
             >
               {/* Background image / fallback */}
               <div className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-105 group-focus:scale-105">
@@ -107,15 +107,15 @@ export default function IndustriesSection({
               {/* Hover: flat dark overlay matching Figma rgba(0,0,0,0.7) */}
               <div className="absolute inset-0 bg-black/70 opacity-0 transition-opacity duration-400 group-hover:opacity-100 group-focus:opacity-100" />
 
-              {/* Content — heading slides up to reveal description */}
+              {/* Content — heading + hr always visible; description reveals on hover */}
               <div className="relative z-10 flex flex-col gap-[30px]">
                 <h3 className="text-2xl font-medium leading-[35px] text-brand-sun md:text-[28px]">
                   {industry.name}
                 </h3>
-                <hr aria-hidden="true" className="border-brand-sun/40" />
+                <hr aria-hidden="true" className="border-white" />
                 {/* CSS grid row trick: 0fr → 1fr reveals the description */}
                 {industry.description && (
-                  <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-400 ease-out group-hover:grid-rows-[1fr] group-focus:grid-rows-[1fr]">
+                  <div className="grid grid-rows-[0fr] -mt-[30px] transition-[grid-template-rows,margin] duration-400 ease-out group-hover:grid-rows-[1fr] group-hover:mt-0 group-focus:grid-rows-[1fr] group-focus:mt-0">
                     <p className="overflow-hidden text-base leading-7 text-white">
                       {industry.description}
                     </p>
