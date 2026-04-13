@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import Container from "@/components/ui/Container";
 import AnimateIn from "@/components/ui/AnimateIn";
 import type { DetailedStatsProps, StatCategory } from "./types";
@@ -50,7 +51,7 @@ function CategoryCard({ category, index }: { category: StatCategory; index: numb
   const desktopLight = (Math.floor(index / 2) + (index % 2)) % 2 === 0;
 
   return (
-    <div className={`p-8 ${mobileLight ? "bg-white" : "bg-brand-surface"} ${desktopLight ? "sm:bg-white" : "sm:bg-brand-surface"}`}>
+    <div className={cn("p-8", mobileLight ? "bg-white" : "bg-brand-surface", desktopLight ? "sm:bg-white" : "sm:bg-brand-surface")}>
       <div className="mb-5 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded bg-brand-primary/10 text-brand-primary">
           {getCategoryIcon(category.categoryName)}

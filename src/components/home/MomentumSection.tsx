@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { useGsap } from "@/hooks/useGsap";
 import { gsap } from "@/lib/gsap";
 
@@ -90,7 +91,7 @@ export default function MomentumSection({
               <div
                 data-momentum-animate
                 key={project.title}
-                className={`flex flex-col gap-[30px] bg-white p-10${spanFull ? " sm:col-span-2" : ""}`}
+                className={cn("flex flex-col gap-[30px] bg-white p-10", spanFull && "sm:col-span-2")}
               >
                 <h3 className="text-[23px] font-medium leading-[30px] text-brand-blue">
                   {project.title}
