@@ -15,7 +15,7 @@ export default function Testimonials({
 }: TestimonialsProps) {
   const ref = useGsap<HTMLDivElement>((el) => {
     gsap.fromTo(
-      el.querySelectorAll("[data-testimonial-animate]"),
+      el.querySelectorAll("[data-animate-fadeinup]"),
       { opacity: 0, y: 30 },
       {
         opacity: 1,
@@ -34,13 +34,13 @@ export default function Testimonials({
     <Container>
       <div ref={ref}>
         {heading && (
-          <h2 data-testimonial-animate className="mb-12 text-center font-heading text-3xl font-bold sm:text-4xl">
+          <h2 data-animate-fadeinup className="mb-12 text-center font-heading text-3xl font-bold sm:text-4xl">
             {heading}
           </h2>
         )}
 
         {layout === "carousel" ? (
-          <div data-testimonial-animate>
+          <div data-animate-fadeinup>
             <TestimonialCarousel items={items} />
           </div>
         ) : (
@@ -62,7 +62,7 @@ function TestimonialGrid({ items }: { items: Testimonial[] }) {
   return (
     <div className={`grid gap-8 ${columns}`}>
       {items.map((item) => (
-        <div key={item._key} data-testimonial-animate>
+        <div key={item._key} data-animate-fadeinup>
           <TestimonialCard item={item} />
         </div>
       ))}

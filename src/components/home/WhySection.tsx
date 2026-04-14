@@ -96,7 +96,7 @@ export default function WhySection({
 
   const sectionRef = useGsap<HTMLElement>((el) => {
     gsap.fromTo(
-      el.querySelectorAll("[data-why-animate]"),
+      el.querySelectorAll("[data-animate-fadeinup]"),
       { opacity: 0, y: 30 },
       {
         opacity: 1,
@@ -112,7 +112,7 @@ export default function WhySection({
   return (
     <section ref={sectionRef} className="py-section">
       <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
-        <div data-why-animate className="max-w-3xl">
+        <div data-animate-fadeinup className="max-w-3xl">
           {sectionLabel && <SectionLabel>{sectionLabel}</SectionLabel>}
 
           <h2 className="mt-5 font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold leading-[1.15] text-brand-primary">
@@ -127,7 +127,7 @@ export default function WhySection({
         </div>
 
         {/* Three pillars */}
-        <div data-why-animate className="mt-14 grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-brand-border border border-brand-border rounded-lg">
+        <div data-animate-fadeinup className="mt-14 grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-brand-border border border-brand-border rounded-lg">
           {resolvedPillars.map((pillar, i) => (
             <div
               key={pillar._key || `pillar-${i}`}

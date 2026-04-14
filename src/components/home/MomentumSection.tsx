@@ -45,7 +45,7 @@ export default function MomentumSection({
 
   const sectionRef = useGsap<HTMLElement>((el) => {
     gsap.fromTo(
-      el.querySelectorAll("[data-momentum-animate]"),
+      el.querySelectorAll("[data-animate-fadeinup]"),
       { opacity: 0, y: 30 },
       {
         opacity: 1,
@@ -61,7 +61,7 @@ export default function MomentumSection({
   return (
     <section ref={sectionRef} className="bg-brand-sky py-section">
       <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
-        <div data-momentum-animate className="mb-10 px-0 md:mb-[60px] lg:px-[109px]">
+        <div data-animate-fadeinup className="mb-10 px-0 md:mb-[60px] lg:px-[109px]">
           {heading && (
             <h2 className="mb-10 text-3xl font-medium leading-tight text-brand-blue md:text-[43px] md:leading-[60px]">
               {heading}
@@ -89,7 +89,7 @@ export default function MomentumSection({
 
             return (
               <div
-                data-momentum-animate
+                data-animate-fadeinup
                 key={project.title}
                 className={cn("flex flex-col gap-[30px] bg-white p-10", spanFull && "sm:col-span-2")}
               >

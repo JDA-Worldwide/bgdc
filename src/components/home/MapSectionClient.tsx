@@ -27,7 +27,7 @@ export default function MapSectionClient({
 }: MapSectionClientProps) {
   const contentRef = useGsap<HTMLDivElement>((el) => {
     gsap.fromTo(
-      el.querySelectorAll("[data-map-animate]"),
+      el.querySelectorAll("[data-animate-fadeinup]"),
       { opacity: 0, y: 30 },
       {
         opacity: 1,
@@ -55,7 +55,7 @@ export default function MapSectionClient({
 
         {/* Bottom row — stagger fade in */}
         <div ref={contentRef} className="flex flex-col gap-10 lg:flex-row lg:gap-[60px]">
-          <div data-map-animate className="flex flex-1 flex-col gap-[25px] text-brand-charcoal">
+          <div data-animate-fadeinup className="flex flex-1 flex-col gap-[25px] text-brand-charcoal">
             {heading && (
               <h2 className="text-2xl font-medium leading-[35px] md:text-[28px]">
                 {heading}
@@ -68,7 +68,7 @@ export default function MapSectionClient({
             {destinations.map((dest) => (
               <div
                 key={dest.label}
-                data-map-animate
+                data-animate-fadeinup
                 className="flex items-start gap-4 sm:items-center sm:gap-5"
               >
                 <div className="mt-2.5 h-[5px] w-[23px] shrink-0 bg-brand-sun sm:mt-0" />

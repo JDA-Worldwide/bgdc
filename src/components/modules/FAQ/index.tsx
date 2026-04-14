@@ -11,7 +11,7 @@ import type { FAQProps, FAQItem } from "./types";
 export default function FAQ({ heading, items }: FAQProps) {
   const ref = useGsap<HTMLDivElement>((el) => {
     gsap.fromTo(
-      el.querySelectorAll("[data-faq-animate]"),
+      el.querySelectorAll("[data-animate-fadeinup]"),
       { opacity: 0, y: 20 },
       {
         opacity: 1,
@@ -30,14 +30,14 @@ export default function FAQ({ heading, items }: FAQProps) {
     <Container>
       <div ref={ref} className="mx-auto max-w-4xl">
         {heading && (
-          <h2 data-faq-animate className="mb-10 text-center font-heading text-3xl font-bold sm:text-4xl">
+          <h2 data-animate-fadeinup className="mb-10 text-center font-heading text-3xl font-bold sm:text-4xl">
             {heading}
           </h2>
         )}
 
         <dl className="divide-y divide-brand-border">
           {items.map((item) => (
-            <div key={item._key} data-faq-animate>
+            <div key={item._key} data-animate-fadeinup>
               <AccordionItem item={item} />
             </div>
           ))}

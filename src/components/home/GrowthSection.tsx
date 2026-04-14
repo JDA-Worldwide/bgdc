@@ -80,7 +80,7 @@ export default function GrowthSection({
 
   const sectionRef = useGsap<HTMLElement>((el) => {
     gsap.fromTo(
-      el.querySelectorAll("[data-growth-animate]"),
+      el.querySelectorAll("[data-animate-fadeinup]"),
       { opacity: 0, y: 30 },
       {
         opacity: 1,
@@ -97,7 +97,7 @@ export default function GrowthSection({
     <section ref={sectionRef} className="border-y border-brand-border bg-brand-surface py-section">
       <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
         {/* Header */}
-        <div data-growth-animate className="grid lg:grid-cols-2 gap-8 lg:gap-16">
+        <div data-animate-fadeinup className="grid lg:grid-cols-2 gap-8 lg:gap-16">
           <div>
             {sectionLabel && <SectionLabel>{sectionLabel}</SectionLabel>}
             <h2 className="mt-5 font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold leading-[1.15] text-brand-primary">
@@ -128,7 +128,7 @@ export default function GrowthSection({
         <div className="mt-12 grid sm:grid-cols-2 gap-5">
           {resolvedProjects.map((project, i) => (
             <div
-              data-growth-animate
+              data-animate-fadeinup
               key={project._key || `project-${i}`}
               className="rounded-lg border border-brand-border bg-white p-7"
             >

@@ -71,7 +71,7 @@ export default function StatsSection({
 
   const sectionRef = useGsap<HTMLElement>((el) => {
     gsap.fromTo(
-      el.querySelectorAll("[data-stats-animate]"),
+      el.querySelectorAll("[data-animate-fadeinup]"),
       { opacity: 0, y: 30 },
       {
         opacity: 1,
@@ -92,7 +92,7 @@ export default function StatsSection({
       <section ref={sectionRef} className="border-t-[5px] border-white bg-brand-blue py-16 md:py-section">
         <div className="@container mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
           {heading && (
-            <h2 data-stats-animate className="mb-10 text-center text-2xl font-medium leading-tight text-white sm:text-3xl md:mb-[60px] md:text-[43px] md:leading-[60px]">
+            <h2 data-animate-fadeinup className="mb-10 text-center text-2xl font-medium leading-tight text-white sm:text-3xl md:mb-[60px] md:text-[43px] md:leading-[60px]">
               {heading}
             </h2>
           )}
@@ -108,7 +108,7 @@ export default function StatsSection({
             {resolvedStats.map((stat, i) => (
               <div
                 key={stat._key ?? i}
-                data-stats-animate
+                data-animate-fadeinup
                 className={cn(
                   count === 1 && "max-w-md",
                   count === 3 && i === 2 && "col-span-2 @[56rem]:col-span-1 justify-self-center",

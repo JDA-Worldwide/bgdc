@@ -52,7 +52,7 @@ export default function IndustriesSection({
 
   const sectionRef = useGsap<HTMLElement>((el) => {
     gsap.fromTo(
-      el.querySelectorAll("[data-industries-animate]"),
+      el.querySelectorAll("[data-animate-fadeinup]"),
       { opacity: 0, y: 30 },
       {
         opacity: 1,
@@ -68,7 +68,7 @@ export default function IndustriesSection({
   return (
     <section ref={sectionRef} className="bg-brand-limestone py-section">
       <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
-        <div data-industries-animate className="mb-10 px-0 md:mb-[60px] lg:px-[109px]">
+        <div data-animate-fadeinup className="mb-10 px-0 md:mb-[60px] lg:px-[109px]">
           {heading && (
             <h2 className="mb-[35px] text-3xl font-medium leading-tight text-brand-blue md:text-[43px] md:leading-[60px]">
               {heading}
@@ -82,7 +82,7 @@ export default function IndustriesSection({
         <div className="mx-auto grid grid-cols-1 gap-10 px-0 sm:grid-cols-2 lg:px-[111px]">
           {resolvedIndustries.map((industry) => (
             <div
-              data-industries-animate
+              data-animate-fadeinup
               key={industry.name}
               tabIndex={0}
               className="group relative flex min-h-[260px] flex-col justify-end overflow-hidden p-10 sm:min-h-[325px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sun focus-visible:ring-offset-2"

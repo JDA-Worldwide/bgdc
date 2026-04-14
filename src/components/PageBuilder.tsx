@@ -38,7 +38,7 @@ import { toPlainText, type PortableTextBlock } from "@portabletext/react";
 interface Module {
   _type: string;
   _key: string;
-  colorScheme?: "light" | "dark";
+  colorScheme?: "light" | "surface" | "dark";
   [key: string]: unknown;
 }
 
@@ -130,12 +130,13 @@ export default function PageBuilder({ modules }: PageBuilderProps) {
           return null;
         }
 
-        const isDark = stegaClean(module.colorScheme) === "dark";
+        const scheme = stegaClean(module.colorScheme);
+        const schemeClass = scheme === "dark" ? "scheme-dark" : scheme === "surface" ? "scheme-surface" : undefined;
         const isFullBleed = fullBleedModules.has(module._type);
 
         if (isFullBleed) {
           return (
-            <div key={module._key} className={isDark ? "scheme-dark" : undefined}>
+            <div key={module._key} className={schemeClass}>
               {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
               <Component {...module} />
             </div>
@@ -143,7 +144,7 @@ export default function PageBuilder({ modules }: PageBuilderProps) {
         }
 
         return (
-          <div key={module._key} className={isDark ? "scheme-dark" : undefined}>
+          <div key={module._key} className={schemeClass}>
             <section className="mx-auto max-w-container py-section">
               {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
               <Component {...module} />

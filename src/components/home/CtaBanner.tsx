@@ -22,7 +22,7 @@ export default function CtaBanner({
 }: CtaBannerProps) {
   const ref = useGsap<HTMLElement>((el) => {
     gsap.fromTo(
-      el.querySelectorAll("[data-cta-animate]"),
+      el.querySelectorAll("[data-animate-fadeinup]"),
       { opacity: 0, y: 30 },
       {
         opacity: 1,
@@ -63,20 +63,20 @@ export default function CtaBanner({
 
       <div className="mx-auto max-w-[816px]">
         {callout && (
-          <p data-cta-animate className="font-accent text-xl italic leading-7 text-brand-blue">
+          <p data-animate-fadeinup className="font-accent text-xl italic leading-7 text-brand-blue">
             {callout}
           </p>
         )}
         {heading && (
-          <h2 data-cta-animate className="mt-8 text-3xl font-medium leading-tight text-brand-blue md:text-[43px] md:leading-[60px]">
+          <h2 data-animate-fadeinup className="mt-8 text-3xl font-medium leading-tight text-brand-blue md:text-[43px] md:leading-[60px]">
             {heading}
           </h2>
         )}
         {body && (
-          <p data-cta-animate className="mt-8 text-base leading-7 text-brand-black">{body}</p>
+          <p data-animate-fadeinup className="mt-8 text-base leading-7 text-brand-black">{body}</p>
         )}
         {cta?.url && (
-          <div data-cta-animate className="mt-8">
+          <div data-animate-fadeinup className="mt-8">
             <a
               href={cta.url}
               target={cta.isExternal ? "_blank" : undefined}

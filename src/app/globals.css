@@ -81,6 +81,20 @@
   .scheme-dark h6 {
     color: #FFFFFF;
   }
+
+  /* Warm off-white — #F8F7F4 */
+  .scheme-surface {
+    --color-brand-background: #F8F7F4;
+    --color-brand-surface: #EEEAE3;
+    --color-brand-border: #D6D1C4;
+    --color-brand-text: #212322;
+    --color-brand-text-heading: #003B71;
+    --color-brand-muted: #6E6860;
+    --color-brand-primary: #003B71;
+    --color-brand-secondary: #FFBF3C;
+    background-color: #F8F7F4;
+    color: #212322;
+  }
 }
 
 /* ── Typography Scale ──
@@ -181,15 +195,15 @@
   }
 }
 
-/* Pre-hide hero elements to prevent FOUC before GSAP fires */
-[data-hero-animate] {
+/* Pre-hide GSAP-animated elements to prevent FOUC before GSAP fires */
+[data-animate-fadeinup] {
   opacity: 0;
   transform: translateY(30px);
 }
 
 /* Restore visibility for no-JS environments */
 @media (scripting: none) {
-  [data-hero-animate] {
+  [data-animate-fadeinup] {
     opacity: 1;
     transform: none;
   }

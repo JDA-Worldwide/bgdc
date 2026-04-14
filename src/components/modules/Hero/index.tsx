@@ -17,7 +17,7 @@ export default function Hero({
 }: HeroProps) {
   const ref = useGsap<HTMLDivElement>((el) => {
     gsap.to(
-      el.querySelectorAll("[data-hero-animate]"),
+      el.querySelectorAll("[data-animate-fadeinup]"),
       { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", stagger: 0.15 }
     );
   });
@@ -53,7 +53,7 @@ export default function Hero({
         )}
       >
         <h1
-          data-hero-animate
+          data-animate-fadeinup
           className={cn(
             "font-heading text-4xl font-medium tracking-tight sm:text-5xl lg:text-6xl",
             backgroundImage?.asset || isDark ? "text-white" : "text-brand-text-heading"
@@ -69,7 +69,7 @@ export default function Hero({
 
         {subheading && (
           <p
-            data-hero-animate
+            data-animate-fadeinup
             className={cn(
               "mx-auto mt-6 max-w-4xl text-lg sm:text-xl",
               backgroundImage?.asset || isDark ? "text-white/90" : "text-brand-muted"
@@ -80,7 +80,7 @@ export default function Hero({
         )}
 
         {cta?.label && (
-          <div data-hero-animate className="mt-10">
+          <div data-animate-fadeinup className="mt-10">
             <Button
               href={cta.url}
               isExternal={cta.isExternal}

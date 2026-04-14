@@ -38,7 +38,7 @@ export default function HeroSection({
 }: HeroSectionProps) {
   const sectionRef = useGsap<HTMLElement>((el) => {
     gsap.to(
-      el.querySelectorAll("[data-hero-animate]"),
+      el.querySelectorAll("[data-animate-fadeinup]"),
       { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", stagger: 0.15 }
     );
 
@@ -80,26 +80,26 @@ export default function HeroSection({
       </div>
 
       {callout && (
-        <p data-hero-animate className="font-accent text-xl italic leading-7 text-brand-sun">
+        <p data-animate-fadeinup className="font-accent text-xl italic leading-7 text-brand-sun">
           {callout}
         </p>
       )}
 
       <div className="mt-10 flex max-w-container flex-col gap-8 text-center text-white md:mt-[60px] md:gap-[54px]">
         {heading && (
-          <h1 data-hero-animate className="text-3xl font-medium text-white sm:text-5xl md:text-[70px] md:leading-[1.15]">
+          <h1 data-animate-fadeinup className="text-3xl font-medium text-white sm:text-5xl md:text-[70px] md:leading-[1.15]">
             {heading}
           </h1>
         )}
         {body && (
-          <p data-hero-animate className="text-base leading-relaxed sm:text-lg md:text-[22px] md:leading-[33px]">
+          <p data-animate-fadeinup className="text-base leading-relaxed sm:text-lg md:text-[22px] md:leading-[33px]">
             {body}
           </p>
         )}
       </div>
 
       {ctas?.length ? (
-        <div data-hero-animate className="mt-10 flex flex-col gap-4 sm:flex-row sm:gap-[60px] md:mt-[60px]">
+        <div data-animate-fadeinup className="mt-10 flex flex-col gap-4 sm:flex-row sm:gap-[60px] md:mt-[60px]">
           {ctas.map((cta) => (
             <a
               key={cta._key}

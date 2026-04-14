@@ -72,7 +72,7 @@ export default function LocationSection({
 
   const sectionRef = useGsap<HTMLElement>((el) => {
     gsap.fromTo(
-      el.querySelectorAll("[data-location-animate]"),
+      el.querySelectorAll("[data-animate-fadeinup]"),
       { opacity: 0, y: 30 },
       {
         opacity: 1,
@@ -100,7 +100,7 @@ export default function LocationSection({
           {/* Left content */}
           <div>
             {/* Title + description block animates as one unit */}
-            <div data-location-animate>
+            <div data-animate-fadeinup>
               {sectionLabel && (
                 <SectionLabel variant="light">{sectionLabel}</SectionLabel>
               )}
@@ -121,7 +121,7 @@ export default function LocationSection({
               {resolvedReach.map((item, i) => (
                 <li
                   key={item._key || `reach-${i}`}
-                  data-location-animate
+                  data-animate-fadeinup
                   className="flex items-center gap-4"
                 >
                   <div aria-hidden="true" className="size-1.5 rounded-full bg-brand-secondary shrink-0" />
@@ -134,7 +134,7 @@ export default function LocationSection({
                 </li>
               ))}
               {extraLine && (
-                <li data-location-animate className="flex items-center gap-4">
+                <li data-animate-fadeinup className="flex items-center gap-4">
                   <div aria-hidden="true" className="size-1.5 rounded-full bg-brand-secondary shrink-0" />
                   <span className="text-sm text-white/78 font-light">{extraLine}</span>
                 </li>
@@ -143,7 +143,7 @@ export default function LocationSection({
 
             {ctaButton?.url && (
               <a
-                data-location-animate
+                data-animate-fadeinup
                 href={ctaButton.url}
                 target={ctaButton.isExternal ? "_blank" : undefined}
                 rel={ctaButton.isExternal ? "noopener noreferrer" : undefined}

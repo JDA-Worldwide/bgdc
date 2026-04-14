@@ -1,6 +1,16 @@
+"use client";
+
 import Container from "@/components/ui/Container";
 import AnimateIn from "@/components/ui/AnimateIn";
+import MapboxMapClient from "@/components/ui/MapboxMap/MapboxMapClient";
 import type { ContactInfoProps } from "./types";
+
+const OFFICE_LNG = -86.1617;
+const OFFICE_LAT = 39.5534;
+
+const OFFICE_MARKERS = [
+  { lng: OFFICE_LNG, lat: OFFICE_LAT, label: "24 N Main St, Bargersville", isPrimary: true },
+];
 
 function PhoneIcon() {
   return (
@@ -211,24 +221,14 @@ export default function ContactInfo({
         </div>
 
         <div className="mt-12 lg:mt-0">
-          {address ? (
-            <div className="h-80 w-full overflow-hidden rounded bg-brand-surface lg:h-full lg:min-h-[400px]">
-              <iframe
-                title="Office location map"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyD-placeholder&q=${encodeURIComponent(address)}`}
-                className="h-full w-full"
-              />
-            </div>
-          ) : (
-            <div className="flex h-80 w-full items-center justify-center rounded border-2 border-dashed border-brand-border bg-brand-surface lg:h-full lg:min-h-[400px]">
-              <p className="text-sm text-brand-muted">Map coming soon</p>
-            </div>
-          )}
+          <div className="h-80 w-full overflow-hidden rounded lg:h-full lg:min-h-[400px]">
+            <MapboxMapClient
+              center={[OFFICE_LNG, OFFICE_LAT]}
+              zoom={11}
+              markers={OFFICE_MARKERS}
+              className="h-full w-full"
+            />
+          </div>
         </div>
       </AnimateIn>
     </Container>

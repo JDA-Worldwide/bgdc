@@ -7,10 +7,11 @@ export const colorSchemeField = defineField({
   options: {
     list: [
       { title: "Light (default)", value: "light" },
-      { title: "Dark", value: "dark" },
+      { title: "Surface (warm off-white)", value: "surface" },
+      { title: "Dark (navy)", value: "dark" },
     ],
     layout: "radio",
   },
   initialValue: "light",
-  description: "Override the section background. Dark uses the navy brand color.",
+  description: "Override the section background color.",
 });
