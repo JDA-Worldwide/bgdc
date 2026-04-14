@@ -8,6 +8,8 @@ export const colorSchemeField = defineField({
     list: [
       { title: "Light (default)", value: "light" },
       { title: "Surface (warm off-white)", value: "surface" },
+      { title: "Limestone (warm greige)", value: "limestone" },
+      { title: "Sky (cool blue-grey)", value: "sky" },
       { title: "Dark (navy)", value: "dark" },
     ],
     layout: "radio",

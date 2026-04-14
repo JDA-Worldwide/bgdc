@@ -1,5 +1,6 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 import { ComponentIcon } from "@sanity/icons";
+import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "industriesGrid",
@@ -64,6 +65,7 @@ export default defineType({
       title: "CTA Button",
       type: "link",
     }),
+    { ...colorSchemeField, initialValue: "limestone" },
   ],
   preview: {
     select: { title: "heading", industries: "industries" },

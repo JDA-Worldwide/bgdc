@@ -1,5 +1,6 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 import { PinIcon } from "@sanity/icons";
+import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "locationMap",
@@ -112,6 +113,7 @@ export default defineType({
         }),
       ],
     }),
+    { ...colorSchemeField, initialValue: "dark" },
   ],
   preview: {
     select: { title: "heading" },

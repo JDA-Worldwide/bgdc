@@ -1,5 +1,6 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 import { StarIcon } from "@sanity/icons";
+import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "incentivesGrid",
@@ -72,6 +73,7 @@ export default defineType({
       ],
       validation: (rule) => rule.min(1).max(4),
     }),
+    colorSchemeField,
   ],
   preview: {
     select: { title: "heading", incentives: "incentives" },

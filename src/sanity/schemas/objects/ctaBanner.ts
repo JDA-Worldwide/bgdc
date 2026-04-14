@@ -1,5 +1,6 @@
 import { defineType, defineField } from "sanity";
 import { BulbOutlineIcon } from "@sanity/icons";
+import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "ctaBanner",
@@ -37,6 +38,7 @@ export default defineType({
       type: "image",
       options: { hotspot: true },
     }),
+    colorSchemeField,
   ],
   preview: {
     select: { title: "heading" },

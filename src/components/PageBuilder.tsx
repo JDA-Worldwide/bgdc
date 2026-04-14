@@ -38,7 +38,7 @@ import { toPlainText, type PortableTextBlock } from "@portabletext/react";
 interface Module {
   _type: string;
   _key: string;
-  colorScheme?: "light" | "surface" | "dark";
+  colorScheme?: "light" | "surface" | "limestone" | "sky" | "dark";
   [key: string]: unknown;
 }
 
@@ -46,8 +46,14 @@ interface FAQModule extends Module {
   items?: Array<{ _key: string; question: string; answer: unknown[] }>;
 }
 
+interface GlobalSocialLink {
+  platform: string;
+  url: string;
+}
+
 interface PageBuilderProps {
   modules?: Module[];
+  globalSocialLinks?: GlobalSocialLink[];
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -115,7 +121,7 @@ function buildFaqJsonLd(module: FAQModule) {
   return <JsonLd key={`${module._key}-jsonld`} data={faqPageSchema(items)} />;
 }
 
-export default function PageBuilder({ modules }: PageBuilderProps) {
+export default function PageBuilder({ modules, globalSocialLinks }: PageBuilderProps) {
   if (!modules?.length) return null;
 
   return (
@@ -131,14 +137,23 @@ export default function PageBuilder({ modules }: PageBuilderProps) {
         }
 
         const scheme = stegaClean(module.colorScheme);
-        const schemeClass = scheme === "dark" ? "scheme-dark" : scheme === "surface" ? "scheme-surface" : undefined;
+        const schemeClass =
+          scheme === "dark" ? "scheme-dark" :
+          scheme === "surface" ? "scheme-surface" :
+          scheme === "limestone" ? "scheme-limestone" :
+          scheme === "sky" ? "scheme-sky" :
+          undefined;
         const isFullBleed = fullBleedModules.has(module._type);
+
+        const extraProps = module._type === "contactInfo" && globalSocialLinks
+          ? { globalSocialLinks }
+          : {};
 
         if (isFullBleed) {
           return (
             <div key={module._key} className={schemeClass}>
               {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
-              <Component {...module} />
+              <Component {...module} {...extraProps} />
             </div>
           );
         }
@@ -147,7 +162,7 @@ export default function PageBuilder({ modules }: PageBuilderProps) {
           <div key={module._key} className={schemeClass}>
             <section className="mx-auto max-w-container py-section">
               {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
-              <Component {...module} />
+              <Component {...module} {...extraProps} />
             </section>
           </div>
         );

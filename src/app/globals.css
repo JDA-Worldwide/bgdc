@@ -4,7 +4,6 @@
 @theme {
   /* ── Color Palette ── */
   --color-brand-blue: #003B71;
-  --color-brand-navy-dark: #002550;
   --color-brand-sun: #FFBF3C;
   --color-brand-sky: #B7C7D3;
   --color-brand-prairie: #C0CA80;
@@ -61,15 +60,15 @@
 /* ── Section Color Schemes ── */
 @layer utilities {
   .scheme-dark {
-    --color-brand-background: #002550;
-    --color-brand-surface: #003B71;
+    --color-brand-background: #003B71;
+    --color-brand-surface: #004d94;
     --color-brand-border: rgba(255,255,255,0.12);
     --color-brand-text: rgba(255,255,255,0.87);
     --color-brand-text-heading: #FFFFFF;
     --color-brand-muted: rgba(183,199,211,0.85);
     --color-brand-primary: #FFBF3C;
     --color-brand-secondary: #FFBF3C;
-    background-color: #002550;
+    background-color: #003B71;
     color: rgba(255,255,255,0.87);
   }
 
@@ -93,6 +92,34 @@
     --color-brand-primary: #003B71;
     --color-brand-secondary: #FFBF3C;
     background-color: #F8F7F4;
+    color: #212322;
+  }
+
+  /* Limestone — #D6D1C4 (warm greige) */
+  .scheme-limestone {
+    --color-brand-background: #D6D1C4;
+    --color-brand-surface: #C8C2B8;
+    --color-brand-border: rgba(33,35,34,0.15);
+    --color-brand-text: #212322;
+    --color-brand-text-heading: #003B71;
+    --color-brand-muted: #4A4740;
+    --color-brand-primary: #003B71;
+    --color-brand-secondary: #FFBF3C;
+    background-color: #D6D1C4;
+    color: #212322;
+  }
+
+  /* Sky — #B7C7D3 (cool blue-grey) */
+  .scheme-sky {
+    --color-brand-background: #B7C7D3;
+    --color-brand-surface: #A6B9C8;
+    --color-brand-border: rgba(0,59,113,0.15);
+    --color-brand-text: #212322;
+    --color-brand-text-heading: #003B71;
+    --color-brand-muted: #3D4F5A;
+    --color-brand-primary: #003B71;
+    --color-brand-secondary: #FFBF3C;
+    background-color: #B7C7D3;
     color: #212322;
   }
 }
