@@ -61,7 +61,7 @@ export const pageBySlugQuery = groq`
       ...,
       _type == "hero" => {
         ...,
-        "backgroundImage": image
+        backgroundImage
       },
       _type == "teamGrid" => {
         heading,
@@ -86,7 +86,7 @@ export const homepageQuery = groq`
       ...,
       _type == "hero" => {
         ...,
-        "backgroundImage": image
+        backgroundImage
       },
       _type == "teamGrid" => {
         heading,
@@ -111,7 +111,7 @@ export const homepageDataQuery = groq`
       ...,
       _type == "hero" => {
         ...,
-        "backgroundImage": image
+        backgroundImage
       },
       _type == "teamGrid" => {
         heading,
@@ -121,6 +121,15 @@ export const homepageDataQuery = groq`
           jobTitle,
           photo,
           bio
+        }
+      },
+      _type == "industriesGrid" => {
+        ...,
+        industries[] {
+          name,
+          description,
+          image,
+          link
         }
       }
     }

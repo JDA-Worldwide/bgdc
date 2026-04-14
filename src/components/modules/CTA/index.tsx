@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { stegaClean } from "@sanity/client/stega";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import type { CTAProps } from "./types";
@@ -16,12 +17,13 @@ export default function CTA({
   secondaryButton,
   backgroundColor = "default",
 }: CTAProps) {
-  const isPrimary = backgroundColor === "primary";
+  const cleanBg = stegaClean(backgroundColor) ?? "default";
+  const isPrimary = cleanBg === "primary";
 
   return (
-    <div className={cn("py-section", bgStyles[backgroundColor])}>
+    <div className={cn("py-section", bgStyles[cleanBg])}>
       <Container>
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-4xl text-center">
           <h2
             className={cn(
               "font-heading text-3xl font-bold sm:text-4xl",

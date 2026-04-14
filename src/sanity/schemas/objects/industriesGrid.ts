@@ -33,6 +33,13 @@ export default defineType({
               validation: (rule) => rule.required(),
             }),
             defineField({
+              name: "description",
+              title: "Description",
+              type: "text",
+              rows: 3,
+              description: "Short text shown on hover/focus over the card.",
+            }),
+            defineField({
               name: "image",
               title: "Background Image",
               description: "Decorative background — no alt text required.",

@@ -39,10 +39,10 @@ export default function CtaBanner({
     <section
       ref={ref}
       id="contact"
-      className="relative flex flex-col items-center justify-center px-6 py-16 text-center sm:px-10 md:px-[170px] md:py-section"
+      className="relative flex flex-col items-center justify-center px-6 py-16 text-center sm:px-10 md:px-[170px] md:py-section border-t-[5px] border-t-white"
     >
-      {/* Background */}
-      <div className="absolute inset-0 -z-10">
+      {/* Background: image base layer (fallback) + animated mesh gradient on top */}
+      <div className="absolute inset-0 -z-10" aria-hidden="true">
         {backgroundImage?.asset ? (
           <SanityImage
             image={backgroundImage}
@@ -52,8 +52,13 @@ export default function CtaBanner({
             decorative
           />
         ) : (
-          <div className="absolute inset-0 bg-brand-surface" />
+          <div className="absolute inset-0 bg-brand-soybean" />
         )}
+        {/* Animated mesh gradient overlay */}
+        <div className="cta-gradient-canvas">
+          <div className="cta-blob-3" />
+          <div className="cta-blob-4" />
+        </div>
       </div>
 
       <div className="mx-auto max-w-[816px]">

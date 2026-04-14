@@ -28,7 +28,7 @@ export default function FAQ({ heading, items }: FAQProps) {
 
   return (
     <Container>
-      <div ref={ref} className="mx-auto max-w-3xl">
+      <div ref={ref} className="mx-auto max-w-4xl">
         {heading && (
           <h2 data-faq-animate className="mb-10 text-center font-heading text-3xl font-bold sm:text-4xl">
             {heading}

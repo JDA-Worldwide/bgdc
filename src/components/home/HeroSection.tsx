@@ -37,9 +37,8 @@ export default function HeroSection({
   backgroundImage,
 }: HeroSectionProps) {
   const sectionRef = useGsap<HTMLElement>((el) => {
-    gsap.fromTo(
+    gsap.to(
       el.querySelectorAll("[data-hero-animate]"),
-      { opacity: 0, y: 30 },
       { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", stagger: 0.15 }
     );
 

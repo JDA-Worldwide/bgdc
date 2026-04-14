@@ -13,4 +13,5 @@ export interface HeroProps {
   subheading?: string;
   cta?: HeroLink;
   backgroundImage?: SanityImageSource;
+  colorScheme?: "light" | "dark";
 }
