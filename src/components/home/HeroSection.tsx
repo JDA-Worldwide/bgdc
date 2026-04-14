@@ -74,7 +74,7 @@ export default function HeroSection({
             decorative
           />
         ) : (
-          <div className="absolute inset-0 bg-brand-navy-dark" />
+          <div className="absolute inset-0 bg-brand-blue" />
         )}
         <div className="absolute inset-0 bg-black/70 mix-blend-multiply" />
       </div>

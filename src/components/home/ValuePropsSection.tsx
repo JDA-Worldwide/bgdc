@@ -91,8 +91,14 @@ export default function ValuePropsSection({
         CSS sticky keeps it in view while the scroll panels below scroll past.
         top offset = nav height (85px) so it clears the nav bar.
       */}
-      <div className="sticky top-[85px] z-10 bg-brand-blue py-16">
-        <div className="mx-auto flex w-full max-w-container flex-col gap-10 px-6 sm:px-10 lg:flex-row lg:items-start lg:px-gutter">
+      <div className="sticky top-[85px] z-10 bg-brand-blue overflow-hidden flex items-center min-h-[calc(100vh-85px)] py-16">
+        {/*
+          Container row — standard grid alignment.
+          The card column uses a negative right margin + matching right padding
+          to bleed the white background to the viewport edge while keeping
+          the card's internal content aligned to the grid.
+        */}
+        <div className="mx-auto flex w-full max-w-container flex-col gap-10 px-6 sm:px-10 lg:flex-row lg:items-center lg:px-gutter">
 
           {/* Left headings — grid-stacked so container = tallest line */}
           <div className="shrink-0 grid *:[grid-area:1/1] lg:w-[36%]">
@@ -107,13 +113,18 @@ export default function ValuePropsSection({
             ))}
           </div>
 
-          {/* Right cards — grid-stacked so container = tallest card, no clipping */}
-          <div className="flex-1 grid *:[grid-area:1/1]">
+          {/*
+            Right cards — bleed to viewport edge.
+            -mr-6/-mr-10/-mr-gutter mirrors the container's own padding so the
+            white bg extends flush to the edge; pr-6/pr-10/pr-gutter keeps the
+            text content inset at the same distance.
+          */}
+          <div className="flex-1 grid *:[grid-area:1/1] -mr-6 sm:-mr-10 lg:-mr-gutter">
             {resolvedCards.map((card) => (
               <div
                 key={card.title}
                 data-value-card
-                className="flex gap-5 bg-white p-6 sm:gap-[30px] sm:p-10"
+                className="flex gap-5 bg-white p-6 pr-6 sm:gap-[30px] sm:p-10 sm:pr-10 lg:pr-gutter"
               >
                 <div className="hidden h-[55px] w-[65px] shrink-0 sm:block">
                   {card.icon?.asset ? (

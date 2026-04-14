@@ -18,9 +18,15 @@ interface PageData {
   modules?: Array<{ _type: string; _key: string; [key: string]: unknown }>;
 }
 
+interface SocialLink {
+  platform: string;
+  url: string;
+}
+
 interface GlobalSettings {
   siteTitle?: string;
   siteUrl?: string;
+  socialLinks?: SocialLink[];
 }
 
 export async function generateStaticParams() {
@@ -77,7 +83,7 @@ export default async function DynamicPage({
         })}
       />
       <h1 className="sr-only">{typedPage.title}</h1>
-      <PageBuilder modules={typedPage.modules} />
+      <PageBuilder modules={typedPage.modules} globalSocialLinks={typedSettings?.socialLinks} />
     </>
   );
 }

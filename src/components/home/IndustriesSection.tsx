@@ -132,7 +132,7 @@ export default function IndustriesSection({
               href={cta.url}
               target={cta.isExternal ? "_blank" : undefined}
               rel={cta.isExternal ? "noopener noreferrer" : undefined}
-              className="rounded-button bg-brand-blue px-5 py-[15px] text-base font-semibold leading-[21px] text-white transition-colors hover:bg-brand-navy-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 active:bg-brand-navy-dark/90"
+              className="rounded-button bg-brand-blue px-5 py-[15px] text-base font-semibold leading-[21px] text-white transition-colors hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 active:bg-brand-blue/90"
             >
               {cta.label}
               {cta.isExternal && (

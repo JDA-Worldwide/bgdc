@@ -100,9 +100,16 @@ export default function ContactInfo({
   website,
   address,
   hours,
+  useGlobalSocialLinks = true,
   socialLinks,
+  globalSocialLinks,
 }: ContactInfoProps) {
   const hasDetails = phone || fax || email || website || address || hours;
+
+  const activeSocialLinks: Array<{ _key?: string; platform: string; url: string }> =
+    useGlobalSocialLinks && globalSocialLinks?.length
+      ? globalSocialLinks
+      : (socialLinks ?? []);
 
   return (
     <Container>
@@ -197,15 +204,15 @@ export default function ContactInfo({
             </ul>
           )}
 
-          {socialLinks && socialLinks.length > 0 && (
+          {activeSocialLinks.length > 0 && (
             <div className="mt-8">
               <p className="mb-3 text-sm font-medium text-brand-muted uppercase tracking-wider">
                 Follow Along
               </p>
               <div className="flex gap-4">
-                {socialLinks.map((link) => (
+                {activeSocialLinks.map((link, i) => (
                   <a
-                    key={link._key}
+                    key={link._key ?? `${link.platform}-${i}`}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"

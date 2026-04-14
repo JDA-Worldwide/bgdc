@@ -4,6 +4,11 @@ export interface SocialLink {
   url: string;
 }
 
+export interface GlobalSocialLink {
+  platform: string;
+  url: string;
+}
+
 export interface ContactInfoProps {
   _type: "contactInfo";
   _key: string;
@@ -15,5 +20,7 @@ export interface ContactInfoProps {
   website?: string;
   address?: string;
   hours?: string;
+  useGlobalSocialLinks?: boolean;
   socialLinks?: SocialLink[];
+  globalSocialLinks?: GlobalSocialLink[];
 }

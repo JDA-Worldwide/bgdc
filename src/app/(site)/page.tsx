@@ -16,9 +16,15 @@ interface HomepageData {
   modules?: Array<{ _type: string; _key: string; [key: string]: unknown }>;
 }
 
+interface SocialLink {
+  platform: string;
+  url: string;
+}
+
 interface GlobalSettings {
   siteTitle?: string;
   siteUrl?: string;
+  socialLinks?: SocialLink[];
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -73,7 +79,7 @@ export default async function HomePage() {
       <h1 className="sr-only">
         Bargersville Economic Development — Cultivating Long-Term Success
       </h1>
-      <PageBuilder modules={data.modules} />
+      <PageBuilder modules={data.modules} globalSocialLinks={typedSettings?.socialLinks} />
     </>
   );
 }

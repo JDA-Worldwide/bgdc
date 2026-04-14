@@ -49,9 +49,18 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      name: "useGlobalSocialLinks",
+      title: "Use Global Social Links",
+      description: "Pull social icons from Global Settings instead of entering them manually below.",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
       name: "socialLinks",
       title: "Social Media Links",
+      description: "Only used when 'Use Global Social Links' is disabled.",
       type: "array",
+      hidden: ({ parent }) => !!parent?.useGlobalSocialLinks,
       of: [
         {
           type: "object",
