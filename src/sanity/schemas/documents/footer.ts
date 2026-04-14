@@ -32,9 +32,18 @@ export default defineType({
       ],
     }),
     defineField({
+      name: "useGlobalSocialLinks",
+      title: "Use Global Social Links",
+      description: "Pull social icons from Global Settings. Disable to override with custom links below.",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
       name: "socialLinks",
       title: "Social Links",
+      description: "Only used when 'Use Global Social Links' is disabled.",
       type: "array",
+      hidden: ({ document }) => !!document?.useGlobalSocialLinks,
       of: [
         {
           type: "object",
@@ -45,14 +54,15 @@ export default defineType({
               type: "string",
               options: {
                 list: [
-                  "facebook",
-                  "twitter",
-                  "instagram",
-                  "linkedin",
-                  "youtube",
-                  "tiktok",
+                  { title: "Facebook", value: "facebook" },
+                  { title: "Twitter / X", value: "twitter" },
+                  { title: "Instagram", value: "instagram" },
+                  { title: "LinkedIn", value: "linkedin" },
+                  { title: "YouTube", value: "youtube" },
+                  { title: "TikTok", value: "tiktok" },
                 ],
               },
+              validation: (rule) => rule.required(),
             }),
             defineField({
               name: "url",

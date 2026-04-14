@@ -39,6 +39,7 @@ export const footerQuery = groq`
         isExternal
       }
     },
+    useGlobalSocialLinks,
     socialLinks,
     copyrightText
   }
