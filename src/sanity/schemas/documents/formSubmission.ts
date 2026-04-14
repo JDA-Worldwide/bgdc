@@ -4,8 +4,6 @@ export default defineType({
   name: "formSubmission",
   title: "Form Submission",
   type: "document",
-  // Disallow creating or editing submissions from Studio — they are created via API only
-  __experimental_actions: ["read", "delete"],
   fields: [
     defineField({
       name: "name",

@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { stegaClean } from "@sanity/client/stega";
 import SanityImage from "@/components/ui/SanityImage";
 import Button from "@/components/ui/Button";
 import { useGsap } from "@/hooks/useGsap";
@@ -21,7 +22,7 @@ export default function Hero({
     );
   });
 
-  const isDark = colorScheme === "dark";
+  const isDark = stegaClean(colorScheme) === "dark";
 
   return (
     <div

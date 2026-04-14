@@ -1,4 +1,5 @@
 import type { ComponentType } from "react";
+import { stegaClean } from "@sanity/client/stega";
 import Hero from "./modules/Hero";
 import TextBlock from "./modules/TextBlock";
 import CTA from "./modules/CTA";
@@ -129,7 +130,7 @@ export default function PageBuilder({ modules }: PageBuilderProps) {
           return null;
         }
 
-        const isDark = module.colorScheme === "dark";
+        const isDark = stegaClean(module.colorScheme) === "dark";
         const isFullBleed = fullBleedModules.has(module._type);
 
         if (isFullBleed) {
