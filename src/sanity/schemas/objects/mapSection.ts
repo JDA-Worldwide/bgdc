@@ -49,7 +49,6 @@ export default defineType({
       name: "destinations",
       title: "Travel Times",
       type: "array",
-      options: { modal: { type: "popover", width: 0 } },
       of: [
         defineArrayMember({
           type: "object",

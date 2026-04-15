@@ -30,7 +30,6 @@ export default defineType({
       name: "reachItems",
       title: "Reach Items",
       type: "array",
-      options: { modal: { type: "popover", width: 0 } },
       of: [
         defineArrayMember({
           type: "object",

@@ -17,7 +17,6 @@ export default defineType({
       name: "logos",
       title: "Logos",
       type: "array",
-      options: { modal: { type: "popover", width: 0 } },
       of: [
         {
           type: "image",

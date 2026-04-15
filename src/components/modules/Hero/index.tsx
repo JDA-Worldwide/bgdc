@@ -22,17 +22,42 @@ export default function Hero({
     );
   });
 
-  const isDark = stegaClean(colorScheme) === "dark";
+  const scheme = stegaClean(colorScheme) ?? "light";
+  const hasImage = !!backgroundImage?.asset;
+  const isDark = scheme === "dark";
+
+  // Schemes that need dark text when used as a solid background (no image)
+  const lightSchemes = new Set(["light", "surface", "limestone", "sky"]);
+  const useDarkText = !hasImage && lightSchemes.has(scheme);
+
+  // Overlay opacity: dark scheme keeps the strong black veil; lighter schemes
+  // let more of the image colour through
+  const overlayClass: Record<string, string> = {
+    light:     "bg-black/70 mix-blend-multiply",
+    dark:      "bg-black/70 mix-blend-multiply",
+    surface:   "bg-black/40 mix-blend-multiply",
+    limestone: "bg-black/40 mix-blend-multiply",
+    sky:       "bg-black/35 mix-blend-multiply",
+  };
+
+  // No-image background: map scheme value to the scheme-* utility class
+  const schemeBgClass: Record<string, string> = {
+    light:     "",
+    dark:      "scheme-dark",
+    surface:   "scheme-surface",
+    limestone: "scheme-limestone",
+    sky:       "scheme-sky",
+  };
 
   return (
     <div
       ref={ref}
       className={cn(
         "relative flex min-h-[60vh] items-center justify-center overflow-hidden",
-        !backgroundImage?.asset && isDark && "scheme-dark bg-brand-background"
+        !hasImage && schemeBgClass[scheme]
       )}
     >
-      {backgroundImage?.asset && (
+      {hasImage && (
         <div className="absolute inset-0">
           <SanityImage
             image={backgroundImage}
@@ -42,21 +67,21 @@ export default function Hero({
             className="h-full w-full"
             decorative
           />
-          <div className="absolute inset-0 bg-black/70 mix-blend-multiply" />
+          <div className={cn("absolute inset-0", overlayClass[scheme] ?? overlayClass.light)} />
         </div>
       )}
 
       <div
         className={cn(
           "relative z-10 mx-auto max-w-content px-4 py-20 text-center sm:px-6 lg:px-8",
-          backgroundImage?.asset || isDark ? "text-white" : "text-brand-text-heading"
+          hasImage || isDark ? "text-white" : useDarkText ? "text-brand-text-heading" : "text-white"
         )}
       >
         <h1
           data-animate-fadeinup
           className={cn(
             "font-heading text-4xl font-medium tracking-tight sm:text-5xl lg:text-6xl",
-            backgroundImage?.asset || isDark ? "text-white" : "text-brand-text-heading"
+            hasImage || isDark ? "text-white" : useDarkText ? "text-brand-text-heading" : "text-white"
           )}
         >
           {heading?.split("\n").map((line, i, arr) => (
@@ -72,7 +97,7 @@ export default function Hero({
             data-animate-fadeinup
             className={cn(
               "mx-auto mt-6 max-w-4xl text-lg sm:text-xl",
-              backgroundImage?.asset || isDark ? "text-white/90" : "text-brand-muted"
+              hasImage || isDark ? "text-white/90" : useDarkText ? "text-brand-muted" : "text-white/90"
             )}
           >
             {subheading}

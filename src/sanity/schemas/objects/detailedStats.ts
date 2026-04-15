@@ -23,7 +23,6 @@ export default defineType({
       name: "categories",
       title: "Stat Categories",
       type: "array",
-      options: { modal: { type: "popover", width: 0 } },
       of: [
         {
           type: "object",
@@ -38,7 +37,6 @@ export default defineType({
               name: "stats",
               title: "Statistics",
               type: "array",
-              options: { modal: { type: "popover", width: 0 } },
               of: [
                 {
                   type: "object",

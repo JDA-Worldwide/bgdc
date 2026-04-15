@@ -1,6 +1,5 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import Container from "@/components/ui/Container";
 import AnimateIn from "@/components/ui/AnimateIn";
 import { useGsap } from "@/hooks/useGsap";
@@ -28,7 +27,7 @@ function StatsList({ stats }: { stats: StatItem[] }) {
   return (
     <ul ref={ref} className="space-y-4">
       {stats.map((stat) => (
-        <li key={stat._key} className="border-b border-brand-border pb-4 last:border-0 last:pb-0">
+        <li key={stat._key}>
           <span className="block font-heading text-2xl font-bold text-brand-primary">
             {stat.value}
           </span>
@@ -82,15 +81,10 @@ function getCategoryIcon(name: string): React.ReactNode {
   return categoryIcons.default;
 }
 
-function CategoryCard({ category, index }: { category: StatCategory; index: number }) {
-  // Mobile (1-col): alternate every row — even index = white, odd = surface
-  // Desktop (2-col): checkerboard — (row + col) % 2 determines shade
-  const mobileLight = index % 2 === 0;
-  const desktopLight = (Math.floor(index / 2) + (index % 2)) % 2 === 0;
-
+function CategoryCard({ category }: { category: StatCategory }) {
   return (
-    <div className={cn("p-8", mobileLight ? "bg-brand-background" : "bg-brand-surface", desktopLight ? "sm:bg-brand-background" : "sm:bg-brand-surface")}>
-      <AnimateIn className="mb-5 flex items-center gap-3">
+    <div className="flex flex-col gap-[30px] bg-white p-10">
+      <AnimateIn className="flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded bg-brand-primary/10 text-brand-primary">
           {getCategoryIcon(category.categoryName)}
         </div>
@@ -102,7 +96,7 @@ function CategoryCard({ category, index }: { category: StatCategory; index: numb
       {category.stats && category.stats.length > 0 ? (
         <StatsList stats={category.stats} />
       ) : (
-        <p className="text-sm text-brand-muted italic">Data coming soon</p>
+        <p className="text-sm italic text-brand-muted">Data coming soon</p>
       )}
     </div>
   );
@@ -139,9 +133,9 @@ export default function DetailedStats({
 
       {categories && categories.length > 0 && (
         <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
-          <div className="grid grid-cols-1 gap-px bg-brand-border sm:grid-cols-2">
-            {categories.map((category, index) => (
-              <CategoryCard key={category._key} category={category} index={index} />
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
+            {categories.map((category) => (
+              <CategoryCard key={category._key} category={category} />
             ))}
           </div>
         </div>

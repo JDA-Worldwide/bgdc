@@ -63,7 +63,6 @@ export default defineType({
       description: "Only used when 'Use Global Social Links' is disabled.",
       type: "array",
       hidden: ({ parent }) => !!parent?.useGlobalSocialLinks,
-      options: { modal: { type: "popover", width: 0 } },
       of: [
         {
           type: "object",

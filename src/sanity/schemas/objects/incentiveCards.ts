@@ -23,7 +23,6 @@ export default defineType({
       name: "programs",
       title: "Incentive Programs",
       type: "array",
-      options: { modal: { type: "popover", width: 0 } },
       of: [
         defineArrayMember({
           type: "object",

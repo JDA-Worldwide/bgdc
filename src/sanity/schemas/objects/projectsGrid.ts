@@ -34,7 +34,6 @@ export default defineType({
       name: "projects",
       title: "Projects",
       type: "array",
-      options: { modal: { type: "popover", width: 0 } },
       of: [
         defineArrayMember({
           type: "object",

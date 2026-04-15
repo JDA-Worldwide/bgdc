@@ -32,7 +32,6 @@ export default defineType({
       name: "images",
       title: "Photo Collage",
       type: "array",
-      options: { modal: { type: "popover", width: 0 } },
       of: [
         defineArrayMember({
           type: "image",

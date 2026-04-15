@@ -18,7 +18,6 @@ export default defineType({
       name: "partners",
       title: "Partners",
       type: "array",
-      options: { modal: { type: "popover", width: 0 } },
       of: [
         defineArrayMember({
           type: "object",

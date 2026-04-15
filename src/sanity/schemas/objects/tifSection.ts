@@ -29,7 +29,6 @@ export default defineType({
       name: "districts",
       title: "TIF Districts",
       type: "array",
-      options: { modal: { type: "popover", width: 0 } },
       of: [
         defineArrayMember({
           type: "object",

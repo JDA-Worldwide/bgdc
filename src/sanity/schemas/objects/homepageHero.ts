@@ -30,7 +30,6 @@ export default defineType({
       title: "Buttons",
       type: "array",
       validation: (rule) => rule.max(3),
-      options: { modal: { type: "popover", width: 0 } },
       of: [
         {
           type: "object",

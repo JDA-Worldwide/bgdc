@@ -17,7 +17,6 @@ export default defineType({
       name: "features",
       title: "Features",
       type: "array",
-      options: { modal: { type: "popover", width: 0 } },
       of: [
         defineArrayMember({
           type: "object",

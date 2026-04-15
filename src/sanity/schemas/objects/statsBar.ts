@@ -18,7 +18,6 @@ export default defineType({
       name: "stats",
       title: "Stats",
       type: "array",
-      options: { modal: { type: "popover", width: 0 } },
       of: [
         defineArrayMember({
           type: "object",
