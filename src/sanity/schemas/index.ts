@@ -35,7 +35,7 @@ import pageBuilder from "./objects/pageBuilder";
 
 // New homepage modules
 import statsBar from "./objects/statsBar";
-import communitySection from "./objects/communitySection";
+import communitySection from "./objects/stackedPhotosText";
 import valueProps from "./objects/valueProps";
 import mapSection from "./objects/mapSection";
 import industriesGrid from "./objects/industriesGrid";

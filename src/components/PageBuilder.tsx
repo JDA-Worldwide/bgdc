@@ -27,7 +27,7 @@ import GrowthSection from "./home/GrowthSection";
 import IncentivesSection from "./home/IncentivesSection";
 import CtaBanner from "./home/CtaBanner";
 import StatsSection from "./home/StatsSection";
-import CommunitySection from "./home/CommunitySection";
+import StackedPhotosText from "./home/StackedPhotosText";
 import ValuePropsSection from "./home/ValuePropsSection";
 import MapSection from "./home/MapSection";
 import IndustriesSection from "./home/IndustriesSection";
@@ -85,7 +85,7 @@ const moduleMap: Record<string, ComponentType<any>> = {
   incentivesGrid: IncentivesSection,
   ctaBanner: CtaBanner,
   statsBar: StatsSection,
-  communitySection: CommunitySection,
+  communitySection: StackedPhotosText,
   valueProps: ValuePropsSection,
   mapSection: MapSection,
   industriesGrid: IndustriesSection,

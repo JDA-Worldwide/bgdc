@@ -5,13 +5,39 @@ import type { SanityImageSource } from "@/components/ui/SanityImage/types";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useGsap } from "@/hooks/useGsap";
 import { useCallback } from "react";
+import {
+  PortableText,
+  type PortableTextReactComponents,
+} from "@portabletext/react";
 
-interface CommunitySectionProps {
+interface StackedPhotosTextProps {
   heading?: string;
   leadText?: string;
-  body?: string;
+  body?: unknown[];
   images?: SanityImageSource[];
 }
+
+const bodyComponents: Partial<PortableTextReactComponents> = {
+  block: {
+    normal: ({ children }) => (
+      <p className="text-base leading-7 text-brand-charcoal">{children}</p>
+    ),
+  },
+  marks: {
+    strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+    em: ({ children }) => <em className="italic">{children}</em>,
+    link: ({ children, value }) => (
+      <a
+        href={value?.href}
+        target={value?.blank ? "_blank" : undefined}
+        rel={value?.blank ? "noopener noreferrer" : undefined}
+        className="underline hover:no-underline"
+      >
+        {children}
+      </a>
+    ),
+  },
+};
 
 const NAV_OFFSET = 32;
 
@@ -20,7 +46,7 @@ const NAV_OFFSET = 32;
  * to create an overlapping, cascading layout per the design.
  * Coordinates are percentages of the container.
  */
-const imageLayout = [
+const imageLayoutFour = [
   {
     // Top-left — large aerial photo
     style: { top: "0%", left: "0%", width: "58%", rotate: "-1.5deg" },
@@ -43,13 +69,30 @@ const imageLayout = [
   },
 ] as const;
 
-export default function CommunitySection({
+/** Two-image variant: larger photos filling the full column height side-by-side */
+const imageLayoutTwo = [
+  {
+    // Top-left — larger, slight counter-clockwise tilt
+    style: { top: "0%", left: "0%", width: "62%", rotate: "-1.5deg" },
+    aspect: "aspect-[4/3.5]",
+  },
+  {
+    // Bottom-right — offset down and right, overlaps image 1
+    style: { top: "38%", left: "30%", width: "68%", rotate: "2deg" },
+    aspect: "aspect-[4/3.2]",
+  },
+] as const;
+
+export default function StackedPhotosText({
   heading = "A Community Built for Business \u2014 and Built to Last",
-  leadText = "Nestled in the heart of Johnson County, Bargersville provides a sense of community, hospitality, and possibility moving side by side. With roots dating back to 1850, this once-agricultural town has grown into a vibrant community that blends heritage with opportunity.",
-  body = "Today, Bargersville is one of the fastest-growing communities in the state, expanding by over 10,000 residents in the last five years. We are conveniently located between Indianapolis and Bloomington, have access to top school districts in the county, and have acreage to spare\u2014providing growth opportunities for families and businesses alike. Bargersville offers all of this, while preserving the character, relationships, and quality of life that make the community feel like home.",
+  leadText,
+  body,
   images,
-}: CommunitySectionProps) {
+}: StackedPhotosTextProps) {
   const resolvedImages = images && images.length > 0 ? images : Array(4).fill(null);
+  const isTwoImage = resolvedImages.length === 2;
+  const activeLayout = isTwoImage ? imageLayoutTwo : imageLayoutFour;
+  const collageHeight = isTwoImage ? "88%" : "130%";
 
   const stickyRef = useCallback((node: HTMLDivElement | null) => {
     if (!node) return;
@@ -92,9 +135,9 @@ export default function CommunitySection({
         {/* Image collage — overlapping, cascading layout */}
         <div className="relative w-full max-w-[660px] shrink-0">
           {/* Padding-bottom sets the aspect ratio of the collage container */}
-          <div className="relative" style={{ paddingBottom: "130%" }}>
-            {resolvedImages.slice(0, 4).map((img, i) => {
-              const layout = imageLayout[i];
+          <div className="relative" style={{ paddingBottom: collageHeight }}>
+            {resolvedImages.slice(0, activeLayout.length).map((img, i) => {
+              const layout = activeLayout[i];
               return (
                 <div
                   key={i}
@@ -145,7 +188,10 @@ export default function CommunitySection({
                 {leadText}
               </p>
             )}
-            {body && <p className="text-base leading-7">{body}</p>}
+            {body && body.length > 0 && (
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              <PortableText value={body as any} components={bodyComponents} />
+            )}
           </div>
         </div>
         </div>
