@@ -1,8 +1,10 @@
 import { defineType, defineField } from "sanity";
+import { TextIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "textBlock",
+  icon: TextIcon,
   title: "Text Block",
   type: "object",
   fields: [

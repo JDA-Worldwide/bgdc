@@ -1,8 +1,10 @@
 import { defineType, defineField } from "sanity";
+import { InfoOutlineIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "contactInfo",
+  icon: InfoOutlineIcon,
   title: "Contact Information",
   type: "object",
   fields: [
@@ -61,6 +63,7 @@ export default defineType({
       description: "Only used when 'Use Global Social Links' is disabled.",
       type: "array",
       hidden: ({ parent }) => !!parent?.useGlobalSocialLinks,
+      options: { modal: { type: "popover", width: 0 } },
       of: [
         {
           type: "object",

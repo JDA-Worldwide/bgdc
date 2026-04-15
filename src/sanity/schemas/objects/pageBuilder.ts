@@ -24,15 +24,12 @@ export default defineType({
     defineArrayMember({ type: "projectsGrid" }),
     defineArrayMember({ type: "incentivesGrid" }),
     defineArrayMember({ type: "ctaBanner" }),
-    // New homepage modules
     defineArrayMember({ type: "statsBar" }),
     defineArrayMember({ type: "communitySection" }),
     defineArrayMember({ type: "valueProps" }),
     defineArrayMember({ type: "mapSection" }),
     defineArrayMember({ type: "industriesGrid" }),
     defineArrayMember({ type: "momentumSection" }),
-
-    // Inner page modules
     defineArrayMember({ type: "contactInfo" }),
     defineArrayMember({ type: "detailedStats" }),
     defineArrayMember({ type: "projectShowcase" }),
@@ -41,4 +38,67 @@ export default defineType({
     defineArrayMember({ type: "tifSection" }),
     defineArrayMember({ type: "resourceHub" }),
   ],
+  options: {
+    insertMenu: {
+      filter: true,
+      groups: [
+        {
+          name: "heroes",
+          title: "Heroes & Headers",
+          of: ["homepageHero", "hero"],
+        },
+        {
+          name: "content",
+          title: "Content",
+          of: [
+            "textBlock",
+            "featureGrid",
+            "imageGallery",
+            "videoEmbed",
+            "testimonials",
+            "faq",
+            "resourceHub",
+          ],
+        },
+        {
+          name: "stats",
+          title: "Stats & Data",
+          of: ["statsCounter", "statsBar", "detailedStats", "momentumSection"],
+        },
+        {
+          name: "people",
+          title: "People & Community",
+          of: ["teamGrid", "communitySection", "partnersTicker", "logoBar"],
+        },
+        {
+          name: "location",
+          title: "Location & Projects",
+          of: [
+            "locationMap",
+            "mapSection",
+            "projectsGrid",
+            "projectShowcase",
+            "developmentAreaShowcase",
+          ],
+        },
+        {
+          name: "incentives",
+          title: "Incentives & Business",
+          of: [
+            "incentivesGrid",
+            "incentiveCards",
+            "industriesGrid",
+            "whyPillars",
+            "valueProps",
+            "tifSection",
+          ],
+        },
+        {
+          name: "cta",
+          title: "Calls to Action",
+          of: ["cta", "ctaBanner", "contactForm", "contactInfo"],
+        },
+      ],
+    },
+  },
 });

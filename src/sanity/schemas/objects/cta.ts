@@ -1,7 +1,9 @@
 import { defineType, defineField } from "sanity";
+import { ArrowRightIcon } from "@sanity/icons";
 
 export default defineType({
   name: "cta",
+  icon: ArrowRightIcon,
   title: "Call to Action",
   type: "object",
   fields: [

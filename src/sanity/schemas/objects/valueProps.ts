@@ -20,6 +20,7 @@ export default defineType({
       name: "cards",
       title: "Cards",
       type: "array",
+      options: { modal: { type: "popover", width: 0 } },
       of: [
         defineArrayMember({
           type: "object",

@@ -30,6 +30,7 @@ export default defineType({
       name: "pillars",
       title: "Pillars",
       type: "array",
+      options: { modal: { type: "popover", width: 0 } },
       of: [
         defineArrayMember({
           type: "object",

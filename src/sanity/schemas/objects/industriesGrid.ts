@@ -23,6 +23,7 @@ export default defineType({
       name: "industries",
       title: "Industries",
       type: "array",
+      options: { modal: { type: "popover", width: 0 } },
       of: [
         defineArrayMember({
           type: "object",

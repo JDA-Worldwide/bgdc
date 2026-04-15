@@ -1,8 +1,10 @@
 import { defineType, defineField } from "sanity";
+import { BarChartIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "detailedStats",
+  icon: BarChartIcon,
   title: "Detailed Statistics Panel",
   type: "object",
   fields: [
@@ -21,6 +23,7 @@ export default defineType({
       name: "categories",
       title: "Stat Categories",
       type: "array",
+      options: { modal: { type: "popover", width: 0 } },
       of: [
         {
           type: "object",
@@ -35,6 +38,7 @@ export default defineType({
               name: "stats",
               title: "Statistics",
               type: "array",
+              options: { modal: { type: "popover", width: 0 } },
               of: [
                 {
                   type: "object",

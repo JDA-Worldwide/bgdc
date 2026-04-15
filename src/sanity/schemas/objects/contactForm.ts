@@ -1,8 +1,10 @@
 import { defineType, defineField } from "sanity";
+import { EnvelopeIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "contactForm",
+  icon: EnvelopeIcon,
   title: "Contact Form",
   type: "object",
   fields: [

@@ -1,8 +1,10 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
+import { EarthGlobeIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "developmentAreaShowcase",
+  icon: EarthGlobeIcon,
   title: "Development Area Showcase",
   type: "object",
   fields: [
@@ -21,6 +23,7 @@ export default defineType({
       name: "areas",
       title: "Development Areas",
       type: "array",
+      options: { modal: { type: "popover", width: 0 } },
       of: [
         defineArrayMember({
           type: "object",

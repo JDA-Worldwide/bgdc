@@ -1,8 +1,10 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
+import { TagIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "incentiveCards",
+  icon: TagIcon,
   title: "Incentive Program Cards",
   type: "object",
   fields: [
@@ -21,6 +23,7 @@ export default defineType({
       name: "programs",
       title: "Incentive Programs",
       type: "array",
+      options: { modal: { type: "popover", width: 0 } },
       of: [
         defineArrayMember({
           type: "object",

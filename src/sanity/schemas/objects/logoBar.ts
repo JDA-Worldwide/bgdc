@@ -1,8 +1,10 @@
 import { defineType, defineField } from "sanity";
+import { ImagesIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "logoBar",
+  icon: ImagesIcon,
   title: "Logo Bar",
   type: "object",
   fields: [
@@ -15,6 +17,7 @@ export default defineType({
       name: "logos",
       title: "Logos",
       type: "array",
+      options: { modal: { type: "popover", width: 0 } },
       of: [
         {
           type: "image",

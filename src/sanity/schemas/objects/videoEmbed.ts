@@ -1,8 +1,10 @@
 import { defineType, defineField } from "sanity";
+import { PlayIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "videoEmbed",
+  icon: PlayIcon,
   title: "Video Embed",
   type: "object",
   fields: [

@@ -1,8 +1,10 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
+import { CaseIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "projectShowcase",
+  icon: CaseIcon,
   title: "Project Showcase",
   type: "object",
   fields: [
@@ -21,6 +23,7 @@ export default defineType({
       name: "projects",
       title: "Projects",
       type: "array",
+      options: { modal: { type: "popover", width: 0 } },
       of: [
         defineArrayMember({
           type: "object",
@@ -105,6 +108,7 @@ export default defineType({
               name: "images",
               title: "Project Images / Renderings",
               type: "array",
+              options: { modal: { type: "popover", width: 0 } },
               of: [
                 defineArrayMember({
                   type: "image",

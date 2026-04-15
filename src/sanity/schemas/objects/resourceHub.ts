@@ -1,8 +1,10 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
+import { BookIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "resourceHub",
+  icon: BookIcon,
   title: "Resource Hub",
   type: "object",
   fields: [
@@ -21,6 +23,7 @@ export default defineType({
       name: "resources",
       title: "Resources",
       type: "array",
+      options: { modal: { type: "popover", width: 0 } },
       of: [
         defineArrayMember({
           type: "object",

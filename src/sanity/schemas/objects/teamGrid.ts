@@ -1,8 +1,10 @@
 import { defineType, defineField } from "sanity";
+import { UsersIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
 
 export default defineType({
   name: "teamGrid",
+  icon: UsersIcon,
   title: "Team Grid",
   type: "object",
   fields: [
