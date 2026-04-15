@@ -80,8 +80,8 @@ export default defineType({
     select: { title: "heading", incentives: "incentives" },
     prepare({ title, incentives }) {
       return {
-        title: title || "Incentives Grid",
-        subtitle: `${incentives?.length ?? 0} incentives`,
+        title: title ? `Incentives Grid — ${title}` : "Incentives Grid",
+        subtitle: `Incentives Grid — ${incentives?.length ?? 0} incentives`,
       };
     },
   },

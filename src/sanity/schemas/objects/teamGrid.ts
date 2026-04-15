@@ -31,8 +31,8 @@ export default defineType({
     select: { title: "heading", members: "members" },
     prepare({ title, members }) {
       return {
-        title: title || "Team Grid",
-        subtitle: `${members?.length ?? 0} members`,
+        title: title ? `Team Grid — ${title}` : "Team Grid",
+        subtitle: `Team Grid — ${members?.length ?? 0} members`,
       };
     },
   },

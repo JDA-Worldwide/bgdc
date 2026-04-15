@@ -39,8 +39,8 @@ export default defineType({
     select: { title: "heading", logos: "logos" },
     prepare({ title, logos }) {
       return {
-        title: title || "Logo Bar",
-        subtitle: `${logos?.length ?? 0} logos`,
+        title: title ? `Logo Bar — ${title}` : "Logo Bar",
+        subtitle: `Logo Bar — ${logos?.length ?? 0} logos`,
       };
     },
   },

@@ -134,8 +134,8 @@ export default defineType({
     select: { heading: "heading", areas: "areas" },
     prepare({ heading, areas }) {
       return {
-        title: heading || "Development Area Showcase",
-        subtitle: `${areas?.length ?? 0} areas`,
+        title: heading ? `Dev Area Showcase — ${heading}` : "Dev Area Showcase",
+        subtitle: `Dev Area Showcase — ${areas?.length ?? 0} areas`,
       };
     },
   },

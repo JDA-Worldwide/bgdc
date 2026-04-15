@@ -67,7 +67,7 @@ export default defineType({
     prepare({ stats }) {
       return {
         title: "Stats Counter",
-        subtitle: `${stats?.length ?? 0} stats`,
+        subtitle: `Stats Counter — ${stats?.length ?? 0} stats`,
       };
     },
   },

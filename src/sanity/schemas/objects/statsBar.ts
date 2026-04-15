@@ -79,8 +79,8 @@ export default defineType({
     select: { heading: "heading", stats: "stats" },
     prepare({ heading, stats }) {
       return {
-        title: heading || "Stats Bar",
-        subtitle: `${stats?.length ?? 0} stats`,
+        title: heading ? `Stats Bar — ${heading}` : "Stats Bar",
+        subtitle: `Stats Bar — ${stats?.length ?? 0} stats`,
       };
     },
   },

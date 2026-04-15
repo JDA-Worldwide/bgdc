@@ -89,7 +89,7 @@ export default defineType({
   preview: {
     select: { title: "heading" },
     prepare({ title }) {
-      return { title: title || "Map Section", subtitle: "Location Map" };
+      return { title: title ? `Map Section — ${title}` : "Map Section", subtitle: "Map Section" };
     },
   },
 });

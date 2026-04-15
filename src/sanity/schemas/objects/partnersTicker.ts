@@ -43,7 +43,7 @@ export default defineType({
     prepare({ partners }) {
       return {
         title: "Partners Ticker",
-        subtitle: `${partners?.length ?? 0} partners`,
+        subtitle: `Partners Ticker — ${partners?.length ?? 0} partners`,
       };
     },
   },

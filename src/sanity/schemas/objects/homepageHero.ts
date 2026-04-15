@@ -86,7 +86,7 @@ export default defineType({
   preview: {
     select: { title: "heading" },
     prepare({ title }) {
-      return { title: title || "Homepage Hero", subtitle: "Hero Section" };
+      return { title: title ? `Homepage Hero — ${title}` : "Homepage Hero", subtitle: "Hero Section" };
     },
   },
 });

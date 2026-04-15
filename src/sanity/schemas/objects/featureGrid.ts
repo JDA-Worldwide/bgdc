@@ -54,8 +54,8 @@ export default defineType({
     select: { title: "heading", features: "features" },
     prepare({ title, features }) {
       return {
-        title: title || "Feature Grid",
-        subtitle: `${features?.length ?? 0} features`,
+        title: title ? `Feature Grid — ${title}` : "Feature Grid",
+        subtitle: `Feature Grid — ${features?.length ?? 0} features`,
       };
     },
   },

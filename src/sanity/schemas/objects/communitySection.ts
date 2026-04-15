@@ -54,7 +54,7 @@ export default defineType({
   preview: {
     select: { title: "heading" },
     prepare({ title }) {
-      return { title: title || "Community Section", subtitle: "Community" };
+      return { title: title ? `Community Section — ${title}` : "Community Section", subtitle: "Community Section" };
     },
   },
 });

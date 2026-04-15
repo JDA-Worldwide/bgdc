@@ -76,8 +76,8 @@ export default defineType({
     select: { title: "heading", pillars: "pillars" },
     prepare({ title, pillars }) {
       return {
-        title: title || "Why Pillars",
-        subtitle: `${pillars?.length ?? 0} pillars`,
+        title: title ? `Why Pillars — ${title}` : "Why Pillars",
+        subtitle: `Why Pillars — ${pillars?.length ?? 0} pillars`,
       };
     },
   },

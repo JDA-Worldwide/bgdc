@@ -50,7 +50,7 @@ export default defineType({
   preview: {
     select: { title: "heading" },
     prepare({ title }) {
-      return { title: title || "Contact Form", subtitle: "Contact Form" };
+      return { title: title ? `Contact Form — ${title}` : "Contact Form", subtitle: "Contact Form" };
     },
   },
 });

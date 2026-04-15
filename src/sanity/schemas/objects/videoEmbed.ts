@@ -35,7 +35,7 @@ export default defineType({
   preview: {
     select: { url: "url" },
     prepare({ url }) {
-      return { title: "Video Embed", subtitle: url };
+      return { title: "Video Embed", subtitle: url ? `Video Embed — ${url}` : "Video Embed" };
     },
   },
 });

@@ -46,7 +46,7 @@ export default defineType({
   preview: {
     select: { title: "heading" },
     prepare({ title }) {
-      return { title: title || "CTA", subtitle: "Call to Action" };
+      return { title: title ? `Call to Action — ${title}` : "Call to Action", subtitle: "Call to Action" };
     },
   },
 });

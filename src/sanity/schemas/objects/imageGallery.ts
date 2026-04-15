@@ -41,7 +41,7 @@ export default defineType({
     prepare({ images }) {
       return {
         title: "Image Gallery",
-        subtitle: `${images?.length ?? 0} images`,
+        subtitle: `Image Gallery — ${images?.length ?? 0} images`,
       };
     },
   },

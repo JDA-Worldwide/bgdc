@@ -72,8 +72,8 @@ export default defineType({
     select: { title: "heading", industries: "industries" },
     prepare({ title, industries }) {
       return {
-        title: title || "Industries Grid",
-        subtitle: `${industries?.length ?? 0} industries`,
+        title: title ? `Industries Grid — ${title}` : "Industries Grid",
+        subtitle: `Industries Grid — ${industries?.length ?? 0} industries`,
       };
     },
   },

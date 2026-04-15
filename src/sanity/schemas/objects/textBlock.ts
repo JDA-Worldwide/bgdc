@@ -64,8 +64,8 @@ export default defineType({
   preview: {
     select: { heading: "heading", body: "body" },
     prepare({ heading, body }) {
-      const text = heading ?? body?.[0]?.children?.[0]?.text ?? "Text Block";
-      return { title: text };
+      const text = heading ?? body?.[0]?.children?.[0]?.text;
+      return { title: text ? `Text Block — ${text}` : "Text Block", subtitle: "Text Block" };
     },
   },
 });
