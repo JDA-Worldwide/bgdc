@@ -39,7 +39,7 @@ export default defineType({
   preview: {
     select: { title: "heading" },
     prepare({ title }) {
-      return { title: title ? `Hero — ${title}` : "Hero", subtitle: "Hero" };
+      return { title: title || "Hero", subtitle: "Hero" };
     },
   },
 });

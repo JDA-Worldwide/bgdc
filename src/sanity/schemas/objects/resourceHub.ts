@@ -79,7 +79,7 @@ export default defineType({
     select: { heading: "heading", resources: "resources" },
     prepare({ heading, resources }) {
       return {
-        title: heading ? `Resource Hub — ${heading}` : "Resource Hub",
+        title: heading || "Resource Hub",
         subtitle: `Resource Hub — ${resources?.length ?? 0} resources`,
       };
     },

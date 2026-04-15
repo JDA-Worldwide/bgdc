@@ -65,7 +65,7 @@ export default defineType({
     select: { title: "heading", projects: "projects" },
     prepare({ title, projects }) {
       return {
-        title: title ? `Momentum Section — ${title}` : "Momentum Section",
+        title: title || "Momentum Section",
         subtitle: `Momentum Section — ${projects?.length ?? 0} projects`,
       };
     },

@@ -95,7 +95,7 @@ export default defineType({
     select: { title: "heading", projects: "projects" },
     prepare({ title, projects }) {
       return {
-        title: title ? `Projects Grid — ${title}` : "Projects Grid",
+        title: title || "Projects Grid",
         subtitle: `Projects Grid — ${projects?.length ?? 0} projects`,
       };
     },

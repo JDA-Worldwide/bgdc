@@ -66,7 +66,7 @@ export default defineType({
     select: { title: "heading", cards: "cards" },
     prepare({ title, cards }) {
       return {
-        title: title ? `Value Props — ${title.split("\n")[0]}` : "Value Props",
+        title: title?.split("\n")[0] || "Value Props",
         subtitle: `Value Props — ${cards?.length ?? 0} cards`,
       };
     },

@@ -165,7 +165,7 @@ export default defineType({
     select: { heading: "heading", projects: "projects" },
     prepare({ heading, projects }) {
       return {
-        title: heading ? `Project Showcase — ${heading}` : "Project Showcase",
+        title: heading || "Project Showcase",
         subtitle: `Project Showcase — ${projects?.length ?? 0} projects`,
       };
     },

@@ -43,7 +43,7 @@ export default defineType({
   preview: {
     select: { title: "heading" },
     prepare({ title }) {
-      return { title: title ? `CTA Banner — ${title}` : "CTA Banner", subtitle: "CTA Banner" };
+      return { title: title || "CTA Banner", subtitle: "CTA Banner" };
     },
   },
 });

@@ -95,7 +95,7 @@ export default defineType({
   preview: {
     select: { heading: "heading" },
     prepare({ heading }) {
-      return { title: heading ? `TIF Section — ${heading}` : "TIF Section", subtitle: "TIF District" };
+      return { title: heading || "TIF District Section", subtitle: "TIF District" };
     },
   },
 });

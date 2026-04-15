@@ -49,7 +49,7 @@ export default defineType({
     select: { title: "heading", items: "items" },
     prepare({ title, items }) {
       return {
-        title: title ? `FAQ — ${title}` : "FAQ",
+        title: title || "FAQ",
         subtitle: `FAQ — ${items?.length ?? 0} questions`,
       };
     },

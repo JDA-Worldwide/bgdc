@@ -82,7 +82,7 @@ export default defineType({
     select: { heading: "heading", programs: "programs" },
     prepare({ heading, programs }) {
       return {
-        title: heading ? `Incentive Cards — ${heading}` : "Incentive Cards",
+        title: heading || "Incentive Cards",
         subtitle: `Incentive Cards — ${programs?.length ?? 0} programs`,
       };
     },
