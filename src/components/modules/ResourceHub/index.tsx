@@ -23,7 +23,7 @@ function ResourceCard({ resource }: { resource: Resource }) {
           <Button
             href={resource.url}
             isExternal={resource.isExternal}
-            variant="outline"
+            variant="blue-dark-outline"
             size="sm"
           >
             {resource.linkLabel || "View Resource"}

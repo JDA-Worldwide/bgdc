@@ -5,8 +5,8 @@ import AnimateIn from "@/components/ui/AnimateIn";
 import MapboxMapClient from "@/components/ui/MapboxMap/MapboxMapClient";
 import type { ContactInfoProps } from "./types";
 
-const OFFICE_LNG = -86.1617;
-const OFFICE_LAT = 39.5534;
+const OFFICE_LNG = -86.164665;
+const OFFICE_LAT = 39.521121;
 
 const OFFICE_MARKERS = [
   { lng: OFFICE_LNG, lat: OFFICE_LAT, label: "24 N Main St, Bargersville", isPrimary: true },

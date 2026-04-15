@@ -122,6 +122,57 @@
     background-color: #B7C7D3;
     color: #212322;
   }
+
+  /* ── Button Color Schemes ── */
+
+  /* Dark Blue: brand-blue fill → inverts to white fill on hover/focus */
+  .btn-blue-dark {
+    background-color: var(--color-brand-blue);
+    color: var(--color-brand-white);
+    border: 2px solid var(--color-brand-blue);
+  }
+  .btn-blue-dark:hover,
+  .btn-blue-dark:focus-visible {
+    background-color: var(--color-brand-white);
+    color: var(--color-brand-blue);
+  }
+
+  /* Light Blue: brand-sky fill → inverts to brand-blue fill on hover/focus */
+  .btn-blue-light {
+    background-color: var(--color-brand-sky);
+    color: var(--color-brand-blue);
+    border: 2px solid var(--color-brand-sky);
+  }
+  .btn-blue-light:hover,
+  .btn-blue-light:focus-visible {
+    background-color: var(--color-brand-blue);
+    color: var(--color-brand-white);
+    border-color: var(--color-brand-blue);
+  }
+
+  /* Dark Blue Outline: transparent + brand-blue border/text → fills to brand-blue on hover/focus */
+  .btn-blue-dark-outline {
+    background-color: transparent;
+    color: var(--color-brand-blue);
+    border: 2px solid var(--color-brand-blue);
+  }
+  .btn-blue-dark-outline:hover,
+  .btn-blue-dark-outline:focus-visible {
+    background-color: var(--color-brand-blue);
+    color: var(--color-brand-white);
+  }
+
+  /* Light Blue Outline: transparent + brand-sky border/text → fills to brand-sky on hover/focus */
+  .btn-blue-light-outline {
+    background-color: transparent;
+    color: var(--color-brand-sky);
+    border: 2px solid var(--color-brand-sky);
+  }
+  .btn-blue-light-outline:hover,
+  .btn-blue-light-outline:focus-visible {
+    background-color: var(--color-brand-sky);
+    color: var(--color-brand-blue);
+  }
 }
 
 /* ── Typography Scale ──

@@ -110,7 +110,7 @@ export default function Hero({
               href={cta.url}
               isExternal={cta.isExternal}
               size="lg"
-              variant="primary"
+              variant={hasImage || isDark ? "blue-light" : "blue-dark"}
             >
               {cta.label}
             </Button>

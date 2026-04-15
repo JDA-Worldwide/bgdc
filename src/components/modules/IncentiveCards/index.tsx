@@ -44,7 +44,7 @@ function ProgramCard({ program }: { program: IncentiveProgram }) {
 
       <div className="mt-auto pt-4">
         {program.cta?.label && program.cta.url ? (
-          <Button href={program.cta.url} isExternal={program.cta.isExternal} variant="outline" size="sm">
+          <Button href={program.cta.url} isExternal={program.cta.isExternal} variant="blue-dark-outline" size="sm">
             {program.cta.label}
           </Button>
         ) : (

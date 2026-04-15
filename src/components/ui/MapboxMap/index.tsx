@@ -18,7 +18,7 @@ interface MapboxMapProps {
 }
 
 export default function MapboxMap({
-  center = [-86.1581, 39.5534],
+  center = [-86.164665, 39.521121],
   zoom = 10,
   markers = [],
   className = "",

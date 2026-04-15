@@ -64,7 +64,7 @@ export default function Footer({ socialLinks }: FooterProps) {
   const links = socialLinks?.length ? socialLinks : FALLBACK_SOCIAL_LINKS;
 
   return (
-    <footer className="bg-brand-blue pb-10 pt-[50px]">
+    <footer className="border-t-[5px] border-t-white bg-brand-blue pb-10 pt-[50px]">
       <div className="mx-auto flex max-w-container flex-col gap-[52px] px-6 sm:px-10 lg:px-gutter">
         {/* Top row: logo + address */}
         <div className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-start">

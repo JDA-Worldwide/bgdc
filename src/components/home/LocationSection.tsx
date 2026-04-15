@@ -43,8 +43,8 @@ const defaultReachItems: ReachItem[] = [
 ];
 
 // Bargersville, IN coordinates
-const BARGERSVILLE_LNG = -86.1581;
-const BARGERSVILLE_LAT = 39.5534;
+const BARGERSVILLE_LNG = -86.164665;
+const BARGERSVILLE_LAT = 39.521121;
 
 const DEFAULT_MARKERS = [
   { lng: BARGERSVILLE_LNG, lat: BARGERSVILLE_LAT, label: "Bargersville", isPrimary: true },

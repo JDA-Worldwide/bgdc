@@ -50,8 +50,7 @@ export default function CTA({
                 <Button
                   href={primaryButton.url}
                   isExternal={primaryButton.isExternal}
-                  variant={isPrimary ? "outline" : "primary"}
-                  className={isPrimary ? "border-white text-white hover:bg-white hover:text-brand-primary" : ""}
+                  variant={isPrimary ? "blue-light" : "blue-dark"}
                 >
                   {primaryButton.label}
                 </Button>
@@ -60,8 +59,7 @@ export default function CTA({
                 <Button
                   href={secondaryButton.url}
                   isExternal={secondaryButton.isExternal}
-                  variant="outline"
-                  className={isPrimary ? "border-white/60 text-white hover:bg-white hover:text-brand-primary" : ""}
+                  variant={isPrimary ? "blue-light-outline" : "blue-dark-outline"}
                 >
                   {secondaryButton.label}
                 </Button>

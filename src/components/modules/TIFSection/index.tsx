@@ -87,7 +87,7 @@ export default function TIFSection({
           )}
 
           {cta?.label && cta.url && (
-            <Button href={cta.url} isExternal={cta.isExternal} variant="primary">
+            <Button href={cta.url} isExternal={cta.isExternal} variant="blue-dark">
               {cta.label}
             </Button>
           )}

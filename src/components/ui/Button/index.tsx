@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline";
+  variant?: "primary" | "secondary" | "outline" | "blue-dark" | "blue-light" | "blue-dark-outline" | "blue-light-outline";
   size?: "sm" | "md" | "lg";
   href?: string;
   isExternal?: boolean;
@@ -14,6 +14,14 @@ const variants = {
     "bg-brand-primary text-white hover:bg-brand-primary/90 focus-visible:ring-brand-primary",
   outline:
     "border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white focus-visible:ring-brand-primary",
+  "blue-dark":
+    "btn-blue-dark focus-visible:ring-brand-blue",
+  "blue-light":
+    "btn-blue-light focus-visible:ring-brand-sky",
+  "blue-dark-outline":
+    "btn-blue-dark-outline focus-visible:ring-brand-blue",
+  "blue-light-outline":
+    "btn-blue-light-outline focus-visible:ring-brand-sky",
 };
 
 const sizes = {

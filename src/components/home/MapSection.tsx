@@ -15,7 +15,7 @@ interface MapSectionProps {
   mapCenterLabel?: string;
 }
 
-const DEFAULT_CENTER: [number, number] = [-86.1581, 39.5534];
+const DEFAULT_CENTER: [number, number] = [-86.164665, 39.521121];
 const DEFAULT_CENTER_LABEL = "Bargersville, IN";
 
 const defaultDestinations: Destination[] = [

@@ -79,7 +79,7 @@ function AreaSection({ area, index }: { area: DevelopmentArea; index: number }) 
             <Button
               href={area.cta.url}
               isExternal={area.cta.isExternal}
-              variant="primary"
+              variant="blue-dark"
               size="sm"
             >
               {area.cta.label}

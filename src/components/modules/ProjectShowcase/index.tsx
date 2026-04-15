@@ -82,7 +82,7 @@ function ProjectCard({ project }: { project: Project }) {
             <Button
               href={project.cta.url}
               isExternal={project.cta.isExternal}
-              variant="outline"
+              variant="blue-dark-outline"
               size="sm"
             >
               {project.cta.label}

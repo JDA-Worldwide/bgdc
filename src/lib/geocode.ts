@@ -3,6 +3,8 @@
  * Only call this from server components or server actions — never from client code.
  */
 
+import { stegaClean } from "@sanity/client/stega";
+
 interface GeocodeResult {
   lng: number;
   lat: number;
@@ -14,8 +16,8 @@ interface GeocodeResult {
  */
 export async function geocodeAddress(
   address: string,
-  proximityLng = -86.1581,
-  proximityLat = 39.5534,
+  proximityLng = -86.164665,
+  proximityLat = 39.521121,
 ): Promise<GeocodeResult | null> {
   const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
   if (!token) {
@@ -23,31 +25,32 @@ export async function geocodeAddress(
     return null;
   }
 
+  const cleanAddress = stegaClean(address);
+
   const params = new URLSearchParams({
-    access_token: token,
     limit: "1",
     proximity: `${proximityLng},${proximityLat}`,
     country: "US",
   });
 
-  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?${params}`;
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(cleanAddress)}.json?${params}&access_token=${token}`;
 
   try {
     const res = await fetch(url, { next: { revalidate: 86400 } }); // cache for 24 h
     if (!res.ok) {
-      console.warn(`[geocode] Request failed for "${address}": ${res.status}`);
+      console.warn(`[geocode] Request failed for "${cleanAddress}": ${res.status}`);
       return null;
     }
     const data = await res.json();
     const feature = data?.features?.[0];
     if (!feature) {
-      console.warn(`[geocode] No results for "${address}"`);
+      console.warn(`[geocode] No results for "${cleanAddress}"`);
       return null;
     }
     const [lng, lat] = feature.center as [number, number];
     return { lng, lat };
   } catch (err) {
-    console.error(`[geocode] Error geocoding "${address}":`, err);
+    console.error(`[geocode] Error geocoding "${cleanAddress}":`, err);
     return null;
   }
 }

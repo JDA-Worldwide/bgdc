@@ -165,8 +165,8 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                     <button
                       type="button"
                       className={cn(
-                        "flex items-center gap-1.5 text-base font-semibold leading-7 transition-colors hover:text-brand-sun",
-                        isActive(item.url) ? "text-brand-sun" : "text-brand-blue"
+                        "flex items-center gap-1.5 text-base font-semibold leading-7 transition-colors hover:text-brand-soybean",
+                        isActive(item.url) ? "text-brand-soybean" : "text-brand-blue"
                       )}
                       aria-expanded={openDropdown === item.label}
                       aria-haspopup="true"
@@ -203,8 +203,8 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                             href={item.url}
                             isExternal={item.isExternal}
                             className={cn(
-                              "block px-5 py-2.5 text-[15px] font-medium transition-colors hover:bg-brand-surface hover:text-brand-sun border-b border-brand-border",
-                              isActive(item.url) ? "text-brand-sun" : "text-brand-blue"
+                              "block px-5 py-2.5 text-[15px] font-medium transition-colors hover:bg-brand-surface hover:text-brand-soybean border-b border-brand-border",
+                              isActive(item.url) ? "text-brand-soybean" : "text-brand-blue"
                             )}
                           >
                             {item.label} Overview
@@ -215,8 +215,8 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                               href={child.url}
                               isExternal={child.isExternal}
                               className={cn(
-                                "block px-5 py-2.5 text-[15px] transition-colors hover:bg-brand-surface hover:text-brand-sun",
-                                isActive(child.url) ? "text-brand-sun" : "text-brand-blue"
+                                "block px-5 py-2.5 text-[15px] transition-colors hover:bg-brand-surface hover:text-brand-soybean",
+                                isActive(child.url) ? "text-brand-soybean" : "text-brand-blue"
                               )}
                             >
                               {child.label}
@@ -235,8 +235,8 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                   href={item.url}
                   isExternal={item.isExternal}
                   className={cn(
-                    "text-base font-semibold leading-7 transition-colors hover:text-brand-sun",
-                    isActive(item.url) ? "text-brand-sun" : "text-brand-blue"
+                    "text-base font-semibold leading-7 transition-colors hover:text-brand-soybean",
+                    isActive(item.url) ? "text-brand-soybean" : "text-brand-blue"
                   )}
                 >
                   {item.label}
@@ -292,8 +292,8 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                     <button
                       type="button"
                       className={cn(
-                        "flex w-full items-center justify-between rounded px-3 py-3 text-base font-semibold transition-colors hover:text-brand-sun",
-                        isActive(item.url) ? "text-brand-sun" : "text-brand-blue"
+                        "flex w-full items-center justify-between rounded px-3 py-3 text-base font-semibold transition-colors hover:text-brand-soybean",
+                        isActive(item.url) ? "text-brand-soybean" : "text-brand-blue"
                       )}
                       aria-expanded={openDropdown === item.label}
                       onClick={() =>
@@ -328,8 +328,8 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                           href={item.url}
                           isExternal={item.isExternal}
                           className={cn(
-                            "block rounded px-3 py-2 text-[15px] transition-colors hover:text-brand-sun",
-                            isActive(item.url) ? "text-brand-sun" : "text-brand-blue"
+                            "block rounded px-3 py-2 text-[15px] transition-colors hover:text-brand-soybean",
+                            isActive(item.url) ? "text-brand-soybean" : "text-brand-blue"
                           )}
                         >
                           Overview
@@ -340,8 +340,8 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                             href={child.url}
                             isExternal={child.isExternal}
                             className={cn(
-                              "block rounded px-3 py-2 text-[15px] transition-colors hover:text-brand-sun",
-                              isActive(child.url) ? "text-brand-sun" : "text-brand-blue"
+                              "block rounded px-3 py-2 text-[15px] transition-colors hover:text-brand-soybean",
+                              isActive(child.url) ? "text-brand-soybean" : "text-brand-blue"
                             )}
                           >
                             {child.label}
@@ -359,8 +359,8 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                   href={item.url}
                   isExternal={item.isExternal}
                   className={cn(
-                    "block rounded px-3 py-3 text-base font-semibold transition-colors hover:text-brand-sun",
-                    isActive(item.url) ? "text-brand-sun" : "text-brand-blue"
+                    "block rounded px-3 py-3 text-base font-semibold transition-colors hover:text-brand-soybean",
+                    isActive(item.url) ? "text-brand-soybean" : "text-brand-blue"
                   )}
                 >
                   {item.label}

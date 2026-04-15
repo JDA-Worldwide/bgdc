@@ -47,7 +47,7 @@ interface FormErrors {
 
 const inputClass = (error?: string) =>
   cn(
-    "w-full rounded border px-4 py-3 text-brand-text outline-none transition-colors focus-visible:border-brand-secondary focus-visible:ring-1 focus-visible:ring-brand-secondary",
+    "w-full rounded border bg-white px-4 py-3 text-brand-text outline-none transition-colors focus-visible:border-brand-secondary focus-visible:ring-1 focus-visible:ring-brand-secondary",
     error ? "border-red-500" : "border-brand-border"
   );
 
@@ -235,6 +235,7 @@ export default function ContactForm({
                   <input
                     id="contact-first-name"
                     type="text"
+                    placeholder="First name"
                     autoComplete="given-name"
                     value={values.firstName}
                     onChange={(e) => handleChange("firstName", e.target.value)}
@@ -248,6 +249,7 @@ export default function ContactForm({
                   <input
                     id="contact-last-name"
                     type="text"
+                    placeholder="Last name"
                     autoComplete="family-name"
                     value={values.lastName}
                     onChange={(e) => handleChange("lastName", e.target.value)}
@@ -262,6 +264,7 @@ export default function ContactForm({
                 <input
                   id="contact-company"
                   type="text"
+                  placeholder="Your company or organization"
                   autoComplete="organization"
                   value={values.company}
                   onChange={(e) => handleChange("company", e.target.value)}
@@ -273,6 +276,7 @@ export default function ContactForm({
                 <input
                   id="contact-email"
                   type="email"
+                  placeholder="you@example.com"
                   autoComplete="email"
                   value={values.email}
                   onChange={(e) => handleChange("email", e.target.value)}
@@ -286,6 +290,7 @@ export default function ContactForm({
                 <input
                   id="contact-phone"
                   type="tel"
+                  placeholder="(555) 555-5555"
                   autoComplete="tel"
                   value={values.phone}
                   onChange={(e) => handleChange("phone", e.target.value)}
@@ -297,6 +302,7 @@ export default function ContactForm({
                 <FormField id="contact-inquiry" label="How can we help you?">
                   <select
                     id="contact-inquiry"
+                    title="How can we help you?"
                     value={values.inquiryType}
                     onChange={(e) => handleChange("inquiryType", e.target.value)}
                     className={inputClass()}
@@ -315,6 +321,7 @@ export default function ContactForm({
                 <textarea
                   id="contact-message"
                   rows={5}
+                  placeholder="Tell us about your project or question…"
                   value={values.message}
                   onChange={(e) => handleChange("message", e.target.value)}
                   aria-invalid={!!errors.message}
@@ -344,6 +351,7 @@ export default function ContactForm({
 
               <Button
                 type="submit"
+                variant="blue-dark"
                 disabled={status === "submitting" || (!!siteKey && !turnstileToken)}
                 aria-busy={status === "submitting"}
                 aria-disabled={status === "submitting"}
