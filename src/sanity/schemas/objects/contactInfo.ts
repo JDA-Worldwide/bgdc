@@ -1,4 +1,4 @@
-import { defineType, defineField } from "sanity";
+import { defineType, defineField, defineArrayMember } from "sanity";
 import { InfoOutlineIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
 
@@ -64,8 +64,9 @@ export default defineType({
       type: "array",
       hidden: ({ parent }) => !!parent?.useGlobalSocialLinks,
       of: [
-        {
+        defineArrayMember({
           type: "object",
+          options: { collapsed: false },
           fields: [
             defineField({
               name: "platform",
@@ -92,7 +93,7 @@ export default defineType({
               return { title: platform || "Social Link", subtitle: url };
             },
           },
-        },
+        }),
       ],
     }),
     colorSchemeField,

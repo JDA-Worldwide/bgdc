@@ -1,4 +1,4 @@
-import { defineType, defineField } from "sanity";
+import { defineType, defineField, defineArrayMember } from "sanity";
 import { BarChartIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
 
@@ -24,8 +24,9 @@ export default defineType({
       title: "Stat Categories",
       type: "array",
       of: [
-        {
+        defineArrayMember({
           type: "object",
+          options: { collapsed: false },
           fields: [
             defineField({
               name: "categoryName",
@@ -38,8 +39,9 @@ export default defineType({
               title: "Statistics",
               type: "array",
               of: [
-                {
+                defineArrayMember({
                   type: "object",
+                  options: { collapsed: false },
                   fields: [
                     defineField({
                       name: "value",
@@ -61,7 +63,7 @@ export default defineType({
                       return { title: value, subtitle: label };
                     },
                   },
-                },
+                }),
               ],
             }),
           ],
@@ -71,7 +73,7 @@ export default defineType({
               return { title: categoryName || "Category" };
             },
           },
-        },
+        }),
       ],
     }),
     colorSchemeField,

@@ -33,6 +33,7 @@ export default defineType({
       of: [
         defineArrayMember({
           type: "object",
+          options: { collapsed: false },
           fields: [
             defineField({
               name: "icon",
