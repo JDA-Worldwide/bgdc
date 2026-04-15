@@ -1,4 +1,4 @@
-import { defineType, defineField } from "sanity";
+import { defineType, defineField, defineArrayMember } from "sanity";
 import { ImagesIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
 
@@ -18,8 +18,9 @@ export default defineType({
       title: "Logos",
       type: "array",
       of: [
-        {
+        defineArrayMember({
           type: "image",
+          options: { collapsed: false },
           fields: [
             defineField({
               name: "alt",
@@ -28,7 +29,7 @@ export default defineType({
               validation: (rule) => rule.required(),
             }),
           ],
-        },
+        }),
       ],
       validation: (rule) => rule.min(1),
     }),

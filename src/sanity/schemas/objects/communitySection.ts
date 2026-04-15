@@ -35,7 +35,7 @@ export default defineType({
       of: [
         defineArrayMember({
           type: "image",
-          options: { hotspot: true },
+          options: { hotspot: true, collapsed: false },
           fields: [
             defineField({
               name: "alt",
