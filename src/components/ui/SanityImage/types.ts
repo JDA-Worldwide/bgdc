@@ -1,14 +1,14 @@
 export interface SanityImageSource {
   _type: "image";
-  asset: {
+  asset?: {
     _ref: string;
-    _type: "reference";
+    _type?: "reference";
   };
   hotspot?: {
     x: number;
     y: number;
-    height: number;
-    width: number;
+    height?: number;
+    width?: number;
   };
   crop?: {
     top: number;

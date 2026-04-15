@@ -3,13 +3,15 @@
 import { useGsap } from "@/hooks/useGsap";
 import { gsap } from "@/lib/gsap";
 import SanityImage from "@/components/ui/SanityImage";
+import CtaButtons from "@/components/ui/CtaButtons";
+import type { CtaButtonItem } from "@/components/ui/CtaButtons";
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
 
 interface CtaBannerProps {
   callout?: string;
   heading?: string;
   body?: string;
-  cta?: { label: string; url: string; isExternal?: boolean };
+  ctas?: CtaButtonItem[];
   backgroundImage?: SanityImageSource;
 }
 
@@ -17,7 +19,7 @@ export default function CtaBanner({
   callout = "Let\u2019s Talk",
   heading = "Ready to Take the Next Step?",
   body = "Devoted to the good of our town, Bargersville Economic Development partners with entrepreneurs, business leaders, and community stakeholders to drive long-term economic growth. Through hands-on guidance and practical resources, we help businesses turn what they start here into lasting success\u2014going beyond permits and paperwork to support real growth.",
-  cta = { label: "Get in Touch", url: "#get-in-touch" },
+  ctas,
   backgroundImage,
 }: CtaBannerProps) {
   const ref = useGsap<HTMLElement>((el) => {
@@ -75,21 +77,7 @@ export default function CtaBanner({
         {body && (
           <p data-animate-fadeinup className="mt-8 text-base leading-7 text-brand-black">{body}</p>
         )}
-        {cta?.url && (
-          <div data-animate-fadeinup className="mt-8">
-            <a
-              href={cta.url}
-              target={cta.isExternal ? "_blank" : undefined}
-              rel={cta.isExternal ? "noopener noreferrer" : undefined}
-              className="inline-block rounded-button bg-brand-blue px-5 py-[15px] text-base font-semibold leading-[21px] text-white transition-colors hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 active:bg-brand-blue/90"
-            >
-              {cta.label}
-              {cta.isExternal && (
-                <span className="sr-only"> (opens in new tab)</span>
-              )}
-            </a>
-          </div>
-        )}
+        <CtaButtons data-animate-fadeinup ctas={ctas} className="mt-8 justify-center" />
       </div>
     </section>
   );

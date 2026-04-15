@@ -4,12 +4,8 @@ import { useGsap } from "@/hooks/useGsap";
 import { gsap } from "@/lib/gsap";
 import SectionLabel from "./SectionLabel";
 import ArrowIcon from "./ArrowIcon";
-
-interface LinkField {
-  label?: string;
-  url?: string;
-  isExternal?: boolean;
-}
+import CtaButtons from "@/components/ui/CtaButtons";
+import type { CtaButtonItem } from "@/components/ui/CtaButtons";
 
 interface Project {
   _key?: string;
@@ -17,14 +13,14 @@ interface Project {
   tagColor?: string;
   title: string;
   description?: string;
-  link?: LinkField;
+  link?: { label?: string; url?: string; isExternal?: boolean };
 }
 
 interface GrowthSectionProps {
   sectionLabel?: string;
   heading?: string;
   description?: string;
-  ctaButton?: LinkField;
+  ctas?: CtaButtonItem[];
   projects?: Project[];
 }
 
@@ -73,7 +69,7 @@ export default function GrowthSection({
   sectionLabel = "Growth in Progress",
   heading = "What\u2019s happening here right now",
   description = "New residential, commercial, and mixed-use development is actively reshaping Bargersville. Here\u2019s what\u2019s underway and what\u2019s on the horizon near the I-69/SR 144 interchange and SR 135 corridor.",
-  ctaButton = { label: "View All Projects", url: "/growth" },
+  ctas,
   projects,
 }: GrowthSectionProps) {
   const resolvedProjects = projects?.length ? projects : defaultProjects;
@@ -110,17 +106,7 @@ export default function GrowthSection({
                 {description}
               </p>
             )}
-            {ctaButton?.url && (
-              <a
-                href={ctaButton.url}
-                target={ctaButton.isExternal ? "_blank" : undefined}
-                rel={ctaButton.isExternal ? "noopener noreferrer" : undefined}
-                className="mt-6 inline-flex items-center gap-2.5 rounded-[3px] bg-brand-primary px-5 py-3 text-[13px] font-medium uppercase tracking-[0.78px] text-white transition-colors hover:bg-brand-primary/90"
-              >
-                {ctaButton.label}
-                <ArrowIcon className="size-3" />
-              </a>
-            )}
+            <CtaButtons ctas={ctas} className="mt-6" />
           </div>
         </div>
 

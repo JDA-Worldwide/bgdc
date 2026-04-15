@@ -4,18 +4,13 @@ import { useGsap } from "@/hooks/useGsap";
 import { gsap } from "@/lib/gsap";
 import MapboxMapClient from "@/components/ui/MapboxMap/MapboxMapClient";
 import SectionLabel from "./SectionLabel";
-import ArrowIcon from "./ArrowIcon";
+import CtaButtons from "@/components/ui/CtaButtons";
+import type { CtaButtonItem } from "@/components/ui/CtaButtons";
 
 interface ReachItem {
   _key?: string;
   time: string;
   place: string;
-}
-
-interface LinkField {
-  label?: string;
-  url?: string;
-  isExternal?: boolean;
 }
 
 interface SanityMapCenter {
@@ -29,7 +24,7 @@ interface LocationSectionProps {
   description?: string;
   reachItems?: ReachItem[];
   extraLine?: string;
-  ctaButton?: LinkField;
+  ctas?: CtaButtonItem[];
   mapCenter?: [number, number] | SanityMapCenter;
   mapZoom?: number;
 }
@@ -58,7 +53,7 @@ export default function LocationSection({
   description = "Bargersville sits at the intersection of I-69 and SR 144 \u2014 a node purpose-built for movement. Whether your business depends on goods in motion or talent in commute, the infrastructure is already here.",
   reachItems,
   extraLine = "Active rail line with freight access",
-  ctaButton = { label: "View Available Parcels", url: "/available-land" },
+  ctas,
   mapCenter,
   mapZoom = 9,
 }: LocationSectionProps) {
@@ -141,21 +136,7 @@ export default function LocationSection({
               )}
             </ul>
 
-            {ctaButton?.url && (
-              <a
-                data-animate-fadeinup
-                href={ctaButton.url}
-                target={ctaButton.isExternal ? "_blank" : undefined}
-                rel={ctaButton.isExternal ? "noopener noreferrer" : undefined}
-                className="mt-10 inline-flex items-center gap-2.5 rounded-[3px] border border-white/35 px-6 py-3 text-[13px] font-medium uppercase tracking-[0.78px] text-white transition-colors hover:border-white/60 hover:bg-white/5"
-              >
-                {ctaButton.label}
-                <ArrowIcon className="size-3" />
-                {ctaButton.isExternal && (
-                  <span className="sr-only"> (opens in new tab)</span>
-                )}
-              </a>
-            )}
+            <CtaButtons data-animate-fadeinup ctas={ctas} className="mt-10" />
           </div>
 
           {/* Right — Mapbox interactive map (no animation) */}

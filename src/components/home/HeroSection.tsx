@@ -2,32 +2,18 @@
 
 import { gsap } from "@/lib/gsap";
 import { useGsap } from "@/hooks/useGsap";
-import { cn } from "@/lib/utils";
 import SanityImage from "@/components/ui/SanityImage";
+import CtaButtons from "@/components/ui/CtaButtons";
+import type { CtaButtonItem } from "@/components/ui/CtaButtons";
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
-
-interface CtaButton {
-  _key: string;
-  label: string;
-  url: string;
-  isExternal?: boolean;
-  variant?: "primary" | "outline";
-}
 
 interface HeroSectionProps {
   callout?: string;
   heading?: string;
   body?: string;
-  ctas?: CtaButton[];
+  ctas?: CtaButtonItem[];
   backgroundImage?: SanityImageSource;
 }
-
-const ctaVariants = {
-  primary:
-    "bg-brand-sky text-brand-blue hover:bg-brand-sky/80 active:bg-brand-sky/70",
-  outline:
-    "border border-brand-sky text-white hover:bg-brand-sky/15 active:bg-brand-sky/25",
-};
 
 export default function HeroSection({
   callout,
@@ -98,27 +84,11 @@ export default function HeroSection({
         )}
       </div>
 
-      {ctas?.length ? (
-        <div data-animate-fadeinup className="mt-10 flex flex-col gap-4 sm:flex-row sm:gap-[60px] md:mt-[60px]">
-          {ctas.map((cta) => (
-            <a
-              key={cta._key}
-              href={cta.url}
-              target={cta.isExternal ? "_blank" : undefined}
-              rel={cta.isExternal ? "noopener noreferrer" : undefined}
-              className={cn(
-                "rounded-button px-5 py-[15px] text-base font-semibold leading-[21px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sky focus-visible:ring-offset-2 focus-visible:ring-offset-brand-blue",
-                ctaVariants[cta.variant ?? "primary"]
-              )}
-            >
-              {cta.label}
-              {cta.isExternal && (
-                <span className="sr-only"> (opens in new tab)</span>
-              )}
-            </a>
-          ))}
-        </div>
-      ) : null}
+      <CtaButtons
+        data-animate-fadeinup
+        ctas={ctas}
+        className="mt-10 justify-center sm:gap-[60px] md:mt-[60px]"
+      />
     </section>
   );
 }

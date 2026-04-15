@@ -1,6 +1,6 @@
 export interface CTALink {
-  label: string;
-  url: string;
+  label?: string;
+  url?: string;
   isExternal?: boolean;
 }
 

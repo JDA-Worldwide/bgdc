@@ -3,13 +3,8 @@
 import { useGsap } from "@/hooks/useGsap";
 import { gsap } from "@/lib/gsap";
 import SectionLabel from "./SectionLabel";
-import ArrowIcon from "./ArrowIcon";
-
-interface LinkField {
-  label?: string;
-  url?: string;
-  isExternal?: boolean;
-}
+import CtaButtons from "@/components/ui/CtaButtons";
+import type { CtaButtonItem } from "@/components/ui/CtaButtons";
 
 interface Incentive {
   _key?: string;
@@ -22,7 +17,7 @@ interface IncentivesSectionProps {
   sectionLabel?: string;
   heading?: string;
   description?: string;
-  ctaButton?: LinkField;
+  ctas?: CtaButtonItem[];
   incentives?: Incentive[];
 }
 
@@ -103,7 +98,7 @@ export default function IncentivesSection({
   sectionLabel = "Doing Business Here",
   heading = "The tools to make your investment work",
   description = "Bargersville Economic Development works directly with businesses to structure the right combination of incentives, zoning support, and resources.",
-  ctaButton = { label: "View All Incentives", url: "/incentives" },
+  ctas,
   incentives,
 }: IncentivesSectionProps) {
   const resolvedIncentives = incentives?.length ? incentives : defaultIncentives;
@@ -141,17 +136,7 @@ export default function IncentivesSection({
               </p>
             )}
 
-            {ctaButton?.url && (
-              <a
-                href={ctaButton.url}
-                target={ctaButton.isExternal ? "_blank" : undefined}
-                rel={ctaButton.isExternal ? "noopener noreferrer" : undefined}
-                className="mt-8 inline-flex items-center gap-2.5 rounded-[3px] bg-brand-primary px-5 py-3 text-[13px] font-medium uppercase tracking-[0.78px] text-white transition-colors hover:bg-brand-primary/90"
-              >
-                {ctaButton.label}
-                <ArrowIcon className="size-3" />
-              </a>
-            )}
+            <CtaButtons ctas={ctas} className="mt-8" />
           </div>
 
           {/* Right grid */}

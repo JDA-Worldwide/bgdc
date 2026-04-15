@@ -3,18 +3,20 @@
 import { cn } from "@/lib/utils";
 import { useGsap } from "@/hooks/useGsap";
 import { gsap } from "@/lib/gsap";
+import CtaButtons from "@/components/ui/CtaButtons";
+import type { CtaButtonItem } from "@/components/ui/CtaButtons";
 
 interface Project {
   title: string;
   description: string;
-  link?: { label: string; url: string; isExternal?: boolean };
+  link?: { label?: string; url?: string; isExternal?: boolean };
 }
 
 interface MomentumSectionProps {
   heading?: string;
   body?: string;
   projects?: Project[];
-  cta?: { label: string; url: string; isExternal?: boolean };
+  ctas?: CtaButtonItem[];
 }
 
 const defaultProjects: Project[] = [
@@ -39,7 +41,7 @@ export default function MomentumSection({
   heading = "Momentum in Motion",
   body = "From a transformative downtown redevelopment plan to new residential communities and mixed-use commercial development along SR 135, Bargersville is actively building its future\u2014one intentional project at a time. There has never been a better time to be part of what\u2019s growing here.",
   projects,
-  cta = { label: "See Current Projects", url: "#projects" },
+  ctas,
 }: MomentumSectionProps) {
   const resolvedProjects = projects?.length ? projects : defaultProjects;
 
@@ -101,18 +103,7 @@ export default function MomentumSection({
           })}
         </div>
 
-        {cta?.url && (
-          <div className="mt-[60px] flex justify-center">
-            <a
-              href={cta.url}
-              target={cta.isExternal ? "_blank" : undefined}
-              rel={cta.isExternal ? "noopener noreferrer" : undefined}
-              className="rounded-button bg-brand-blue px-5 py-[15px] text-base font-semibold leading-[21px] text-white transition-colors hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 active:bg-brand-blue/90"
-            >
-              {cta.label}
-            </a>
-          </div>
-        )}
+        <CtaButtons ctas={ctas} className="mt-[60px] justify-center" />
       </div>
     </section>
   );

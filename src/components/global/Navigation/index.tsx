@@ -247,7 +247,7 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
 
           <Link
             href={ctaUrl}
-            className="rounded-button bg-brand-blue px-5 py-[15px] text-base font-semibold leading-[21px] text-white transition-colors hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 active:bg-brand-blue/90"
+            className="btn-blue-dark rounded-button px-5 py-[15px] text-base font-semibold leading-[21px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2"
           >
             {ctaLabel}
           </Link>
@@ -369,7 +369,7 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
             })}
             <Link
               href={ctaUrl}
-              className="mt-4 block rounded-button bg-brand-blue px-5 py-4 text-center text-base font-semibold text-white transition-colors hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 active:bg-brand-blue/90"
+              className="btn-blue-dark mt-4 block rounded-button px-5 py-4 text-center text-base font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2"
             >
               {ctaLabel}
             </Link>

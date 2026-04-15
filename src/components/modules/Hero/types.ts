@@ -1,8 +1,8 @@
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
 
 export interface HeroLink {
-  label: string;
-  url: string;
+  label?: string;
+  url?: string;
   isExternal?: boolean;
 }
 

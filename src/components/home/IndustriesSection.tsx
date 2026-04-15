@@ -3,20 +3,22 @@
 import { useGsap } from "@/hooks/useGsap";
 import { gsap } from "@/lib/gsap";
 import SanityImage from "@/components/ui/SanityImage";
+import CtaButtons from "@/components/ui/CtaButtons";
+import type { CtaButtonItem } from "@/components/ui/CtaButtons";
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
 
 interface Industry {
   name: string;
   description?: string;
   image?: SanityImageSource;
-  link?: { label: string; url: string; isExternal?: boolean };
+  link?: { label?: string; url?: string; isExternal?: boolean };
 }
 
 interface IndustriesSectionProps {
   heading?: string;
   body?: string;
   industries?: Industry[];
-  cta?: { label: string; url: string; isExternal?: boolean };
+  ctas?: CtaButtonItem[];
 }
 
 const defaultIndustries: Industry[] = [
@@ -46,7 +48,7 @@ export default function IndustriesSection({
   heading = "Room to Grow Across Industries",
   body = "Choosing Bargersville means gaining the advantages of city access without the friction of a crowded market. With direct access to I-69, a 30-minute commute to Indianapolis, and less competition, businesses here have room to stand out, grow faster, and build loyal local demand. Whatever your industry, Bargersville offers the space, infrastructure, and community support to grow sustainably.",
   industries,
-  cta = { label: "Learn More About Doing Business Here", url: "#business" },
+  ctas,
 }: IndustriesSectionProps) {
   const resolvedIndustries = industries?.length ? industries : defaultIndustries;
 
@@ -126,21 +128,7 @@ export default function IndustriesSection({
           ))}
         </div>
 
-        {cta?.url && (
-          <div className="mt-[60px] flex justify-center">
-            <a
-              href={cta.url}
-              target={cta.isExternal ? "_blank" : undefined}
-              rel={cta.isExternal ? "noopener noreferrer" : undefined}
-              className="rounded-button bg-brand-blue px-5 py-[15px] text-base font-semibold leading-[21px] text-white transition-colors hover:bg-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2 active:bg-brand-blue/90"
-            >
-              {cta.label}
-              {cta.isExternal && (
-                <span className="sr-only"> (opens in new tab)</span>
-              )}
-            </a>
-          </div>
-        )}
+        <CtaButtons ctas={ctas} className="mt-[60px] justify-center" />
       </div>
     </section>
   );

@@ -11,6 +11,7 @@ import formSubmission from "./documents/formSubmission";
 
 // Objects
 import link from "./objects/link";
+import ctaButton from "./objects/ctaButton";
 import seo from "./objects/seo";
 import textBlock from "./objects/textBlock";
 import hero from "./objects/hero";
@@ -62,6 +63,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
 
   // Objects
   link,
+  ctaButton,
   seo,
   textBlock,
   hero,

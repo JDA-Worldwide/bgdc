@@ -1,8 +1,6 @@
-interface SanityImageField {
-  asset?: { _ref: string };
-  hotspot?: { x: number; y: number };
-  alt?: string;
-}
+import type { SanityImageSource } from "@/components/ui/SanityImage/types";
+
+type SanityImageField = SanityImageSource;
 
 export interface TextBlockProps {
   _type: "textBlock";

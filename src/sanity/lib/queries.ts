@@ -1,5 +1,25 @@
 import { groq } from "next-sanity";
 
+// Reusable GROQ fragment — resolves a `link` object's URL from either a
+// pageRef slug (internal) or a plain url string (external).
+const linkFields = /* groq */ `
+  "label": coalesce(label, pageRef->title),
+  isExternal,
+  "url": coalesce("/" + pageRef->slug.current, url)
+`;
+
+// Reusable GROQ fragment — projects a ctaButton item with resolved URL.
+const ctaButtonFields = /* groq */ `
+  _key,
+  label,
+  variant,
+  isExternal,
+  "url": coalesce("/" + pageRef->slug.current, url)
+`;
+
+// Inline projection for a ctas[] array of ctaButton.
+const ctasProjection = /* groq */ `ctas[] { ${ctaButtonFields} }`;
+
 // --- Global ---
 
 export const settingsQuery = groq`
@@ -34,9 +54,7 @@ export const footerQuery = groq`
     columns[] {
       title,
       links[] {
-        label,
-        url,
-        isExternal
+        ${linkFields}
       }
     },
     useGlobalSocialLinks,
@@ -62,7 +80,51 @@ export const pageBySlugQuery = groq`
       ...,
       _type == "hero" => {
         ...,
-        backgroundImage
+        backgroundImage,
+        cta { ${linkFields} }
+      },
+      _type == "cta" => {
+        ...,
+        primaryButton { ${linkFields} },
+        secondaryButton { ${linkFields} }
+      },
+      _type == "ctaBanner" => {
+        ...,
+        ${ctasProjection}
+      },
+      _type == "incentivesGrid" => {
+        ...,
+        ${ctasProjection}
+      },
+      _type == "projectsGrid" => {
+        ...,
+        ${ctasProjection},
+        projects[] {
+          ...,
+          link { ${linkFields} }
+        }
+      },
+      _type == "locationMap" => {
+        ...,
+        ${ctasProjection}
+      },
+      _type == "momentumSection" => {
+        ...,
+        ${ctasProjection},
+        projects[] {
+          ...,
+          link { ${linkFields} }
+        }
+      },
+      _type == "industriesGrid" => {
+        ...,
+        ${ctasProjection},
+        industries[] {
+          name,
+          description,
+          image,
+          link { ${linkFields} }
+        }
       },
       _type == "teamGrid" => {
         heading,
@@ -93,9 +155,57 @@ export const homepageQuery = groq`
     seo,
     modules[] {
       ...,
+      _type == "homepageHero" => {
+        ...,
+        ctas[] { ${ctaButtonFields} }
+      },
       _type == "hero" => {
         ...,
-        backgroundImage
+        backgroundImage,
+        cta { ${linkFields} }
+      },
+      _type == "cta" => {
+        ...,
+        primaryButton { ${linkFields} },
+        secondaryButton { ${linkFields} }
+      },
+      _type == "ctaBanner" => {
+        ...,
+        ${ctasProjection}
+      },
+      _type == "incentivesGrid" => {
+        ...,
+        ${ctasProjection}
+      },
+      _type == "projectsGrid" => {
+        ...,
+        ${ctasProjection},
+        projects[] {
+          ...,
+          link { ${linkFields} }
+        }
+      },
+      _type == "locationMap" => {
+        ...,
+        ${ctasProjection}
+      },
+      _type == "momentumSection" => {
+        ...,
+        ${ctasProjection},
+        projects[] {
+          ...,
+          link { ${linkFields} }
+        }
+      },
+      _type == "industriesGrid" => {
+        ...,
+        ${ctasProjection},
+        industries[] {
+          name,
+          description,
+          image,
+          link { ${linkFields} }
+        }
       },
       _type == "teamGrid" => {
         heading,
@@ -126,9 +236,57 @@ export const homepageDataQuery = groq`
     seo,
     modules[] {
       ...,
+      _type == "homepageHero" => {
+        ...,
+        ctas[] { ${ctaButtonFields} }
+      },
       _type == "hero" => {
         ...,
-        backgroundImage
+        backgroundImage,
+        cta { ${linkFields} }
+      },
+      _type == "cta" => {
+        ...,
+        primaryButton { ${linkFields} },
+        secondaryButton { ${linkFields} }
+      },
+      _type == "ctaBanner" => {
+        ...,
+        ${ctasProjection}
+      },
+      _type == "incentivesGrid" => {
+        ...,
+        ${ctasProjection}
+      },
+      _type == "projectsGrid" => {
+        ...,
+        ${ctasProjection},
+        projects[] {
+          ...,
+          link { ${linkFields} }
+        }
+      },
+      _type == "locationMap" => {
+        ...,
+        ${ctasProjection}
+      },
+      _type == "momentumSection" => {
+        ...,
+        ${ctasProjection},
+        projects[] {
+          ...,
+          link { ${linkFields} }
+        }
+      },
+      _type == "industriesGrid" => {
+        ...,
+        ${ctasProjection},
+        industries[] {
+          name,
+          description,
+          image,
+          link { ${linkFields} }
+        }
       },
       _type == "teamGrid" => {
         heading,
@@ -138,15 +296,6 @@ export const homepageDataQuery = groq`
           jobTitle,
           photo,
           bio
-        }
-      },
-      _type == "industriesGrid" => {
-        ...,
-        industries[] {
-          name,
-          description,
-          image,
-          link
         }
       },
       _type == "textBlock" => {

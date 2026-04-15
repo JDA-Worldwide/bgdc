@@ -71,7 +71,7 @@ export default function ValuePropsSection({
         <div
           key={card.title}
           data-value-row
-          className="mx-auto flex w-full max-w-container flex-col gap-10 px-6 sm:px-10 lg:flex-row lg:items-center lg:px-gutter"
+          className="mx-auto flex w-full max-w-container flex-col gap-10 px-6 sm:px-10 lg:flex-row lg:items-start lg:px-gutter"
         >
           {/* Left heading */}
           <div className="shrink-0 lg:w-[36%]">

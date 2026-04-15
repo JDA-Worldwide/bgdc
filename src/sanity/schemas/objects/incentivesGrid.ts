@@ -26,9 +26,11 @@ export default defineType({
       rows: 4,
     }),
     defineField({
-      name: "ctaButton",
-      title: "CTA Button",
-      type: "link",
+      name: "ctas",
+      title: "Buttons",
+      type: "array",
+      validation: (rule) => rule.max(3),
+      of: [{ type: "ctaButton" }],
     }),
     defineField({
       name: "incentives",
