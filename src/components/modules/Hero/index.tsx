@@ -42,7 +42,7 @@ export default function Hero({
             className="h-full w-full"
             decorative
           />
-          <div className="absolute inset-0 bg-brand-primary/60" />
+          <div className="absolute inset-0 bg-black/70 mix-blend-multiply" />
         </div>
       )}
 

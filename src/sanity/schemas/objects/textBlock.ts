@@ -59,6 +59,34 @@ export default defineType({
         },
       ],
     }),
+    defineField({
+      name: "image",
+      title: "Image",
+      type: "image",
+      options: { hotspot: true },
+      fields: [
+        defineField({
+          name: "alt",
+          title: "Alt Text",
+          type: "string",
+          validation: (r) => r.required(),
+        }),
+      ],
+    }),
+    defineField({
+      name: "imagePlacement",
+      title: "Image Placement",
+      type: "string",
+      options: {
+        list: [
+          { title: "Left", value: "left" },
+          { title: "Right", value: "right" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "left",
+      hidden: ({ parent }) => !parent?.image,
+    }),
     colorSchemeField,
   ],
   preview: {

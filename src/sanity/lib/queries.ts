@@ -73,6 +73,14 @@ export const pageBySlugQuery = groq`
           photo,
           bio
         }
+      },
+      _type == "textBlock" => {
+        ...,
+        image {
+          ...,
+          asset->
+        },
+        imagePlacement
       }
     }
   }
@@ -98,6 +106,14 @@ export const homepageQuery = groq`
           photo,
           bio
         }
+      },
+      _type == "textBlock" => {
+        ...,
+        image {
+          ...,
+          asset->
+        },
+        imagePlacement
       }
     }
   }
@@ -132,6 +148,14 @@ export const homepageDataQuery = groq`
           image,
           link
         }
+      },
+      _type == "textBlock" => {
+        ...,
+        image {
+          ...,
+          asset->
+        },
+        imagePlacement
       }
     }
   }
