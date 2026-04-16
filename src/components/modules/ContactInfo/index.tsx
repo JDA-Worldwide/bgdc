@@ -3,6 +3,7 @@
 import Container from "@/components/ui/Container";
 import AnimateIn from "@/components/ui/AnimateIn";
 import MapboxMapClient from "@/components/ui/MapboxMap/MapboxMapClient";
+import { stegaClean } from "next-sanity";
 import type { ContactInfoProps } from "./types";
 
 const OFFICE_LNG = -86.164665;
@@ -210,18 +211,21 @@ export default function ContactInfo({
                 Follow Along
               </p>
               <div className="flex gap-4">
-                {activeSocialLinks.map((link, i) => (
-                  <a
-                    key={link._key ?? i}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={socialLabels[link.platform] ?? link.platform}
-                    className="flex h-10 w-10 items-center justify-center rounded bg-brand-surface text-brand-primary hover:bg-brand-primary hover:text-white transition-colors"
-                  >
-                    {socialIcons[link.platform]}
-                  </a>
-                ))}
+                {activeSocialLinks.map((link, i) => {
+                  const platform = stegaClean(link.platform);
+                  return (
+                    <a
+                      key={link._key ?? i}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={socialLabels[platform] ?? platform}
+                      className="flex h-10 w-10 items-center justify-center rounded bg-brand-surface text-brand-primary hover:bg-brand-primary hover:text-white transition-colors"
+                    >
+                      {socialIcons[platform]}
+                    </a>
+                  );
+                })}
               </div>
             </div>
           )}

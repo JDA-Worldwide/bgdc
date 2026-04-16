@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { stegaClean } from "next-sanity";
 
 interface SocialLink {
   _key?: string;
@@ -92,18 +93,21 @@ export default function Footer({ socialLinks }: FooterProps) {
             &copy; {year} Bargersville Economic Development
           </p>
           <div className="flex items-center gap-[25px]">
-            {links.map((link) => (
-              <a
-                key={link._key ?? link.platform}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={socialLabels[link.platform] ?? link.platform}
-                className="text-white transition-colors hover:text-brand-sun"
-              >
-                {socialIcons[link.platform]}
-              </a>
-            ))}
+            {links.map((link) => {
+              const platform = stegaClean(link.platform);
+              return (
+                <a
+                  key={link._key ?? platform}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={socialLabels[platform] ?? platform}
+                  className="text-white transition-colors hover:text-brand-sun"
+                >
+                  {socialIcons[platform]}
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>
