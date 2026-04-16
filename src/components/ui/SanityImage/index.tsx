@@ -19,7 +19,9 @@ export default function SanityImage({
     ? `${image.hotspot.x * 100}% ${image.hotspot.y * 100}%`
     : undefined;
 
-  const src = urlFor(image).width(width).height(height).auto("format").url();
+  const src = fill
+    ? urlFor(image).width(2048).quality(85).auto("format").url()
+    : urlFor(image).width(width).height(height).quality(85).auto("format").url();
 
   return (
     <Image
