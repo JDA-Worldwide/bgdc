@@ -112,7 +112,7 @@ export default function ValuePropsSection({
                 <h3 className="text-2xl font-medium leading-[35px] text-brand-blue md:text-[28px]">
                   {card.title}
                 </h3>
-                <hr className="border-brand-sky" />
+                <hr className="border-brand-sun" />
                 <p className="text-base leading-7 text-brand-blue">{card.body}</p>
               </div>
             </div>
