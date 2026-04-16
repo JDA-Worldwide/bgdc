@@ -2,6 +2,7 @@ import { draftMode } from "next/headers";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { stegaClean } from "@sanity/client/stega";
 import VisualEditingClient from "@/components/global/VisualEditingClient";
+import DraftModeBadge from "@/components/global/DraftModeBadge";
 import { navigationQuery, settingsQuery } from "@/sanity/lib/queries";
 import Navigation from "@/components/global/Navigation";
 import Footer from "@/components/global/Footer";
@@ -56,6 +57,7 @@ export default async function SiteLayout({
         <>
           <SanityLive />
           <VisualEditingClient />
+          <DraftModeBadge />
         </>
       )}
     </>
