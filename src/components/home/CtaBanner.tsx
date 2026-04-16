@@ -9,16 +9,16 @@ import type { SanityImageSource } from "@/components/ui/SanityImage/types";
 
 interface CtaBannerProps {
   callout?: string;
-  heading?: string;
+  heading: string;
   body?: string;
   ctas?: CtaButtonItem[];
   backgroundImage?: SanityImageSource;
 }
 
 export default function CtaBanner({
-  callout = "Let\u2019s Talk",
-  heading = "Ready to Take the Next Step?",
-  body = "Devoted to the good of our town, Bargersville Economic Development partners with entrepreneurs, business leaders, and community stakeholders to drive long-term economic growth. Through hands-on guidance and practical resources, we help businesses turn what they start here into lasting success\u2014going beyond permits and paperwork to support real growth.",
+  callout,
+  heading,
+  body,
   ctas,
   backgroundImage,
 }: CtaBannerProps) {
@@ -69,11 +69,9 @@ export default function CtaBanner({
             {callout}
           </p>
         )}
-        {heading && (
-          <h2 data-animate-fadeinup className="mt-8 text-3xl font-medium leading-tight text-brand-blue md:text-[43px] md:leading-[60px]">
-            {heading}
-          </h2>
-        )}
+        <h2 data-animate-fadeinup className="mt-8 text-3xl font-medium leading-tight text-brand-blue md:text-[43px] md:leading-[60px]">
+          {heading}
+        </h2>
         {body && (
           <p data-animate-fadeinup className="mt-8 text-base leading-7 text-brand-black">{body}</p>
         )}

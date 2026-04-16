@@ -371,7 +371,7 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
             })}
             <Link
               href={ctaUrl}
-              className="btn-blue-dark mt-4 block rounded-button px-5 py-4 text-center text-base font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2"
+              className="btn-blue-dark mt-4 block rounded-button px-5 py-[15px] text-center text-base font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2"
             >
               {ctaLabel}
             </Link>
