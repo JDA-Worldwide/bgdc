@@ -11,10 +11,11 @@ export default function DraftModeBadge() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  // SSR returns false (not in frame); client snapshot reads the real value.
-  const inFrame = useSyncExternalStore(
+  // SSR returns false; client detects both iframe (Presentation preview pane)
+  // and popup window (Presentation "open in new tab" preview) contexts.
+  const inStudio = useSyncExternalStore(
     subscribe,
-    () => window.self !== window.top,
+    () => window.self !== window.top || !!window.opener,
     () => false,
   );
 
@@ -25,7 +26,7 @@ export default function DraftModeBadge() {
     });
   }
 
-  if (inFrame) return null;
+  if (inStudio) return null;
 
   return (
     <div
