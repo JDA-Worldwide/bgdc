@@ -16,7 +16,8 @@ export default function DraftModeBadge() {
 
   return (
     <div
-      className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-brand-charcoal px-3 py-1.5 text-xs font-semibold text-white shadow-lg"
+      className="fixed bottom-4 right-4 flex items-center gap-2 rounded-full bg-brand-charcoal px-3 py-1.5 text-xs font-semibold text-white shadow-lg"
+      style={{ zIndex: 10000000 }}
       role="status"
       aria-label="Sanity draft mode is active"
     >
