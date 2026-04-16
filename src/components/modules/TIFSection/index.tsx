@@ -22,7 +22,7 @@ function MapPlaceholder() {
             d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"
           />
         </svg>
-        <p className="text-sm text-brand-muted">TIF district map coming soon</p>
+        <p className="text-sm text-brand-text">TIF district map coming soon</p>
       </div>
     </div>
   );
@@ -63,14 +63,14 @@ export default function TIFSection({
 
           {districts && districts.length > 0 ? (
             <div className="mb-8 space-y-4">
-              <p className="text-sm font-semibold uppercase tracking-wider text-brand-muted">
+              <p className="text-sm font-semibold uppercase tracking-wider text-brand-text">
                 TIF Districts
               </p>
               {districts.map((district) => (
                 <div key={district._key} className="rounded border border-brand-border p-4">
                   <p className="font-medium text-brand-text-heading">{district.name}</p>
                   {district.eligibleUses && (
-                    <p className="mt-1 text-sm text-brand-muted">{district.eligibleUses}</p>
+                    <p className="mt-1 text-sm text-brand-text">{district.eligibleUses}</p>
                   )}
                   {district.contact && (
                     <p className="mt-1 text-sm text-brand-secondary">{district.contact}</p>
@@ -80,7 +80,7 @@ export default function TIFSection({
             </div>
           ) : (
             <div className="mb-8 rounded border-2 border-dashed border-brand-border bg-brand-surface p-6 text-center">
-              <p className="text-sm italic text-brand-muted">
+              <p className="text-sm italic text-brand-text">
                 TIF district details coming soon — contact us for current information.
               </p>
             </div>

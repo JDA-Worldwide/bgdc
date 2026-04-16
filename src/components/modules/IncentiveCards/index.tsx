@@ -16,14 +16,14 @@ function ProgramCard({ program }: { program: IncentiveProgram }) {
       <div className="mb-4 h-px w-12 bg-brand-sky" aria-hidden="true" />
 
       {isEmpty ? (
-        <p className="flex-1 text-sm italic text-brand-muted">
+        <p className="flex-1 text-sm italic text-brand-text">
           Program details coming soon — contact us to learn more.
         </p>
       ) : (
         <>
           {program.eligibility && (
             <div className="mb-3">
-              <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-brand-muted">
+              <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-brand-text">
                 Who It&apos;s For
               </p>
               <p className="text-sm text-brand-charcoal">{program.eligibility}</p>
@@ -31,7 +31,7 @@ function ProgramCard({ program }: { program: IncentiveProgram }) {
           )}
           {program.description && (
             <div className="mb-4 flex-1">
-              <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-brand-muted">
+              <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-brand-text">
                 What It Offers
               </p>
               <p className="text-sm leading-relaxed text-brand-charcoal">
@@ -77,7 +77,7 @@ export default function IncentiveCards({
             </h2>
           )}
           {introText && (
-            <p className="max-w-3xl text-base leading-7 text-brand-muted">{introText}</p>
+            <p className="max-w-3xl text-base leading-7 text-brand-text">{introText}</p>
           )}
         </div>
       )}
@@ -92,7 +92,7 @@ export default function IncentiveCards({
         <div className="flex items-center justify-center rounded border-2 border-dashed border-brand-border bg-brand-surface p-12 text-center">
           <div>
             <p className="font-medium text-brand-text-heading">Incentive programs coming soon</p>
-            <p className="mt-2 text-sm text-brand-muted">
+            <p className="mt-2 text-sm text-brand-text">
               Contact our team to learn about current development incentives.
             </p>
             <Link href="/get-in-touch" className="mt-4 inline-block text-sm font-medium text-brand-secondary hover:underline">

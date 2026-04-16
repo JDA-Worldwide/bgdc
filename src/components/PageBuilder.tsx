@@ -108,6 +108,7 @@ const fullBleedModules = new Set([
   "whyPillars",
   "projectsGrid",
   "incentivesGrid",
+  "projectShowcase",
 ]);
 
 function buildFaqJsonLd(module: FAQModule) {

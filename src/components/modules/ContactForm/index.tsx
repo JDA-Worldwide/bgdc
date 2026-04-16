@@ -206,7 +206,7 @@ export default function ContactForm({
           </h2>
         )}
         {description && (
-          <p className="mb-8 text-center text-brand-muted">{description}</p>
+          <p className="mb-8 text-center text-brand-text">{description}</p>
         )}
 
         {status === "success" ? (
@@ -339,7 +339,7 @@ export default function ContactForm({
                     onChange={(e) => handleChange("newsletterOptIn", e.target.checked)}
                     className="mt-1 h-4 w-4 rounded border-brand-border text-brand-secondary focus:ring-brand-secondary"
                   />
-                  <label htmlFor="contact-newsletter" className="text-sm text-brand-muted">
+                  <label htmlFor="contact-newsletter" className="text-sm text-brand-text">
                     I&apos;d like to receive updates from Bargersville Economic Development
                   </label>
                 </div>

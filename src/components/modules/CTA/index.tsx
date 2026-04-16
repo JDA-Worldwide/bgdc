@@ -37,7 +37,7 @@ export default function CTA({
             <p
               className={cn(
                 "mt-4 text-lg",
-                isPrimary ? "text-white/90" : "text-brand-muted"
+                isPrimary ? "text-white/90" : "text-brand-text"
               )}
             >
               {body}

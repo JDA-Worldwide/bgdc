@@ -97,7 +97,7 @@ export default function Hero({
             data-animate-fadeinup
             className={cn(
               "mx-auto mt-6 max-w-4xl text-lg sm:text-xl",
-              hasImage || isDark ? "text-white/90" : useDarkText ? "text-brand-muted" : "text-white/90"
+              hasImage || isDark ? "text-white/90" : useDarkText ? "text-brand-text" : "text-white/90"
             )}
           >
             {subheading}

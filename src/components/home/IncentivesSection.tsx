@@ -154,7 +154,7 @@ export default function IncentivesSection({
                   {item.title}
                 </h3>
                 {item.description && (
-                  <p className="mt-3 text-[13px] leading-[1.6] text-brand-muted font-light">
+                  <p className="mt-3 text-[13px] leading-[1.6] text-brand-text font-light">
                     {item.description}
                   </p>
                 )}

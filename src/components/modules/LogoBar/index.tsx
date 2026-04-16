@@ -10,7 +10,7 @@ export default function LogoBar({ heading, logos }: LogoBarProps) {
     <Container>
       {heading && (
         <AnimateIn>
-          <p className="mb-8 text-center text-sm font-medium uppercase tracking-wider text-brand-muted">
+          <p className="mb-8 text-center text-sm font-medium uppercase tracking-wider text-brand-text">
             {heading}
           </p>
         </AnimateIn>

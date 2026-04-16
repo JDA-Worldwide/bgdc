@@ -7,7 +7,7 @@ function ResourceCard({ resource }: { resource: Resource }) {
   const hasLink = !!resource.url;
 
   return (
-    <div className="flex flex-col gap-[30px] bg-brand-sky p-10">
+    <div className="flex flex-col gap-[30px] bg-brand-sky p-10 in-[.scheme-limestone]:bg-white in-[.scheme-sky]:bg-white in-[.scheme-dark]:bg-white">
       <h3 className="text-[23px] font-medium leading-[30px] text-brand-blue">
         {resource.title}
       </h3>
@@ -59,7 +59,7 @@ export default function ResourceHub({
             </h2>
           )}
           {introText && (
-            <p className="max-w-3xl text-base leading-7 text-brand-muted">{introText}</p>
+            <p className="max-w-3xl text-base leading-7 text-brand-text">{introText}</p>
           )}
         </div>
       )}

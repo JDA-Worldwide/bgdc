@@ -22,7 +22,7 @@ const components: Partial<PortableTextReactComponents> = {
     ),
     normal: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>,
     blockquote: ({ children }) => (
-      <blockquote className="my-6 border-l-4 border-brand-secondary pl-4 italic text-brand-muted">
+      <blockquote className="my-6 border-l-4 border-brand-secondary pl-4 italic text-brand-text">
         {children}
       </blockquote>
     ),

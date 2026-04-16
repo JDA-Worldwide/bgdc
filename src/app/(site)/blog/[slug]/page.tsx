@@ -94,7 +94,7 @@ export default async function BlogPostPage({
         <h1 className="font-heading text-4xl font-bold lg:text-5xl">
           {typedPost.title}
         </h1>
-        <div className="mt-4 flex items-center gap-4 text-brand-muted">
+        <div className="mt-4 flex items-center gap-4 text-brand-text">
           {typedPost.author && <span>{typedPost.author}</span>}
           <time dateTime={typedPost.publishedAt}>{formatDate(typedPost.publishedAt)}</time>
         </div>

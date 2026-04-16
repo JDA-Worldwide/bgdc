@@ -70,7 +70,7 @@ function GalleryThumbnail({
           </div>
         </button>
         {image.caption && (
-          <figcaption className="mt-2 text-center text-sm text-brand-muted">
+          <figcaption className="mt-2 text-center text-sm text-brand-text">
             {image.caption}
           </figcaption>
         )}

@@ -29,7 +29,7 @@ export default function TeamGrid({ heading, members }: TeamGridProps) {
             )}
             <h3 className="font-heading text-lg font-semibold">{member.name}</h3>
             {member.jobTitle && (
-              <p className="mt-1 text-sm text-brand-muted">{member.jobTitle}</p>
+              <p className="mt-1 text-sm text-brand-text">{member.jobTitle}</p>
             )}
             {member.bio && (
               <p className="mt-2 text-sm text-brand-text">{member.bio}</p>

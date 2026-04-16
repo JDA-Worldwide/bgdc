@@ -64,7 +64,7 @@ function AnimatedStat({ stat }: { stat: Stat }) {
       <p className="sr-only" aria-live="polite">
         {finalValue} {stat.label}
       </p>
-      <p className="mt-2 text-brand-muted">{stat.label}</p>
+      <p className="mt-2 text-brand-text">{stat.label}</p>
     </div>
   );
 }

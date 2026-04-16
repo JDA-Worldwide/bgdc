@@ -31,7 +31,7 @@ function StatsList({ stats }: { stats: StatItem[] }) {
           <span className="block font-heading text-2xl font-bold text-brand-primary">
             {stat.value}
           </span>
-          <span className="mt-0.5 block text-sm leading-5 text-brand-muted">
+          <span className="mt-0.5 block text-sm leading-5 text-brand-text">
             {stat.label}
           </span>
         </li>
@@ -123,7 +123,7 @@ export default function DetailedStats({
               </h2>
             )}
             {introText && (
-              <p className="mx-auto max-w-2xl text-base leading-7 text-brand-muted">
+              <p className="mx-auto max-w-2xl text-base leading-7 text-brand-text">
                 {introText}
               </p>
             )}

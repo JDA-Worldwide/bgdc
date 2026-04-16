@@ -102,7 +102,7 @@ export default function GrowthSection({
           </div>
           <div className="lg:pt-1">
             {description && (
-              <p className="text-[15px] leading-[1.7] text-brand-muted font-light">
+              <p className="text-[15px] leading-[1.7] text-brand-text font-light">
                 {description}
               </p>
             )}
@@ -131,7 +131,7 @@ export default function GrowthSection({
               </h3>
 
               {project.description && (
-                <p className="mt-3 text-sm leading-[1.65] text-brand-muted font-light">
+                <p className="mt-3 text-sm leading-[1.65] text-brand-text font-light">
                   {project.description}
                 </p>
               )}

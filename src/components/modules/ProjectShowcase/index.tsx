@@ -1,4 +1,3 @@
-import Container from "@/components/ui/Container";
 import PortableText from "@/components/ui/PortableText";
 import SanityImage from "@/components/ui/SanityImage";
 import Button from "@/components/ui/Button";
@@ -6,13 +5,13 @@ import AnimateIn from "@/components/ui/AnimateIn";
 import type { ProjectShowcaseProps, Project } from "./types";
 
 const statusColors: Record<string, string> = {
-  "In Progress": "bg-blue-100 text-blue-800",
-  "Now Selling": "bg-green-100 text-green-800",
-  "Upcoming": "bg-amber-100 text-amber-800",
-  "Planning": "bg-purple-100 text-purple-800",
-  "Under Construction": "bg-orange-100 text-orange-800",
-  "Approved": "bg-teal-100 text-teal-800",
-  "Coming Soon": "bg-gray-100 text-gray-700",
+  "In Progress": "bg-brand-sky/30 text-brand-primary",
+  "Now Selling": "bg-brand-prairie/30 text-brand-soybean",
+  "Upcoming": "bg-brand-sun/20 text-brand-primary",
+  "Planning": "bg-brand-sky/30 text-brand-primary",
+  "Under Construction": "bg-brand-sun/30 text-brand-primary",
+  "Approved": "bg-brand-prairie/30 text-brand-soybean",
+  "Coming Soon": "bg-brand-limestone/60 text-brand-primary",
 };
 
 function CheckIcon() {
@@ -39,30 +38,45 @@ function ProjectCard({ project }: { project: Project }) {
   const hasContent = project.body || project.highlights?.length || project.cta?.label;
 
   return (
-    <article className="border-l-4 border-brand-sun bg-brand-surface">
+    <article className="bg-white">
       <div className={hasImages ? "lg:grid lg:grid-cols-2" : ""}>
         <div className="p-8 lg:p-10">
-          {project.tagLabel && (
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-primary">
-              {project.tagLabel}
-            </p>
+          {/* Mobile: badge first, then eyebrow. Desktop: eyebrow left + badge top-right on same row. */}
+          {project.status && statusClass && (
+            <span
+              className={`mb-3 inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold font-accent italic sm:hidden ${statusClass}`}
+            >
+              {project.status}
+            </span>
           )}
 
-          <div className="mb-4 flex flex-wrap items-start gap-3">
-            <h3 className="font-heading text-2xl font-medium text-brand-text-heading sm:text-[28px] sm:leading-[35px]">
-              {project.title}
-            </h3>
+          <div className="mb-3 flex items-start justify-between gap-4">
+            {project.tagLabel ? (
+              <p className="font-accent text-sm italic text-brand-primary">
+                {project.tagLabel}
+              </p>
+            ) : (
+              <span />
+            )}
             {project.status && statusClass && (
               <span
-                className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${statusClass}`}
+                className={`hidden shrink-0 items-center rounded-full px-3 py-1 text-xs font-semibold font-accent italic sm:inline-flex ${statusClass}`}
               >
                 {project.status}
               </span>
             )}
           </div>
 
+          <div className="mb-4">
+            <h3 className="font-heading text-2xl font-medium text-brand-text-heading sm:text-[28px] sm:leading-[35px]">
+              {project.title}
+            </h3>
+          </div>
+
+          <hr className="mb-[30px] border-brand-sun" />
+
           {project.body && (project.body as unknown[]).length > 0 && (
-            <div className="mb-6 text-brand-charcoal">
+            <div className="mb-6 text-brand-blue">
               <PortableText value={project.body as unknown[]} />
             </div>
           )}
@@ -121,7 +135,7 @@ function ProjectCard({ project }: { project: Project }) {
 
       {!hasImages && !hasContent && (
         <div className="flex items-center justify-center border-t border-brand-border p-8">
-          <p className="text-sm italic text-brand-muted">
+          <p className="text-sm italic text-brand-text">
             Project details coming soon — stay connected for updates.
           </p>
         </div>
@@ -138,31 +152,33 @@ export default function ProjectShowcase({
   if (!projects?.length && !heading) return null;
 
   return (
-    <Container>
-      {(heading || introText) && (
-        <div className="mb-12">
-          {heading && (
-            <h2 className="mb-4 font-heading text-2xl font-medium text-brand-text-heading sm:text-3xl md:text-[43px] md:leading-[60px]">
-              {heading}
-            </h2>
-          )}
-          {introText && (
-            <p className="max-w-3xl text-base leading-7 text-brand-muted">
-              {introText}
-            </p>
-          )}
-        </div>
-      )}
+    <section className="bg-brand-limestone py-section">
+      <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
+        {(heading || introText) && (
+          <div className="mb-10 px-0 md:mb-[60px] lg:px-[109px]">
+            {heading && (
+              <h2 className="mb-4 text-3xl font-medium leading-tight text-brand-blue md:text-[43px] md:leading-[60px]">
+                {heading}
+              </h2>
+            )}
+            {introText && (
+              <p className="max-w-3xl text-base leading-7 text-brand-black">
+                {introText}
+              </p>
+            )}
+          </div>
+        )}
 
-      {projects && projects.length > 0 && (
-        <div className="space-y-8">
-          {projects.map((project, i) => (
-            <AnimateIn key={project._key} delay={i * 0.05}>
-              <ProjectCard project={project} />
-            </AnimateIn>
-          ))}
-        </div>
-      )}
-    </Container>
+        {projects && projects.length > 0 && (
+          <div className="mx-auto space-y-8 px-0 lg:px-[109px]">
+            {projects.map((project, i) => (
+              <AnimateIn key={project._key} delay={i * 0.05}>
+                <ProjectCard project={project} />
+              </AnimateIn>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
   );
 }

@@ -41,7 +41,7 @@ function AreaSection({ area, index }: { area: DevelopmentArea; index: number }) 
               {area.areaLabel.split("|").map((tag, i) => (
                 <span
                   key={i}
-                  className="inline-flex items-center rounded-full bg-brand-sky/30 px-3 py-1 text-xs font-semibold font-sans text-brand-primary"
+                  className="inline-flex items-center rounded-full bg-brand-sky/30 px-3 py-1 text-xs font-semibold font-accent italic text-brand-primary"
                 >
                   {tag.trim()}
                 </span>
@@ -61,7 +61,7 @@ function AreaSection({ area, index }: { area: DevelopmentArea; index: number }) 
 
           {area.opportunities && area.opportunities.length > 0 && (
             <div className="mb-6">
-              <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-brand-muted">
+              <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-brand-text">
                 Available Opportunities
               </p>
               <ul className="space-y-2">
@@ -123,7 +123,7 @@ export default function DevelopmentAreaShowcase({
             </h2>
           )}
           {introText && (
-            <p className="max-w-3xl text-base leading-7 text-brand-muted">
+            <p className="max-w-3xl text-base leading-7 text-brand-text">
               {introText}
             </p>
           )}

@@ -226,7 +226,7 @@ function TestimonialCard({
             {item.name}
           </cite>
           {item.title && (
-            <p className="text-sm text-brand-muted">{item.title}</p>
+            <p className="text-sm text-brand-text">{item.title}</p>
           )}
         </div>
       </footer>

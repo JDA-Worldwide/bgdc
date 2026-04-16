@@ -51,7 +51,7 @@ export default async function BlogListingPage() {
                 <h2 className="font-heading text-xl font-semibold group-hover:text-brand-secondary">
                   {post.title}
                 </h2>
-                <time dateTime={post.publishedAt} className="mt-1 block text-sm text-brand-muted">
+                <time dateTime={post.publishedAt} className="mt-1 block text-sm text-brand-text">
                   {formatDate(post.publishedAt)}
                 </time>
                 {post.excerpt && (

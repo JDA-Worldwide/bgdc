@@ -132,7 +132,7 @@ export default function ContactInfo({
                 <li className="flex items-start gap-3">
                   <PhoneIcon />
                   <div>
-                    <span className="block text-sm font-medium text-brand-muted">Phone</span>
+                    <span className="block text-sm font-medium text-brand-text">Phone</span>
                     <a
                       href={`tel:${phone.replace(/\D/g, "")}`}
                       className="text-brand-text hover:text-brand-secondary transition-colors"
@@ -146,7 +146,7 @@ export default function ContactInfo({
                 <li className="flex items-start gap-3">
                   <FaxIcon />
                   <div>
-                    <span className="block text-sm font-medium text-brand-muted">Fax</span>
+                    <span className="block text-sm font-medium text-brand-text">Fax</span>
                     <span className="text-brand-text">{fax}</span>
                   </div>
                 </li>
@@ -155,7 +155,7 @@ export default function ContactInfo({
                 <li className="flex items-start gap-3">
                   <EmailIcon />
                   <div>
-                    <span className="block text-sm font-medium text-brand-muted">Email</span>
+                    <span className="block text-sm font-medium text-brand-text">Email</span>
                     <a
                       href={`mailto:${email}`}
                       className="text-brand-text hover:text-brand-secondary transition-colors"
@@ -169,7 +169,7 @@ export default function ContactInfo({
                 <li className="flex items-start gap-3">
                   <GlobeIcon />
                   <div>
-                    <span className="block text-sm font-medium text-brand-muted">Website</span>
+                    <span className="block text-sm font-medium text-brand-text">Website</span>
                     <a
                       href={website.startsWith("http") ? website : `https://${website}`}
                       target="_blank"
@@ -185,7 +185,7 @@ export default function ContactInfo({
                 <li className="flex items-start gap-3">
                   <MapPinIcon />
                   <div>
-                    <span className="block text-sm font-medium text-brand-muted">Address</span>
+                    <span className="block text-sm font-medium text-brand-text">Address</span>
                     <address className="not-italic text-brand-text whitespace-pre-line">
                       {address}
                     </address>
@@ -196,7 +196,7 @@ export default function ContactInfo({
                 <li className="flex items-start gap-3">
                   <ClockIcon />
                   <div>
-                    <span className="block text-sm font-medium text-brand-muted">Hours</span>
+                    <span className="block text-sm font-medium text-brand-text">Hours</span>
                     <span className="text-brand-text">{hours}</span>
                   </div>
                 </li>
@@ -206,7 +206,7 @@ export default function ContactInfo({
 
           {activeSocialLinks.length > 0 && (
             <div className="mt-8">
-              <p className="mb-3 text-sm font-medium text-brand-muted uppercase tracking-wider">
+              <p className="mb-3 text-sm font-medium text-brand-text uppercase tracking-wider">
                 Follow Along
               </p>
               <div className="flex gap-4">

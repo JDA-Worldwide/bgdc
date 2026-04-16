@@ -39,7 +39,7 @@ export default function TickerSection({
       <div className="border-b border-brand-border bg-brand-surface">
         <div className="mx-auto flex max-w-container items-center gap-6 overflow-x-auto px-6 py-6 sm:px-10 lg:px-gutter">
           {label && (
-            <span className="shrink-0 text-[10px] font-semibold uppercase tracking-[2px] text-brand-muted">
+            <span className="shrink-0 text-[10px] font-semibold uppercase tracking-[2px] text-brand-text">
               {label}
             </span>
           )}
@@ -48,7 +48,7 @@ export default function TickerSection({
             {resolvedPartners.map((partner, i) => (
               <span
                 key={partner._key || `partner-${i}`}
-                className="shrink-0 text-[13px] font-medium tracking-[0.52px] text-brand-muted/70"
+                className="shrink-0 text-[13px] font-medium tracking-[0.52px] text-brand-text"
               >
                 {partner.name}
               </span>
