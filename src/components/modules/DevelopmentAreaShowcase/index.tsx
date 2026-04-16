@@ -41,7 +41,7 @@ function AreaSection({ area, index }: { area: DevelopmentArea; index: number }) 
               {area.areaLabel.split("|").map((tag, i) => (
                 <span
                   key={i}
-                  className="inline-flex items-center rounded-full bg-brand-sky/30 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brand-primary"
+                  className="inline-flex items-center rounded-full bg-brand-sky/30 px-3 py-1 text-xs font-semibold font-sans text-brand-primary"
                 >
                   {tag.trim()}
                 </span>
@@ -66,8 +66,8 @@ function AreaSection({ area, index }: { area: DevelopmentArea; index: number }) 
               </p>
               <ul className="space-y-2">
                 {area.opportunities.map((opp, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-brand-charcoal">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-secondary" aria-hidden="true" />
+                  <li key={i} className="flex items-center gap-4 text-sm text-brand-charcoal">
+                    <div className="h-[5px] w-[23px] shrink-0 bg-brand-sun" aria-hidden="true" />
                     <span>{opp}</span>
                   </li>
                 ))}

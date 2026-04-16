@@ -9,7 +9,7 @@ export default function FeatureGrid({ heading, features }: FeatureGridProps) {
     <Container>
       {heading && (
         <AnimateIn>
-          <h2 className="mb-12 text-center font-heading text-3xl font-bold sm:text-4xl">
+          <h2 className="mb-12 text-3xl font-medium leading-tight text-brand-text-heading md:text-[43px] md:leading-[60px]">
             {heading}
           </h2>
         </AnimateIn>
@@ -19,13 +19,14 @@ export default function FeatureGrid({ heading, features }: FeatureGridProps) {
         {features.map((feature) => (
           <div
             key={feature._key}
-            className="rounded bg-brand-surface p-6 transition-shadow hover:shadow-md"
+            className="flex flex-col gap-[30px] bg-brand-sky p-10"
           >
-            <h3 className="font-heading text-xl font-semibold">
+            <h3 className="text-[23px] font-medium leading-[30px] text-brand-blue">
               {feature.title}
             </h3>
+            <hr className="border-brand-blue/20" />
             {feature.description && (
-              <p className="mt-2 text-brand-muted">{feature.description}</p>
+              <p className="text-base leading-7 text-brand-blue">{feature.description}</p>
             )}
           </div>
         ))}
