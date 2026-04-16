@@ -1,11 +1,22 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useSyncExternalStore, useTransition } from "react";
+
+function subscribe() {
+  return () => {};
+}
 
 export default function DraftModeBadge() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+
+  // SSR returns false (not in frame); client snapshot reads the real value.
+  const inFrame = useSyncExternalStore(
+    subscribe,
+    () => window.self !== window.top,
+    () => false,
+  );
 
   function exitDraftMode() {
     startTransition(async () => {
@@ -13,6 +24,8 @@ export default function DraftModeBadge() {
       router.refresh();
     });
   }
+
+  if (inFrame) return null;
 
   return (
     <div
