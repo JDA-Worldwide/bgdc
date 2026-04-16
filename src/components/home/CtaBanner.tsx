@@ -65,7 +65,7 @@ export default function CtaBanner({
 
       <div className="mx-auto max-w-[816px]">
         {callout && (
-          <p data-animate-fadeinup className="font-accent text-xl italic leading-7 text-brand-blue">
+          <p data-animate-fadeinup className="font-accent text-xl italic leading-7 text-brand-black">
             {callout}
           </p>
         )}
