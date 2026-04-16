@@ -8,6 +8,7 @@ import type { CtaButtonItem } from "@/components/ui/CtaButtons";
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
 
 interface Industry {
+  _key?: string;
   name: string;
   description?: string;
   image?: SanityImageSource;
@@ -82,10 +83,10 @@ export default function IndustriesSection({
         </div>
 
         <div className="mx-auto grid grid-cols-1 gap-10 px-0 sm:grid-cols-2 lg:px-[111px]">
-          {resolvedIndustries.map((industry) => (
+          {resolvedIndustries.map((industry, i) => (
             <div
               data-animate-fadeinup
-              key={industry.name}
+              key={industry._key ?? i}
               tabIndex={0}
               className="group relative flex min-h-[260px] flex-col justify-end overflow-hidden p-10 sm:min-h-[325px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sun focus-visible:ring-offset-2"
             >

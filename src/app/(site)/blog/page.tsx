@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
 
 interface BlogPostPreview {
+  _id: string;
   title: string;
   slug: string;
   excerpt?: string;
@@ -34,7 +35,7 @@ export default async function BlogListingPage() {
       ) : (
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {typedPosts.map((post) => (
-            <article key={post.slug}>
+            <article key={post._id}>
               <a href={`/blog/${post.slug}`} className="group block">
                 {post.featuredImage?.asset && (
                   <div className="relative mb-4 aspect-[16/9] overflow-hidden rounded">

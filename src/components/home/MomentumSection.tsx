@@ -7,6 +7,7 @@ import CtaButtons from "@/components/ui/CtaButtons";
 import type { CtaButtonItem } from "@/components/ui/CtaButtons";
 
 interface Project {
+  _key?: string;
   title: string;
   description: string;
   link?: { label?: string; url?: string; isExternal?: boolean };
@@ -85,7 +86,7 @@ export default function MomentumSection({
             return (
               <div
                 data-animate-fadeinup
-                key={project.title}
+                key={project._key ?? i}
                 className={cn(
                   "flex flex-col gap-[30px] bg-white p-10",
                   spanTablet && "sm:col-span-2 lg:col-span-1"

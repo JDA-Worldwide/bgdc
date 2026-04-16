@@ -65,9 +65,9 @@ export default function MapSectionClient({
           </div>
 
           <div className="flex flex-1 flex-col gap-[23px]">
-            {destinations.map((dest) => (
+            {destinations.map((dest, i) => (
               <div
-                key={dest.label}
+                key={i}
                 data-animate-fadeinup
                 className="flex items-start gap-4 sm:items-center sm:gap-5"
               >

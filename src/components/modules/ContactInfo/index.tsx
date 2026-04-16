@@ -212,7 +212,7 @@ export default function ContactInfo({
               <div className="flex gap-4">
                 {activeSocialLinks.map((link, i) => (
                   <a
-                    key={link._key ?? `${link.platform}-${i}`}
+                    key={link._key ?? i}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"

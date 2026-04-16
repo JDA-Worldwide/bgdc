@@ -9,12 +9,14 @@ import { cn } from "@/lib/utils";
 /* ---------- Types ---------- */
 
 interface NavChild {
+  _key?: string;
   label: string;
   url: string;
   isExternal?: boolean;
 }
 
 interface NavItem {
+  _key?: string;
   label: string;
   url: string;
   isExternal?: boolean;
@@ -156,7 +158,7 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
               if (hasChildren) {
                 return (
                   <div
-                    key={item.label}
+                    key={item._key ?? item.label}
                     className="relative"
                     data-dropdown
                     onMouseEnter={() => handleDropdownEnter(item.label)}
@@ -211,7 +213,7 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                           </NavLink>
                           {item.children!.map((child) => (
                             <NavLink
-                              key={child.url}
+                              key={child._key ?? child.url}
                               href={child.url}
                               isExternal={child.isExternal}
                               className={cn(
@@ -231,7 +233,7 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
 
               return (
                 <NavLink
-                  key={item.url}
+                  key={item._key ?? item.url}
                   href={item.url}
                   isExternal={item.isExternal}
                   className={cn(
@@ -288,7 +290,7 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
 
               if (hasChildren) {
                 return (
-                  <div key={item.label}>
+                  <div key={item._key ?? item.label}>
                     <button
                       type="button"
                       className={cn(
@@ -336,7 +338,7 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                         </NavLink>
                         {item.children!.map((child) => (
                           <NavLink
-                            key={child.url}
+                            key={child._key ?? child.url}
                             href={child.url}
                             isExternal={child.isExternal}
                             className={cn(
@@ -355,7 +357,7 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
 
               return (
                 <NavLink
-                  key={item.url}
+                  key={item._key ?? item.url}
                   href={item.url}
                   isExternal={item.isExternal}
                   className={cn(

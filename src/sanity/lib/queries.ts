@@ -37,10 +37,12 @@ export const navigationQuery = groq`
     "ctaLabel": coalesce(ctaLabel, ctaPage->title),
     "ctaUrl": "/" + ctaPage->slug.current,
     items[] {
+      _key,
       "label": coalesce(label, pageRef->title),
       "url": select(isExternal == true => url, "/" + pageRef->slug.current),
       isExternal,
       children[] {
+        _key,
         "label": coalesce(label, pageRef->title),
         "url": select(isExternal == true => url, "/" + pageRef->slug.current),
         isExternal
@@ -58,7 +60,11 @@ export const footerQuery = groq`
       }
     },
     useGlobalSocialLinks,
-    socialLinks,
+    socialLinks[] {
+      _key,
+      platform,
+      url
+    },
     copyrightText
   }
 `;
@@ -120,6 +126,7 @@ export const pageBySlugQuery = groq`
         ...,
         ${ctasProjection},
         industries[] {
+          _key,
           name,
           description,
           image,
@@ -201,6 +208,7 @@ export const homepageQuery = groq`
         ...,
         ${ctasProjection},
         industries[] {
+          _key,
           name,
           description,
           image,
@@ -282,6 +290,7 @@ export const homepageDataQuery = groq`
         ...,
         ${ctasProjection},
         industries[] {
+          _key,
           name,
           description,
           image,
@@ -314,6 +323,7 @@ export const homepageDataQuery = groq`
 
 export const allBlogPostsQuery = groq`
   *[_type == "blogPost"] | order(publishedAt desc) {
+    _id,
     title,
     "slug": slug.current,
     excerpt,

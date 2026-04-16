@@ -6,6 +6,7 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useGsap } from "@/hooks/useGsap";
 
 interface ValueCard {
+  _key?: string;
   icon?: SanityImageSource;
   title: string;
   body: string;
@@ -69,7 +70,7 @@ export default function ValuePropsSection({
     <section ref={sectionRef} className="overflow-hidden bg-brand-blue py-16 flex flex-col gap-16 lg:gap-20">
       {resolvedCards.map((card, i) => (
         <div
-          key={card.title}
+          key={card._key ?? i}
           data-value-row
           className="mx-auto flex w-full max-w-container flex-col gap-10 px-6 sm:px-10 lg:flex-row lg:items-start lg:px-gutter"
         >

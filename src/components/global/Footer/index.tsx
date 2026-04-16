@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface SocialLink {
+  _key?: string;
   platform: string;
   url: string;
 }
@@ -93,7 +94,7 @@ export default function Footer({ socialLinks }: FooterProps) {
           <div className="flex items-center gap-[25px]">
             {links.map((link) => (
               <a
-                key={link.platform}
+                key={link._key ?? link.platform}
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"

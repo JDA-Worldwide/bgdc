@@ -54,6 +54,17 @@ All brand values defined in `src/app/globals.css` via Tailwind v4 `@theme inline
 - All image fields must include a required `alt` string field
 - All slugs use `isUnique` validator from `@/sanity/lib/isUnique`
 
+### React List Keys and Sanity Live Preview
+
+Sanity's stega encoding embeds invisible Unicode characters into every string prop when Live Preview is active. If a Sanity string field is used as a React `key`, the key changes on every content update — causing React to unmount and remount list items. This breaks GSAP animations (elements snap to their hidden initial state and don't re-animate because their ScrollTrigger threshold has already been passed).
+
+**Rules:**
+- Always use `_key` for Sanity array items: `key={item._key}` or `key={item._key ?? i}` as a fallback for hardcoded defaults
+- Use `_id` for Sanity document references (blog posts, team members, etc.)
+- Never use string fields (`name`, `title`, `label`, `url`, `platform`, `slug`) as `key`
+- Index (`i`) is only acceptable for `string[]` primitive arrays, string splits, and positional UI elements (e.g. carousel dots)
+- When writing explicit GROQ array projections, always include `_key`: `items[] { _key, name, ... }` — `...` spread includes it automatically
+
 ## Conventions
 
 - **Components:** one directory per component with `index.tsx` + optional `types.ts`, default exports, props interface named `[ComponentName]Props`

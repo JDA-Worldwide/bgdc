@@ -32,6 +32,14 @@ All content fetched via GROQ in server components.
 - Never fetch in client components — pass data as props
 - Use `revalidateTag` for ISR cache invalidation
 - GROQ queries use tagged template literals for syntax highlighting
+- Always include `_key` in explicit array projections (e.g. `industries[] { _key, name, ... }`) — `...` spread includes it automatically
+
+## React List Keys (Sanity Live Preview)
+- Never use Sanity string fields (name, title, label, url, platform, slug) as React `key` props
+- Stega encoding changes these strings on every live preview update, causing React to unmount/remount list items and breaking GSAP animations
+- Always use `_key` for Sanity array items: `key={item._key}` or `key={item._key ?? i}` as fallback for hardcoded defaults
+- Use `_id` for Sanity document references (e.g. blog posts, team members)
+- Index (`i`) is only acceptable for string primitive arrays (`string[]`), string splits, and positional UI elements (carousel dots)
 
 ## Styling
 - Tailwind utility classes exclusively. No custom CSS files
