@@ -24,7 +24,7 @@ export function ensureMapboxCSS(): Promise<void> {
 }
 
 /** Mapbox Studio style URL for the Bargersville brand map. */
-export const BRAND_MAP_STYLE = "mapbox://styles/prolific/cmnsvuf47008q01qtea3caamk";
+export const BRAND_MAP_STYLE = "mapbox://styles/prolific/cmo2rdliz00ay01pc1w7t6rat";
 
 /** Verify a Mapbox token is accepted before handing it to mapbox-gl. */
 export async function validateMapboxToken(token: string): Promise<boolean> {
