@@ -24,7 +24,7 @@ export default function FeatureGrid({ heading, features }: FeatureGridProps) {
             <h3 className="text-[23px] font-medium leading-[30px] text-brand-blue">
               {feature.title}
             </h3>
-            <hr className="border-brand-blue/20" />
+            <hr className="border-brand-blue/20 in-[.scheme-limestone]:border-brand-sun in-[.scheme-sky]:border-brand-sun in-[.scheme-dark]:border-brand-sun" />
             {feature.description && (
               <p className="text-base leading-7 text-brand-blue">{feature.description}</p>
             )}

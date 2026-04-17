@@ -38,7 +38,7 @@ const components: Partial<PortableTextReactComponents> = {
           href={value?.href}
           target={target}
           rel={rel}
-          className="text-brand-secondary underline hover:no-underline"
+          className="text-brand-soybean underline hover:text-brand-soybean/80 hover:no-underline focus-visible:text-brand-soybean/80 focus-visible:outline-none"
         >
           {children}
         </a>

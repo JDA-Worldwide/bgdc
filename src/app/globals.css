@@ -55,6 +55,11 @@
     font-family: var(--font-heading);
     font-weight: 500;
   }
+
+  a:hover,
+  a:focus-visible {
+    color: var(--color-brand-soybean);
+  }
 }
 
 /* ── Section Color Schemes ── */

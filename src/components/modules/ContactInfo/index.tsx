@@ -136,7 +136,7 @@ export default function ContactInfo({
                     <span className="block text-sm font-medium text-brand-text">Phone</span>
                     <a
                       href={`tel:${phone.replace(/\D/g, "")}`}
-                      className="text-brand-text hover:text-brand-secondary transition-colors"
+                      className="text-brand-text hover:text-brand-soybean transition-colors"
                     >
                       {phone}
                     </a>
@@ -159,7 +159,7 @@ export default function ContactInfo({
                     <span className="block text-sm font-medium text-brand-text">Email</span>
                     <a
                       href={`mailto:${email}`}
-                      className="text-brand-text hover:text-brand-secondary transition-colors"
+                      className="text-brand-text hover:text-brand-soybean transition-colors"
                     >
                       {email}
                     </a>
@@ -175,7 +175,7 @@ export default function ContactInfo({
                       href={website.startsWith("http") ? website : `https://${website}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-brand-text hover:text-brand-secondary transition-colors"
+                      className="text-brand-text hover:text-brand-soybean transition-colors"
                     >
                       {website}
                     </a>

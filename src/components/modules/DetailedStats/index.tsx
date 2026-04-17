@@ -28,10 +28,10 @@ function StatsList({ stats }: { stats: StatItem[] }) {
     <ul ref={ref} className="space-y-4">
       {stats.map((stat) => (
         <li key={stat._key}>
-          <span className="block font-heading text-2xl font-bold text-brand-primary">
+          <span className="block font-heading text-3xl font-bold text-brand-primary">
             {stat.value}
           </span>
-          <span className="mt-0.5 block text-sm leading-5 text-brand-text">
+          <span className="mt-0.5 block font-accent text-sm italic leading-5 text-brand-text">
             {stat.label}
           </span>
         </li>

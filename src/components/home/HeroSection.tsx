@@ -71,7 +71,7 @@ export default function HeroSection({
         </p>
       )}
 
-      <div className="mt-10 flex max-w-container flex-col gap-8 text-center text-white md:mt-[60px] md:gap-[54px]">
+      <div className="mt-10 flex max-w-4xl flex-col gap-8 text-center text-white md:mt-[60px] md:gap-[54px]">
         {heading && (
           <h1 data-animate-fadeinup className="text-3xl font-medium text-white sm:text-5xl md:text-[70px] md:leading-[1.15]">
             {heading}
