@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import { BRAND_MAP_STYLE, ensureMapboxCSS, validateMapboxToken } from "@/lib/mapbox";
 
 export interface MapMarker {
@@ -10,6 +10,10 @@ export interface MapMarker {
   isPrimary?: boolean;
 }
 
+export interface MapboxMapHandle {
+  flyTo: (lng: number, lat: number, label: string) => void;
+}
+
 interface MapboxMapProps {
   center?: [number, number];
   zoom?: number;
@@ -17,14 +21,30 @@ interface MapboxMapProps {
   className?: string;
 }
 
-export default function MapboxMap({
+const MapboxMap = forwardRef<MapboxMapHandle, MapboxMapProps>(function MapboxMap({
   center = [-86.164665, 39.521121],
   zoom = 10,
   markers = [],
   className = "",
-}: MapboxMapProps) {
+}, ref) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<unknown>(null);
+  const markerInstancesRef = useRef<Map<string, unknown>>(new Map());
+
+  useImperativeHandle(ref, () => ({
+    flyTo(lng: number, lat: number, label: string) {
+      const m = mapRef.current as { flyTo: (opts: unknown) => void } | null;
+      if (!m) return;
+      m.flyTo({ center: [lng, lat], zoom: 10, duration: 800 });
+      const mkr = markerInstancesRef.current.get(label) as
+        | { getPopup: () => { isOpen: () => boolean } | null; togglePopup: () => void }
+        | undefined;
+      if (mkr) {
+        const popup = mkr.getPopup();
+        if (popup && !popup.isOpen()) mkr.togglePopup();
+      }
+    },
+  }));
 
   useEffect(() => {
     const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
@@ -96,8 +116,8 @@ export default function MapboxMap({
                 width: 10px;
                 height: 10px;
                 border-radius: 50%;
-                background: #B7C7D3;
-                border: 2px solid rgba(183,199,211,0.5);
+                background: #FFBF3C;
+                border: 2px solid rgba(255,191,60,0.5);
                 box-shadow: 0 1px 4px rgba(0,0,0,0.3);
                 cursor: pointer;
               `;
@@ -121,6 +141,14 @@ export default function MapboxMap({
             }
 
             mkr.addTo(m);
+
+            if (marker.label) {
+              markerInstancesRef.current.set(marker.label, mkr);
+            }
+
+            if (marker.isPrimary && marker.label) {
+              mkr.togglePopup();
+            }
           });
         });
 
@@ -149,4 +177,6 @@ export default function MapboxMap({
       role="img"
     />
   );
-}
+});
+
+export default MapboxMap;

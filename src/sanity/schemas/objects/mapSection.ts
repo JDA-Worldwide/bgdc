@@ -19,20 +19,6 @@ export default defineType({
       rows: 4,
     }),
     defineField({
-      name: "mapImage",
-      title: "Map Image",
-      type: "image",
-      options: { hotspot: true },
-      fields: [
-        defineField({
-          name: "alt",
-          title: "Alt Text",
-          type: "string",
-          validation: (rule) => rule.required(),
-        }),
-      ],
-    }),
-    defineField({
       name: "mapCenterAddress",
       title: "Map Center — Location",
       type: "string",
@@ -44,6 +30,14 @@ export default defineType({
       title: "Map Center — Pin Label",
       type: "string",
       description: "Label shown on the primary pin popup.",
+    }),
+    defineField({
+      name: "zoom",
+      title: "Map Zoom Level",
+      type: "number",
+      description: "1 (world) – 20 (street level). Default: 9.",
+      initialValue: 9,
+      validation: (rule) => rule.min(1).max(20),
     }),
     defineField({
       name: "destinations",

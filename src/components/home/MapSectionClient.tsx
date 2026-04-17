@@ -1,9 +1,10 @@
 "use client";
 
+import { useRef } from "react";
 import { useGsap } from "@/hooks/useGsap";
 import { gsap } from "@/lib/gsap";
 import MapboxMapClient from "@/components/ui/MapboxMap/MapboxMapClient";
-import type { MapMarker } from "@/components/ui/MapboxMap";
+import type { MapMarker, MapboxMapHandle } from "@/components/ui/MapboxMap";
 
 interface Destination {
   time: string;
@@ -15,6 +16,7 @@ interface MapSectionClientProps {
   body?: string;
   destinations: Destination[];
   center: [number, number];
+  zoom?: number;
   markers: MapMarker[];
 }
 
@@ -23,8 +25,11 @@ export default function MapSectionClient({
   body,
   destinations,
   center,
+  zoom = 9,
   markers,
 }: MapSectionClientProps) {
+  const mapRef = useRef<MapboxMapHandle>(null);
+
   const contentRef = useGsap<HTMLDivElement>((el) => {
     gsap.fromTo(
       el.querySelectorAll("[data-animate-fadeinup]"),
@@ -46,8 +51,9 @@ export default function MapSectionClient({
         {/* Interactive Mapbox map — no animation */}
         <div className="relative aspect-1320/487 w-full overflow-hidden">
           <MapboxMapClient
+            ref={mapRef}
             center={center}
-            zoom={8}
+            zoom={zoom}
             markers={markers}
             className="absolute inset-0 h-full w-full"
           />
@@ -65,23 +71,38 @@ export default function MapSectionClient({
           </div>
 
           <div className="flex flex-1 flex-col gap-[23px]">
-            {destinations.map((dest, i) => (
-              <div
-                key={i}
-                data-animate-fadeinup
-                className="flex items-start gap-4 sm:items-center sm:gap-5"
-              >
-                <div className="mt-2.5 h-[5px] w-[23px] shrink-0 bg-brand-sun sm:mt-0" />
-                <div className="flex flex-col sm:flex-row sm:gap-3">
-                  <p className="text-base font-semibold leading-[27px] text-brand-charcoal">
-                    {dest.time}
-                  </p>
-                  <p className="text-sm leading-6 text-brand-charcoal sm:text-base sm:leading-7">
-                    {dest.label}
-                  </p>
+            {destinations.map((dest, i) => {
+              const marker = markers[i + 1];
+              return (
+                <div
+                  key={i}
+                  data-animate-fadeinup
+                  className="flex cursor-pointer items-start gap-4 transition-opacity hover:opacity-70 sm:items-center sm:gap-5"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Show ${dest.label} on map`}
+                  onClick={() => {
+                    if (marker) mapRef.current?.flyTo(marker.lng, marker.lat, dest.label);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      if (marker) mapRef.current?.flyTo(marker.lng, marker.lat, dest.label);
+                    }
+                  }}
+                >
+                  <div className="mt-2.5 h-[5px] w-[23px] shrink-0 bg-brand-sun sm:mt-0" />
+                  <div className="flex flex-col sm:flex-row sm:gap-3">
+                    <p className="text-base font-semibold leading-[27px] text-brand-charcoal">
+                      {dest.time}
+                    </p>
+                    <p className="text-sm leading-6 text-brand-charcoal sm:text-base sm:leading-7">
+                      {dest.label}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

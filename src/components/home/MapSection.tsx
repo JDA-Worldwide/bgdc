@@ -13,6 +13,7 @@ interface MapSectionProps {
   destinations?: Destination[];
   mapCenterAddress?: string;
   mapCenterLabel?: string;
+  zoom?: number;
 }
 
 const DEFAULT_CENTER: [number, number] = [-86.164665, 39.521121];
@@ -32,6 +33,7 @@ export default async function MapSection({
   destinations,
   mapCenterAddress,
   mapCenterLabel,
+  zoom = 9,
 }: MapSectionProps) {
   const resolvedDestinations = destinations?.length ? destinations : defaultDestinations;
 
@@ -70,6 +72,7 @@ export default async function MapSection({
       body={body}
       destinations={resolvedDestinations}
       center={center}
+      zoom={zoom}
       markers={allMarkers}
     />
   );
