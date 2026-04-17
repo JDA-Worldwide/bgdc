@@ -313,3 +313,9 @@
     transform: none;
   }
 }
+
+/* Restore visibility in Sanity Studio preview / draft mode */
+body[data-preview] [data-animate-fadeinup] {
+  opacity: 1;
+  transform: none;
+}

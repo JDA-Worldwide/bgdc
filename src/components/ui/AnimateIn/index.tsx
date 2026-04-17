@@ -1,6 +1,7 @@
 "use client";
 
 import { useGsap } from "@/hooks/useGsap";
+import { useIsPreview } from "@/components/global/PreviewContext";
 import { gsap } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 
@@ -33,7 +34,9 @@ export default function AnimateIn({
   delay = 0,
   start = "top 85%",
 }: AnimateInProps) {
+  const isPreview = useIsPreview();
   const ref = useGsap<HTMLElement>((el) => {
+    if (isPreview) return;
     if (stagger) {
       const kids = el.children;
       if (!kids.length) return;
