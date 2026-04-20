@@ -1,5 +1,6 @@
 "use client";
 
+import type { FeatureCollection } from "geojson";
 import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import { BRAND_MAP_STYLE, ensureMapboxCSS, validateMapboxToken } from "@/lib/mapbox";
 
@@ -94,7 +95,7 @@ const MapboxMap = forwardRef<MapboxMapHandle, MapboxMapProps>(function MapboxMap
               "https://gis.townofbargersville.org/arcgis/rest/services/PublicData/StormwaterNetwork/MapServer/8/query?where=1%3D1&outFields=*&f=geojson",
             );
             if (cancelled) return;
-            const geojson = await res.json() as { features?: { geometry: { coordinates: unknown } }[] };
+            const geojson = await res.json() as FeatureCollection;
             if (cancelled) return;
 
             m.addSource("bargersville-district", { type: "geojson", data: geojson });
@@ -120,7 +121,7 @@ const MapboxMap = forwardRef<MapboxMapHandle, MapboxMapProps>(function MapboxMap
                 (coords as unknown[]).forEach(extendBounds);
               }
             };
-            geojson.features?.forEach((f) => extendBounds(f.geometry.coordinates));
+            geojson.features?.forEach((f) => extendBounds((f.geometry as { coordinates: unknown }).coordinates));
             if (!bounds.isEmpty()) {
               m.fitBounds(bounds, { padding: 30, maxZoom: 14, duration: 0 });
             }
