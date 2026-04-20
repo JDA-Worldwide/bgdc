@@ -87,7 +87,47 @@ const MapboxMap = forwardRef<MapboxMapHandle, MapboxMapProps>(function MapboxMap
           "top-right",
         );
 
-        m.on("load", () => {
+        m.on("load", async () => {
+          // Fetch district boundary, fit map to its bounds, then add layers
+          try {
+            const res = await fetch(
+              "https://gis.townofbargersville.org/arcgis/rest/services/PublicData/StormwaterNetwork/MapServer/8/query?where=1%3D1&outFields=*&f=geojson",
+            );
+            if (cancelled) return;
+            const geojson = await res.json() as { features?: { geometry: { coordinates: unknown } }[] };
+            if (cancelled) return;
+
+            m.addSource("bargersville-district", { type: "geojson", data: geojson });
+            m.addLayer({
+              id: "bargersville-district-fill",
+              type: "fill",
+              source: "bargersville-district",
+              paint: { "fill-color": "#FFBF3C", "fill-opacity": 0.1 },
+            });
+            m.addLayer({
+              id: "bargersville-district-line",
+              type: "line",
+              source: "bargersville-district",
+              paint: { "line-color": "#FFBF3C", "line-width": 2, "line-opacity": 0.7 },
+            });
+
+            // Compute bounding box from geometry coordinates
+            const bounds = new mapboxgl.default.LngLatBounds();
+            const extendBounds = (coords: unknown): void => {
+              if (typeof (coords as number[])[0] === "number") {
+                bounds.extend(coords as [number, number]);
+              } else {
+                (coords as unknown[]).forEach(extendBounds);
+              }
+            };
+            geojson.features?.forEach((f) => extendBounds(f.geometry.coordinates));
+            if (!bounds.isEmpty()) {
+              m.fitBounds(bounds, { padding: 30, maxZoom: 14, duration: 0 });
+            }
+          } catch (err) {
+            console.warn("Failed to load district boundary:", err);
+          }
+
           markers.forEach((marker) => {
             const el = document.createElement("div");
             el.className = "mapbox-marker";
@@ -146,9 +186,9 @@ const MapboxMap = forwardRef<MapboxMapHandle, MapboxMapProps>(function MapboxMap
               markerInstancesRef.current.set(marker.label, mkr);
             }
 
-            if (marker.isPrimary && marker.label) {
-              mkr.togglePopup();
-            }
+            // if (marker.isPrimary && marker.label) {
+            //   mkr.togglePopup();
+            // }
           });
         });
 
