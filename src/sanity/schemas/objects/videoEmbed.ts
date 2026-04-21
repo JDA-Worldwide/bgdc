@@ -1,6 +1,7 @@
 import { defineType, defineField } from "sanity";
 import { PlayIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
+import { anchorSlugField } from "./_anchorSlugField";
 
 export default defineType({
   name: "videoEmbed",
@@ -31,6 +32,7 @@ export default defineType({
       ],
     }),
     colorSchemeField,
+    anchorSlugField,
   ],
   preview: {
     select: { url: "url" },

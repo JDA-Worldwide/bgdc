@@ -1,6 +1,7 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 import { ImagesIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
+import { anchorSlugField } from "./_anchorSlugField";
 
 export default defineType({
   name: "logoBar",
@@ -34,6 +35,7 @@ export default defineType({
       validation: (rule) => rule.min(1),
     }),
     colorSchemeField,
+    anchorSlugField,
   ],
   preview: {
     select: { title: "heading", logos: "logos" },

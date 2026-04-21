@@ -1,6 +1,7 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 import { RocketIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
+import { anchorSlugField } from "./_anchorSlugField";
 
 export default defineType({
   name: "projectsGrid",
@@ -92,6 +93,7 @@ export default defineType({
       validation: (rule) => rule.min(1),
     }),
     { ...colorSchemeField, initialValue: "surface" },
+    anchorSlugField,
   ],
   preview: {
     select: { title: "heading", projects: "projects" },

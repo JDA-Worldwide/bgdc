@@ -1,6 +1,7 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 import { BarChartIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
+import { anchorSlugField } from "./_anchorSlugField";
 
 export default defineType({
   name: "statsCounter",
@@ -61,6 +62,7 @@ export default defineType({
       validation: (rule) => rule.min(1),
     }),
     colorSchemeField,
+    anchorSlugField,
   ],
   preview: {
     select: { stats: "stats" },

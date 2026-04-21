@@ -1,5 +1,6 @@
 import type { ComponentType } from "react";
 import { stegaClean } from "@sanity/client/stega";
+import { cn } from "@/lib/utils";
 import Hero from "./modules/Hero";
 import TextBlock from "./modules/TextBlock";
 import CTA from "./modules/CTA";
@@ -39,6 +40,7 @@ interface Module {
   _type: string;
   _key: string;
   colorScheme?: "light" | "surface" | "limestone" | "sky" | "dark";
+  anchorSlug?: { current?: string };
   [key: string]: unknown;
 }
 
@@ -145,14 +147,17 @@ export default function PageBuilder({ modules, globalSocialLinks }: PageBuilderP
           scheme === "sky" ? "scheme-sky" :
           undefined;
         const isFullBleed = fullBleedModules.has(module._type);
+        const anchorId = stegaClean(module.anchorSlug?.current) || undefined;
 
         const extraProps = module._type === "contactInfo" && globalSocialLinks
           ? { globalSocialLinks }
           : {};
 
+        const scrollClass = anchorId ? "scroll-mt-[var(--header-height)]" : undefined;
+
         if (isFullBleed) {
           return (
-            <div key={module._key} className={schemeClass}>
+            <div key={module._key} id={anchorId} className={cn(schemeClass, scrollClass)}>
               {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
               <Component {...module} {...extraProps} />
             </div>
@@ -160,7 +165,7 @@ export default function PageBuilder({ modules, globalSocialLinks }: PageBuilderP
         }
 
         return (
-          <div key={module._key} className={schemeClass}>
+          <div key={module._key} id={anchorId} className={cn(schemeClass, scrollClass)}>
             <section className="mx-auto max-w-container py-section">
               {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
               <Component {...module} {...extraProps} />

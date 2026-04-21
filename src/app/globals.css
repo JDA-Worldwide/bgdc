@@ -44,6 +44,13 @@
 
 /* ── Base Styles ── */
 @layer base {
+  :root {
+    --header-height: 80px; /* logo h-10 (40px) + py-5 (20px × 2) */
+    @media (min-width: 640px) {
+      --header-height: 103px; /* logo h-[63px] + py-5 (20px × 2) */
+    }
+  }
+
   body {
     background: var(--color-brand-background);
     color: var(--color-brand-text);

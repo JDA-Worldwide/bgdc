@@ -1,5 +1,6 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 import { UsersIcon } from "@sanity/icons";
+import { anchorSlugField } from "./_anchorSlugField";
 
 export default defineType({
   name: "partnersTicker",
@@ -37,6 +38,7 @@ export default defineType({
       ],
       validation: (rule) => rule.min(1),
     }),
+    anchorSlugField,
   ],
   preview: {
     select: { partners: "partners" },

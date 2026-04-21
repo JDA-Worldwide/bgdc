@@ -1,6 +1,7 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 import { BulbOutlineIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
+import { anchorSlugField } from "./_anchorSlugField";
 
 export default defineType({
   name: "valueProps",
@@ -61,6 +62,7 @@ export default defineType({
       validation: (rule) => rule.min(1).max(4),
     }),
     { ...colorSchemeField, initialValue: "dark" },
+    anchorSlugField,
   ],
   preview: {
     select: { title: "heading", cards: "cards" },

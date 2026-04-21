@@ -1,6 +1,7 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 import { RocketIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
+import { anchorSlugField } from "./_anchorSlugField";
 
 export default defineType({
   name: "momentumSection",
@@ -62,6 +63,7 @@ export default defineType({
       of: [{ type: "ctaButton" }],
     }),
     { ...colorSchemeField, initialValue: "sky" },
+    anchorSlugField,
   ],
   preview: {
     select: { title: "heading", projects: "projects" },

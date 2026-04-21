@@ -1,6 +1,7 @@
 import { defineType, defineField } from "sanity";
 import { EnvelopeIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
+import { anchorSlugField } from "./_anchorSlugField";
 
 export default defineType({
   name: "contactForm",
@@ -46,6 +47,7 @@ export default defineType({
       initialValue: false,
     }),
     colorSchemeField,
+    anchorSlugField,
   ],
   preview: {
     select: { title: "heading" },

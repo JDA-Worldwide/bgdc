@@ -1,5 +1,6 @@
 import { defineType, defineField } from "sanity";
 import { HomeIcon } from "@sanity/icons";
+import { anchorSlugField } from "./_anchorSlugField";
 
 export default defineType({
   name: "homepageHero",
@@ -39,6 +40,7 @@ export default defineType({
       options: { hotspot: true },
       description: "Decorative background image — no alt text needed.",
     }),
+    anchorSlugField,
   ],
   preview: {
     select: { title: "heading" },

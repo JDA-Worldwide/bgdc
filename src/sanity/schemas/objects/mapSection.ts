@@ -1,5 +1,6 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 import { PinIcon } from "@sanity/icons";
+import { anchorSlugField } from "./_anchorSlugField";
 
 export default defineType({
   name: "mapSection",
@@ -79,6 +80,7 @@ export default defineType({
         }),
       ],
     }),
+    anchorSlugField,
   ],
   preview: {
     select: { title: "heading" },

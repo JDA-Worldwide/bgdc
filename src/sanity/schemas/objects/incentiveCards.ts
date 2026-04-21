@@ -1,6 +1,7 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 import { TagIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
+import { anchorSlugField } from "./_anchorSlugField";
 
 export default defineType({
   name: "incentiveCards",
@@ -77,6 +78,7 @@ export default defineType({
       ],
     }),
     colorSchemeField,
+    anchorSlugField,
   ],
   preview: {
     select: { heading: "heading", programs: "programs" },

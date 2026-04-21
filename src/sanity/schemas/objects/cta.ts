@@ -1,5 +1,6 @@
 import { defineType, defineField } from "sanity";
 import { ArrowRightIcon } from "@sanity/icons";
+import { anchorSlugField } from "./_anchorSlugField";
 
 export default defineType({
   name: "cta",
@@ -42,6 +43,7 @@ export default defineType({
       },
       initialValue: "default",
     }),
+    anchorSlugField,
   ],
   preview: {
     select: { title: "heading" },

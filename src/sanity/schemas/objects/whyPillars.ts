@@ -1,6 +1,7 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 import { BlockContentIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
+import { anchorSlugField } from "./_anchorSlugField";
 
 export default defineType({
   name: "whyPillars",
@@ -71,6 +72,7 @@ export default defineType({
       validation: (rule) => rule.min(1).max(4),
     }),
     colorSchemeField,
+    anchorSlugField,
   ],
   preview: {
     select: { title: "heading", pillars: "pillars" },

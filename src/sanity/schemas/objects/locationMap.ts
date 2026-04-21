@@ -1,6 +1,7 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 import { PinIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
+import { anchorSlugField } from "./_anchorSlugField";
 
 export default defineType({
   name: "locationMap",
@@ -116,6 +117,7 @@ export default defineType({
       ],
     }),
     { ...colorSchemeField, initialValue: "dark" },
+    anchorSlugField,
   ],
   preview: {
     select: { title: "heading" },

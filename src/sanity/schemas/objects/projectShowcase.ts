@@ -1,6 +1,7 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 import { CaseIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
+import { anchorSlugField } from "./_anchorSlugField";
 
 export default defineType({
   name: "projectShowcase",
@@ -158,6 +159,7 @@ export default defineType({
       ],
     }),
     colorSchemeField,
+    anchorSlugField,
   ],
   preview: {
     select: { heading: "heading", projects: "projects" },

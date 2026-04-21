@@ -1,6 +1,7 @@
 import { defineType, defineField } from "sanity";
 import { TextIcon } from "@sanity/icons";
 import { colorSchemeField } from "./_colorSchemeField";
+import { anchorSlugField } from "./_anchorSlugField";
 
 export default defineType({
   name: "textBlock",
@@ -88,6 +89,7 @@ export default defineType({
       hidden: ({ parent }) => !parent?.image,
     }),
     colorSchemeField,
+    anchorSlugField,
   ],
   preview: {
     select: { heading: "heading", body: "body" },
