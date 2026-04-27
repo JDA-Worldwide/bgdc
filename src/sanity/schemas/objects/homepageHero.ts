@@ -17,7 +17,9 @@ export default defineType({
     defineField({
       name: "heading",
       title: "Heading",
-      type: "string",
+      type: "text",
+      rows: 3,
+      description: "Use Enter/Return to add line breaks in the rendered heading.",
       validation: (rule) => rule.required(),
     }),
     defineField({
