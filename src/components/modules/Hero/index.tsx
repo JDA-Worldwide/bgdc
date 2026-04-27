@@ -100,7 +100,12 @@ export default function Hero({
               hasImage || isDark ? "text-white/90" : useDarkText ? "text-brand-text" : "text-white/90"
             )}
           >
-            {subheading}
+            {subheading.split("\n").map((line, i, arr) => (
+              <span key={i}>
+                {line}
+                {i < arr.length - 1 && <br />}
+              </span>
+            ))}
           </p>
         )}
 

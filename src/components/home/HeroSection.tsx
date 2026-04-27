@@ -84,7 +84,12 @@ export default function HeroSection({
         )}
         {body && (
           <p data-animate-fadeinup className="text-base leading-relaxed sm:text-lg md:text-[22px] md:leading-[33px]">
-            {body}
+            {body.split("\n").map((line, i, arr) => (
+              <span key={i}>
+                {line}
+                {i < arr.length - 1 && <br />}
+              </span>
+            ))}
           </p>
         )}
       </div>
