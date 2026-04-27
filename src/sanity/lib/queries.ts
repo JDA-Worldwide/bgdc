@@ -53,19 +53,7 @@ export const navigationQuery = groq`
 
 export const footerQuery = groq`
   *[_type == "footer"][0] {
-    columns[] {
-      title,
-      links[] {
-        ${linkFields}
-      }
-    },
-    useGlobalSocialLinks,
-    socialLinks[] {
-      _key,
-      platform,
-      url
-    },
-    copyrightText
+    address
   }
 `;
 

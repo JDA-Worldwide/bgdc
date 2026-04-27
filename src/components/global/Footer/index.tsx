@@ -8,8 +8,11 @@ interface SocialLink {
   url: string;
 }
 
+const FALLBACK_ADDRESS = "24 North Main Street\nBargersville, IN 46106";
+
 interface FooterProps {
   socialLinks?: SocialLink[];
+  address?: string;
 }
 
 const FALLBACK_SOCIAL_LINKS: SocialLink[] = [
@@ -61,9 +64,10 @@ const socialLabels: Record<string, string> = {
   tiktok: "TikTok",
 };
 
-export default function Footer({ socialLinks }: FooterProps) {
+export default function Footer({ socialLinks, address }: FooterProps) {
   const year = new Date().getFullYear();
   const links = socialLinks?.length ? socialLinks : FALLBACK_SOCIAL_LINKS;
+  const addressLines = (address ?? FALLBACK_ADDRESS).split("\n").filter(Boolean);
 
   return (
     <footer className="border-t-[5px] border-t-white bg-brand-blue pb-10 pt-[50px]">
@@ -81,9 +85,9 @@ export default function Footer({ socialLinks }: FooterProps) {
             />
           </Link>
           <div className="text-base leading-7 text-white sm:text-right">
-            <p>24 North Main Street</p>
-            <p>PO Box 420</p>
-            <p>Bargersville, IN 46106</p>
+            {addressLines.map((line, i) => (
+              <p key={i}>{line}</p>
+            ))}
           </div>
         </div>
 
