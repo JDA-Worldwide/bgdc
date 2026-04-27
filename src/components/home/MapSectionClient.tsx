@@ -61,7 +61,7 @@ export default function MapSectionClient({
 
         {/* Bottom row — stagger fade in */}
         <div ref={contentRef} className="flex flex-col gap-10 lg:flex-row lg:gap-[60px]">
-          <div data-animate-fadeinup className="flex flex-1 flex-col gap-[25px] text-brand-charcoal">
+          <div data-animate-fadeinup className="flex flex-col gap-[25px] text-brand-charcoal lg:w-[35%] lg:shrink-0">
             {heading && (
               <h2 className="text-2xl font-medium leading-[35px] md:text-[28px]">
                 {heading}
@@ -70,7 +70,7 @@ export default function MapSectionClient({
             {body && <p className="text-base leading-7">{body}</p>}
           </div>
 
-          <div className="flex flex-1 flex-col gap-[23px]">
+          <div className="grid flex-1 grid-cols-1 gap-[23px] sm:grid-cols-2">
             {destinations.map((dest, i) => {
               const marker = markers[i + 1];
               return (
