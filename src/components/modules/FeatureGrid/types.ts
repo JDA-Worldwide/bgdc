@@ -1,6 +1,5 @@
 export interface Feature {
   _key: string;
-  icon?: string;
   title: string;
   description?: string;
 }

@@ -24,12 +24,6 @@ export default defineType({
           options: { collapsed: false },
           fields: [
             defineField({
-              name: "icon",
-              title: "Icon",
-              type: "string",
-              description: "Icon name or emoji",
-            }),
-            defineField({
               name: "title",
               title: "Title",
               type: "string",
