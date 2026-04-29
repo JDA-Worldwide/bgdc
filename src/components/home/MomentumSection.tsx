@@ -5,7 +5,7 @@ import { useGsap } from "@/hooks/useGsap";
 import { gsap } from "@/lib/gsap";
 import CtaButtons from "@/components/ui/CtaButtons";
 import type { CtaButtonItem } from "@/components/ui/CtaButtons";
-import { PortableText } from "@portabletext/react";
+import { PortableText, type PortableTextBlock } from "@portabletext/react";
 
 interface Project {
   _key?: string;
@@ -16,7 +16,7 @@ interface Project {
 
 interface MomentumSectionProps {
   heading?: string;
-  body?: unknown[];
+  body?: PortableTextBlock[];
   projects?: Project[];
   ctas?: CtaButtonItem[];
 }

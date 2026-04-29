@@ -6,12 +6,12 @@ import SanityImage from "@/components/ui/SanityImage";
 import CtaButtons from "@/components/ui/CtaButtons";
 import type { CtaButtonItem } from "@/components/ui/CtaButtons";
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
-import { PortableText } from "@portabletext/react";
+import { PortableText, type PortableTextBlock } from "@portabletext/react";
 
 interface CtaBannerProps {
   callout?: string;
   heading: string;
-  body?: unknown[];
+  body?: PortableTextBlock[];
   ctas?: CtaButtonItem[];
   backgroundImage?: SanityImageSource;
 }

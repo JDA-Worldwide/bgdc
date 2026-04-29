@@ -6,7 +6,7 @@ import SanityImage from "@/components/ui/SanityImage";
 import CtaButtons from "@/components/ui/CtaButtons";
 import type { CtaButtonItem } from "@/components/ui/CtaButtons";
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
-import { PortableText } from "@portabletext/react";
+import { PortableText, type PortableTextBlock } from "@portabletext/react";
 
 interface Industry {
   _key?: string;
@@ -18,7 +18,7 @@ interface Industry {
 
 interface IndustriesSectionProps {
   heading?: string;
-  body?: unknown[];
+  body?: PortableTextBlock[];
   industries?: Industry[];
   ctas?: CtaButtonItem[];
 }

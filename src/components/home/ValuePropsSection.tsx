@@ -4,13 +4,13 @@ import SanityImage from "@/components/ui/SanityImage";
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useGsap } from "@/hooks/useGsap";
-import { PortableText } from "@portabletext/react";
+import { PortableText, type PortableTextBlock } from "@portabletext/react";
 
 interface ValueCard {
   _key?: string;
   icon?: SanityImageSource;
   title: string;
-  body: unknown[];
+  body: PortableTextBlock[];
 }
 
 interface ValuePropsSectionProps {
