@@ -5,6 +5,7 @@ import { useGsap } from "@/hooks/useGsap";
 import { gsap } from "@/lib/gsap";
 import MapboxMapClient from "@/components/ui/MapboxMap/MapboxMapClient";
 import type { MapMarker, MapboxMapHandle } from "@/components/ui/MapboxMap";
+import { PortableText } from "@portabletext/react";
 
 interface Destination {
   time: string;
@@ -13,7 +14,7 @@ interface Destination {
 
 interface MapSectionClientProps {
   heading?: string;
-  body?: string;
+  body?: unknown[];
   destinations: Destination[];
   center: [number, number];
   zoom?: number;
@@ -67,7 +68,22 @@ export default function MapSectionClient({
                 {heading}
               </h2>
             )}
-            {body && <p className="text-base leading-7">{body}</p>}
+            {body?.length ? (
+              <PortableText
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                value={body as any}
+                components={{
+                  block: { normal: ({ children }) => <p className="text-base leading-7">{children}</p> },
+                  marks: {
+                    strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+                    em: ({ children }) => <em className="italic">{children}</em>,
+                    link: ({ children, value }) => (
+                      <a href={value?.href} target={value?.blank ? "_blank" : undefined} rel={value?.blank ? "noopener noreferrer" : undefined} className="underline hover:no-underline">{children}</a>
+                    ),
+                  },
+                }}
+              />
+            ) : null}
           </div>
 
           <div className="grid flex-1 grid-cols-1 gap-[23px] sm:grid-cols-2">

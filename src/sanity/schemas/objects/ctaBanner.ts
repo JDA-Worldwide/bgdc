@@ -24,8 +24,30 @@ export default defineType({
     defineField({
       name: "body",
       title: "Body Text",
-      type: "text",
-      rows: 4,
+      type: "array",
+      of: [
+        {
+          type: "block",
+          styles: [{ title: "Normal", value: "normal" }],
+          marks: {
+            decorators: [
+              { title: "Bold", value: "strong" },
+              { title: "Italic", value: "em" },
+            ],
+            annotations: [
+              {
+                name: "link",
+                type: "object",
+                title: "Link",
+                fields: [
+                  defineField({ name: "href", title: "URL", type: "url", validation: (rule) => rule.uri({ allowRelative: true }) }),
+                  defineField({ name: "blank", title: "Open in New Tab", type: "boolean", initialValue: false }),
+                ],
+              },
+            ],
+          },
+        },
+      ],
     }),
     defineField({
       name: "ctas",

@@ -4,12 +4,13 @@ import SanityImage from "@/components/ui/SanityImage";
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useGsap } from "@/hooks/useGsap";
+import { PortableText } from "@portabletext/react";
 
 interface ValueCard {
   _key?: string;
   icon?: SanityImageSource;
   title: string;
-  body: string;
+  body: unknown[];
 }
 
 interface ValuePropsSectionProps {
@@ -20,15 +21,15 @@ interface ValuePropsSectionProps {
 const defaultCards: ValueCard[] = [
   {
     title: "Strategic Location",
-    body: "Bargersville sits at the intersection of I-69 and SR 144\u2014strategically positioned at one of the region\u2019s fastest-growing transportation corridors. Businesses here stay connected to regional and national markets while operating in a calmer, more efficient environment than crowded metro markets.",
+    body: [{ _type: "block", _key: "a", style: "normal", children: [{ _type: "span", _key: "a1", text: "Bargersville sits at the intersection of I-69 and SR 144\u2014strategically positioned at one of the region\u2019s fastest-growing transportation corridors. Businesses here stay connected to regional and national markets while operating in a calmer, more efficient environment than crowded metro markets.", marks: [] }], markDefs: [] }],
   },
   {
     title: "Quality of Place",
-    body: "Some communities make you choose between opportunity and quality of life \u2014 Bargersville is not one of them. It\u2019s a tight-knit community with top-rated schools, reliable locally-owned utilities, and a revitalizing downtown that\u2019s drawing people in. This is a place where people don\u2019t just work \u2014 they stay.",
+    body: [{ _type: "block", _key: "b", style: "normal", children: [{ _type: "span", _key: "b1", text: "Some communities make you choose between opportunity and quality of life \u2014 Bargersville is not one of them. It\u2019s a tight-knit community with top-rated schools, reliable locally-owned utilities, and a revitalizing downtown that\u2019s drawing people in. This is a place where people don\u2019t just work \u2014 they stay.", marks: [] }], markDefs: [] }],
   },
   {
     title: "Pro-Business Government",
-    body: "Bargersville Economic Development exists to build momentum for businesses that want to grow with confidence \u2014 offering hands-on guidance, practical resources, and real partnership that goes beyond permits and paperwork. Our municipal leadership is committed to pro-business policies, long-range planning, and thoughtful development that preserves what makes this community worth investing in.",
+    body: [{ _type: "block", _key: "c", style: "normal", children: [{ _type: "span", _key: "c1", text: "Bargersville Economic Development exists to build momentum for businesses that want to grow with confidence \u2014 offering hands-on guidance, practical resources, and real partnership that goes beyond permits and paperwork. Our municipal leadership is committed to pro-business policies, long-range planning, and thoughtful development that preserves what makes this community worth investing in.", marks: [] }], markDefs: [] }],
   },
 ];
 
@@ -113,7 +114,19 @@ export default function ValuePropsSection({
                   {card.title}
                 </h3>
                 <hr className="border-brand-sun" />
-                <p className="text-base leading-7 text-brand-blue">{card.body}</p>
+                <PortableText
+                  value={card.body}
+                  components={{
+                    block: { normal: ({ children }) => <p className="text-base leading-7 text-brand-blue">{children}</p> },
+                    marks: {
+                      strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+                      em: ({ children }) => <em className="italic">{children}</em>,
+                      link: ({ children, value }) => (
+                        <a href={value?.href} target={value?.blank ? "_blank" : undefined} rel={value?.blank ? "noopener noreferrer" : undefined} className="underline hover:no-underline">{children}</a>
+                      ),
+                    },
+                  }}
+                />
               </div>
             </div>
           </div>

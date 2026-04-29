@@ -6,6 +6,7 @@ import SanityImage from "@/components/ui/SanityImage";
 import CtaButtons from "@/components/ui/CtaButtons";
 import type { CtaButtonItem } from "@/components/ui/CtaButtons";
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
+import { PortableText } from "@portabletext/react";
 
 interface Industry {
   _key?: string;
@@ -17,7 +18,7 @@ interface Industry {
 
 interface IndustriesSectionProps {
   heading?: string;
-  body?: string;
+  body?: unknown[];
   industries?: Industry[];
   ctas?: CtaButtonItem[];
 }
@@ -47,7 +48,7 @@ const defaultIndustries: Industry[] = [
 
 export default function IndustriesSection({
   heading = "Room to Grow Across Industries",
-  body = "Choosing Bargersville means gaining the advantages of city access without the friction of a crowded market. With direct access to I-69, a 30-minute commute to Indianapolis, and less competition, businesses here have room to stand out, grow faster, and build loyal local demand. Whatever your industry, Bargersville offers the space, infrastructure, and community support to grow sustainably.",
+  body,
   industries,
   ctas,
 }: IndustriesSectionProps) {
@@ -77,9 +78,21 @@ export default function IndustriesSection({
               {heading}
             </h2>
           )}
-          {body && (
-            <p className="text-base leading-7 text-brand-black">{body}</p>
-          )}
+          {body?.length ? (
+            <PortableText
+              value={body}
+              components={{
+                block: { normal: ({ children }) => <p className="text-base leading-7 text-brand-black">{children}</p> },
+                marks: {
+                  strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+                  em: ({ children }) => <em className="italic">{children}</em>,
+                  link: ({ children, value }) => (
+                    <a href={value?.href} target={value?.blank ? "_blank" : undefined} rel={value?.blank ? "noopener noreferrer" : undefined} className="underline hover:no-underline">{children}</a>
+                  ),
+                },
+              }}
+            />
+          ) : null}
         </div>
 
         <div className="mx-auto grid grid-cols-1 gap-10 px-0 sm:grid-cols-2 lg:px-[111px]">

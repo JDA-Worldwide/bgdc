@@ -6,11 +6,12 @@ import SanityImage from "@/components/ui/SanityImage";
 import CtaButtons from "@/components/ui/CtaButtons";
 import type { CtaButtonItem } from "@/components/ui/CtaButtons";
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
+import { PortableText } from "@portabletext/react";
 
 interface HeroSectionProps {
   callout?: string;
   heading?: string;
-  body?: string;
+  body?: unknown[];
   ctas?: CtaButtonItem[];
   backgroundImage?: SanityImageSource;
 }
@@ -82,16 +83,24 @@ export default function HeroSection({
             ))}
           </h1>
         )}
-        {body && (
-          <p data-animate-fadeinup className="text-base leading-relaxed sm:text-lg md:text-[22px] md:leading-[33px]">
-            {body.split("\n").map((line, i, arr) => (
-              <span key={i}>
-                {line}
-                {i < arr.length - 1 && <br />}
-              </span>
-            ))}
-          </p>
-        )}
+        {body?.length ? (
+          <div data-animate-fadeinup>
+            <PortableText
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              value={body as any}
+              components={{
+                block: { normal: ({ children }) => <p className="text-base leading-relaxed sm:text-lg md:text-[22px] md:leading-[33px]">{children}</p> },
+                marks: {
+                  strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+                  em: ({ children }) => <em className="italic">{children}</em>,
+                  link: ({ children, value }) => (
+                    <a href={value?.href} target={value?.blank ? "_blank" : undefined} rel={value?.blank ? "noopener noreferrer" : undefined} className="underline hover:no-underline">{children}</a>
+                  ),
+                },
+              }}
+            />
+          </div>
+        ) : null}
       </div>
 
       <CtaButtons

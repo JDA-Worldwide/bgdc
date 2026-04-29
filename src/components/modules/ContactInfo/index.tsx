@@ -4,6 +4,7 @@ import Container from "@/components/ui/Container";
 import AnimateIn from "@/components/ui/AnimateIn";
 import MapboxMapClient from "@/components/ui/MapboxMap/MapboxMapClient";
 import { stegaClean } from "next-sanity";
+import { PortableText } from "@portabletext/react";
 import type { ContactInfoProps } from "./types";
 
 const OFFICE_LNG = -86.164665;
@@ -121,11 +122,24 @@ export default function ContactInfo({
               {heading}
             </h2>
           )}
-          {body && (
-            <p className="mb-8 text-base leading-7 text-brand-charcoal">
-              {body}
-            </p>
-          )}
+          {body?.length ? (
+            <div className="mb-8 text-base leading-7 text-brand-charcoal">
+              <PortableText
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                value={body as any}
+                components={{
+                  block: { normal: ({ children }) => <p className="text-base leading-7 text-brand-charcoal">{children}</p> },
+                  marks: {
+                    strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+                    em: ({ children }) => <em className="italic">{children}</em>,
+                    link: ({ children, value }) => (
+                      <a href={value?.href} target={value?.blank ? "_blank" : undefined} rel={value?.blank ? "noopener noreferrer" : undefined} className="underline hover:no-underline">{children}</a>
+                    ),
+                  },
+                }}
+              />
+            </div>
+          ) : null}
 
           {hasDetails && (
             <ul className="space-y-4" aria-label="Contact details">

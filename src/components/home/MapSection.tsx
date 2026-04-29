@@ -9,7 +9,7 @@ interface Destination {
 
 interface MapSectionProps {
   heading?: string;
-  body?: string;
+  body?: unknown[];
   destinations?: Destination[];
   mapCenterAddress?: string;
   mapCenterLabel?: string;
@@ -29,7 +29,7 @@ const defaultDestinations: Destination[] = [
 
 export default async function MapSection({
   heading = "The Center of Indiana\u2019s Regional Corridor Network",
-  body = "Bargersville sits at the intersection of I-69 and SR 144 \u2014 a node purpose-built for movement. Whether your business depends on goods in motion or talent in commute, the infrastructure is already here.",
+  body,
   destinations,
   mapCenterAddress,
   mapCenterLabel,

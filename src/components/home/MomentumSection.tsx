@@ -5,6 +5,7 @@ import { useGsap } from "@/hooks/useGsap";
 import { gsap } from "@/lib/gsap";
 import CtaButtons from "@/components/ui/CtaButtons";
 import type { CtaButtonItem } from "@/components/ui/CtaButtons";
+import { PortableText } from "@portabletext/react";
 
 interface Project {
   _key?: string;
@@ -15,7 +16,7 @@ interface Project {
 
 interface MomentumSectionProps {
   heading?: string;
-  body?: string;
+  body?: unknown[];
   projects?: Project[];
   ctas?: CtaButtonItem[];
 }
@@ -40,7 +41,7 @@ const defaultProjects: Project[] = [
 
 export default function MomentumSection({
   heading = "Momentum in Motion",
-  body = "From a transformative downtown redevelopment plan to new residential communities and mixed-use commercial development along SR 135, Bargersville is actively building its future\u2014one intentional project at a time. There has never been a better time to be part of what\u2019s growing here.",
+  body,
   projects,
   ctas,
 }: MomentumSectionProps) {
@@ -70,9 +71,21 @@ export default function MomentumSection({
               {heading}
             </h2>
           )}
-          {body && (
-            <p className="text-base leading-7 text-brand-black">{body}</p>
-          )}
+          {body?.length ? (
+            <PortableText
+              value={body}
+              components={{
+                block: { normal: ({ children }) => <p className="text-base leading-7 text-brand-black">{children}</p> },
+                marks: {
+                  strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+                  em: ({ children }) => <em className="italic">{children}</em>,
+                  link: ({ children, value }) => (
+                    <a href={value?.href} target={value?.blank ? "_blank" : undefined} rel={value?.blank ? "noopener noreferrer" : undefined} className="underline hover:no-underline">{children}</a>
+                  ),
+                },
+              }}
+            />
+          ) : null}
         </div>
 
         <div className="mx-auto grid grid-cols-1 gap-10 px-0 sm:grid-cols-2 lg:grid-cols-3 lg:px-[111px]">

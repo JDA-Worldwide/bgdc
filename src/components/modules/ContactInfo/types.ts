@@ -13,7 +13,7 @@ export interface ContactInfoProps {
   _type: "contactInfo";
   _key: string;
   heading?: string;
-  body?: string;
+  body?: unknown[];
   phone?: string;
   fax?: string;
   email?: string;

@@ -6,11 +6,12 @@ import SanityImage from "@/components/ui/SanityImage";
 import CtaButtons from "@/components/ui/CtaButtons";
 import type { CtaButtonItem } from "@/components/ui/CtaButtons";
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
+import { PortableText } from "@portabletext/react";
 
 interface CtaBannerProps {
   callout?: string;
   heading: string;
-  body?: string;
+  body?: unknown[];
   ctas?: CtaButtonItem[];
   backgroundImage?: SanityImageSource;
 }
@@ -72,9 +73,23 @@ export default function CtaBanner({
         <h2 data-animate-fadeinup className="mt-8 text-3xl font-medium leading-tight text-brand-blue md:text-[43px] md:leading-[60px]">
           {heading}
         </h2>
-        {body && (
-          <p data-animate-fadeinup className="mt-8 text-base leading-7 text-brand-black">{body}</p>
-        )}
+        {body?.length ? (
+          <div data-animate-fadeinup className="mt-8">
+            <PortableText
+              value={body}
+              components={{
+                block: { normal: ({ children }) => <p className="text-base leading-7 text-brand-black">{children}</p> },
+                marks: {
+                  strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+                  em: ({ children }) => <em className="italic">{children}</em>,
+                  link: ({ children, value }) => (
+                    <a href={value?.href} target={value?.blank ? "_blank" : undefined} rel={value?.blank ? "noopener noreferrer" : undefined} className="underline hover:no-underline">{children}</a>
+                  ),
+                },
+              }}
+            />
+          </div>
+        ) : null}
         <CtaButtons data-animate-fadeinup ctas={ctas} className="mt-8 justify-center" />
       </div>
     </section>

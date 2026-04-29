@@ -8,7 +8,7 @@ export interface CTAProps {
   _type: "cta";
   _key: string;
   heading: string;
-  body?: string;
+  body?: unknown[];
   primaryButton?: CTALink;
   secondaryButton?: CTALink;
   backgroundColor?: "default" | "primary" | "surface";
