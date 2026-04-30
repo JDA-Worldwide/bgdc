@@ -75,17 +75,12 @@ const MapboxMap = forwardRef<MapboxMapHandle, MapboxMapProps>(function MapboxMap
           zoom,
           attributionControl: false,
           logoPosition: "bottom-right",
-          scrollZoom: false,
+          interactive: false,
         });
 
         m.addControl(
           new mapboxgl.default.AttributionControl({ compact: true }),
           "bottom-left",
-        );
-
-        m.addControl(
-          new mapboxgl.default.NavigationControl({ showCompass: false }),
-          "top-right",
         );
 
         m.on("load", async () => {
@@ -112,21 +107,16 @@ const MapboxMap = forwardRef<MapboxMapHandle, MapboxMapProps>(function MapboxMap
               paint: { "line-color": "#FFBF3C", "line-width": 2, "line-opacity": 0.7 },
             });
 
-            // Compute bounding box from geometry coordinates
-            const bounds = new mapboxgl.default.LngLatBounds();
-            const extendBounds = (coords: unknown): void => {
-              if (typeof (coords as number[])[0] === "number") {
-                bounds.extend(coords as [number, number]);
-              } else {
-                (coords as unknown[]).forEach(extendBounds);
-              }
-            };
-            geojson.features?.forEach((f) => extendBounds((f.geometry as { coordinates: unknown }).coordinates));
-            if (!bounds.isEmpty()) {
-              m.fitBounds(bounds, { padding: 30, maxZoom: 14, duration: 0 });
-            }
+            // District boundary loaded — bounds fitted to markers below
           } catch (err) {
             console.warn("Failed to load district boundary:", err);
+          }
+
+          // Fit map to all marker positions
+          const markerBounds = new mapboxgl.default.LngLatBounds();
+          markers.forEach((mk) => markerBounds.extend([mk.lng, mk.lat]));
+          if (!markerBounds.isEmpty()) {
+            m.fitBounds(markerBounds, { padding: 80, maxZoom: 10, duration: 0 });
           }
 
           markers.forEach((marker) => {
@@ -185,11 +175,8 @@ const MapboxMap = forwardRef<MapboxMapHandle, MapboxMapProps>(function MapboxMap
 
             if (marker.label) {
               markerInstancesRef.current.set(marker.label, mkr);
+              mkr.togglePopup();
             }
-
-            // if (marker.isPrimary && marker.label) {
-            //   mkr.togglePopup();
-            // }
           });
         });
 
