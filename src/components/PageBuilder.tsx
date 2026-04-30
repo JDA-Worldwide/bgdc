@@ -18,7 +18,8 @@ import DetailedStats from "./modules/DetailedStats";
 import ProjectShowcase from "./modules/ProjectShowcase";
 import DevelopmentAreaShowcase from "./modules/DevelopmentAreaShowcase";
 import IncentiveCards from "./modules/IncentiveCards";
-import TIFSection from "./modules/TIFSection";
+import BusinessIncentive from "./modules/BusinessIncentive";
+import MapEmbed from "./modules/MapEmbed";
 import ResourceHub from "./modules/ResourceHub";
 import HeroSection from "./home/HeroSection";
 import TickerSection from "./home/TickerSection";
@@ -77,7 +78,8 @@ const moduleMap: Record<string, ComponentType<any>> = {
   projectShowcase: ProjectShowcase,
   developmentAreaShowcase: DevelopmentAreaShowcase,
   incentiveCards: IncentiveCards,
-  tifSection: TIFSection,
+  businessIncentive: BusinessIncentive,
+  mapEmbed: MapEmbed,
   resourceHub: ResourceHub,
   homepageHero: HeroSection,
   partnersTicker: TickerSection,

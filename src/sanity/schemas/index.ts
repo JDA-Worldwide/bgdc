@@ -48,7 +48,8 @@ import detailedStats from "./objects/detailedStats";
 import projectShowcase from "./objects/projectShowcase";
 import developmentAreaShowcase from "./objects/developmentAreaShowcase";
 import incentiveCards from "./objects/incentiveCards";
-import tifSection from "./objects/tifSection";
+import businessIncentive from "./objects/businessIncentive";
+import mapEmbed from "./objects/mapEmbed";
 import resourceHub from "./objects/resourceHub";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
@@ -100,6 +101,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   projectShowcase,
   developmentAreaShowcase,
   incentiveCards,
-  tifSection,
+  businessIncentive,
+  mapEmbed,
   resourceHub,
 ];

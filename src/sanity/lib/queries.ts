@@ -138,6 +138,10 @@ export const pageBySlugQuery = groq`
           asset->
         },
         imagePlacement
+      },
+      _type == "businessIncentive" => {
+        ...,
+        cta { ${ctaButtonFields} }
       }
     }
   }
@@ -220,6 +224,10 @@ export const homepageQuery = groq`
           asset->
         },
         imagePlacement
+      },
+      _type == "businessIncentive" => {
+        ...,
+        cta { ${ctaButtonFields} }
       }
     }
   }
@@ -302,6 +310,10 @@ export const homepageDataQuery = groq`
           asset->
         },
         imagePlacement
+      },
+      _type == "businessIncentive" => {
+        ...,
+        cta { ${ctaButtonFields} }
       }
     }
   }

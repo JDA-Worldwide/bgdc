@@ -35,7 +35,8 @@ export default defineType({
     defineArrayMember({ type: "projectShowcase" }),
     defineArrayMember({ type: "developmentAreaShowcase" }),
     defineArrayMember({ type: "incentiveCards" }),
-    defineArrayMember({ type: "tifSection" }),
+    defineArrayMember({ type: "businessIncentive" }),
+    defineArrayMember({ type: "mapEmbed" }),
     defineArrayMember({ type: "resourceHub" }),
   ],
   options: {
@@ -76,6 +77,7 @@ export default defineType({
           of: [
             "locationMap",
             "mapSection",
+            "mapEmbed",
             "projectsGrid",
             "projectShowcase",
             "developmentAreaShowcase",
@@ -90,7 +92,7 @@ export default defineType({
             "industriesGrid",
             "whyPillars",
             "valueProps",
-            "tifSection",
+            "businessIncentive",
           ],
         },
         {
