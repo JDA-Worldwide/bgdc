@@ -1,6 +1,6 @@
 "use client";
 
-import type { FeatureCollection } from "geojson";
+import type { FeatureCollection, Feature } from "geojson";
 import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import { BRAND_MAP_STYLE, ensureMapboxCSS, validateMapboxToken } from "@/lib/mapbox";
 
@@ -61,7 +61,7 @@ const MapboxMap = forwardRef<MapboxMapHandle, MapboxMapProps>(function MapboxMap
         if (!tokenValid) {
           console.warn(
             "Mapbox token is invalid or expired — map will not load. " +
-              "Update NEXT_PUBLIC_MAPBOX_TOKEN in .env.local.",
+              "Update NEXT_PUBLIC_MAPBOX_TOKEN environment variable.",
           );
           return;
         }
@@ -140,7 +140,6 @@ const MapboxMap = forwardRef<MapboxMapHandle, MapboxMapProps>(function MapboxMap
                 background: #FFBF3C;
                 border: 3px solid #FFBF3C;
                 box-shadow: 0 0 0 4px rgba(255,191,60,0.25), 0 2px 8px rgba(0,0,0,0.4);
-                cursor: pointer;
               `;
             } else {
               el.style.cssText = `
@@ -150,7 +149,6 @@ const MapboxMap = forwardRef<MapboxMapHandle, MapboxMapProps>(function MapboxMap
                 background: #FFBF3C;
                 border: 2px solid rgba(255,191,60,0.5);
                 box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-                cursor: pointer;
               `;
             }
 
@@ -159,24 +157,81 @@ const MapboxMap = forwardRef<MapboxMapHandle, MapboxMapProps>(function MapboxMap
               marker.lat,
             ]);
 
-            if (marker.label) {
-              mkr.setPopup(
-                new mapboxgl.default.Popup({
-                  offset: 16,
-                  closeButton: false,
-                  className: "mapbox-brand-popup",
-                }).setHTML(
-                  `<span style="font-family:Montserrat,sans-serif;font-size:12px;font-weight:600;color:#003B71;">${marker.label}</span>`,
-                ),
-              );
-            }
-
             mkr.addTo(m);
 
             if (marker.label) {
               markerInstancesRef.current.set(marker.label, mkr);
-              mkr.togglePopup();
             }
+          });
+
+          // Build a stretchable rounded-rectangle image for label backgrounds.
+          // Using a 9-patch canvas so Mapbox stretches only the middle strip,
+          // preserving crisp rounded corners at any label width.
+          const bSize = 40;
+          const bRadius = 10;
+          const bubbleCanvas = document.createElement("canvas");
+          bubbleCanvas.width = bSize;
+          bubbleCanvas.height = bSize;
+          const bCtx = bubbleCanvas.getContext("2d")!;
+          bCtx.fillStyle = "#FFFFFF";
+          bCtx.beginPath();
+          bCtx.moveTo(bRadius, 0);
+          bCtx.lineTo(bSize - bRadius, 0);
+          bCtx.arcTo(bSize, 0, bSize, bRadius, bRadius);
+          bCtx.lineTo(bSize, bSize - bRadius);
+          bCtx.arcTo(bSize, bSize, bSize - bRadius, bSize, bRadius);
+          bCtx.lineTo(bRadius, bSize);
+          bCtx.arcTo(0, bSize, 0, bSize - bRadius, bRadius);
+          bCtx.lineTo(0, bRadius);
+          bCtx.arcTo(0, 0, bRadius, 0, bRadius);
+          bCtx.closePath();
+          bCtx.fill();
+
+          m.addImage(
+            "label-bubble",
+            bCtx.getImageData(0, 0, bSize, bSize),
+            {
+              pixelRatio: 2,
+              stretchX: [[bRadius, bSize - bRadius]],
+              stretchY: [[bRadius, bSize - bRadius]],
+              content: [bRadius, bRadius, bSize - bRadius, bSize - bRadius],
+            },
+          );
+
+          // Symbol layer for labels — Mapbox handles collision detection natively
+          const labelFeatures: Feature[] = markers
+            .filter((mk) => mk.label)
+            .map((mk) => ({
+              type: "Feature",
+              geometry: { type: "Point", coordinates: [mk.lng, mk.lat] },
+              properties: { label: mk.label ?? "" },
+            }));
+
+          m.addSource("marker-labels", {
+            type: "geojson",
+            data: { type: "FeatureCollection", features: labelFeatures },
+          });
+
+          m.addLayer({
+            id: "marker-labels",
+            type: "symbol",
+            source: "marker-labels",
+            layout: {
+              "icon-image": "label-bubble",
+              "icon-text-fit": "both",
+              "icon-text-fit-padding": [5, 10, 5, 10],
+              "text-field": ["get", "label"],
+              "text-font": ["Open Sans Semibold", "Arial Unicode MS Regular"],
+              "text-size": 12,
+              "text-variable-anchor": ["bottom", "top", "left", "right", "bottom-left", "bottom-right", "top-left", "top-right"],
+              "text-radial-offset": 1.0,
+              "text-justify": "auto",
+              "text-max-width": 10,
+              "text-allow-overlap": false,
+            },
+            paint: {
+              "text-color": "#003B71",
+            },
           });
         });
 

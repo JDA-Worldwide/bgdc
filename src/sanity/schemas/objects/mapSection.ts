@@ -92,6 +92,21 @@ export default defineType({
               description:
                 'Address or place name used to plot the map marker, e.g. "Indianapolis International Airport, IN". Leave blank to omit the pin.',
             }),
+            defineField({
+              name: "showOnMap",
+              title: "Show on Map?",
+              type: "boolean",
+              description: "Plot this location as a marker on the map.",
+              initialValue: true,
+              hidden: ({ parent }) => !parent?.address,
+            }),
+            defineField({
+              name: "description",
+              title: "Description",
+              type: "text",
+              rows: 2,
+              description: "Optional note shown beneath the label in the sidebar list. Never shown on the map.",
+            }),
           ],
           preview: {
             select: { time: "time", label: "label" },

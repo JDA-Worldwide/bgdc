@@ -9,6 +9,7 @@ import { PortableText } from "@portabletext/react";
 interface Destination {
   time: string;
   label: string;
+  description?: string;
 }
 
 interface MapSectionClientProps {
@@ -47,8 +48,8 @@ export default function MapSectionClient({
     <section className="py-section">
       <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-stretch lg:gap-0">
-          {/* Map — full width mobile, flex-1 on desktop */}
-          <div className="relative h-[90vh] overflow-hidden lg:flex-1">
+          {/* Map — full width mobile, 2/3 on desktop */}
+          <div className="relative h-[60vh] overflow-hidden lg:h-[90vh] lg:w-2/3 lg:shrink-0">
             <MapboxMapClient
               center={center}
               zoom={zoom}
@@ -57,10 +58,10 @@ export default function MapSectionClient({
             />
           </div>
 
-          {/* Sidebar — below map on mobile, right column on desktop */}
+          {/* Sidebar — below map on mobile, right 1/3 column on desktop */}
           <div
             ref={sidebarRef}
-            className="flex flex-col gap-8 lg:h-[90vh] lg:w-[380px] lg:shrink-0 lg:overflow-y-auto lg:pl-12"
+            className="flex flex-col gap-8 lg:h-[90vh] lg:w-1/3 lg:min-w-0 lg:overflow-y-auto lg:pl-12"
           >
             <div data-animate-fadeinup className="flex flex-col gap-[25px] text-brand-charcoal">
               {heading && (
@@ -86,21 +87,26 @@ export default function MapSectionClient({
               ) : null}
             </div>
 
-            <div className="flex flex-col gap-[23px]">
+            <div className="flex flex-col gap-5">
               {destinations.map((dest, i) => (
                 <div
                   key={i}
                   data-animate-fadeinup
-                  className="flex items-start gap-4 sm:items-center sm:gap-5"
+                  className="grid grid-cols-[23px_auto_1fr] items-start gap-x-3"
                 >
-                  <div className="mt-2.5 h-[5px] w-[23px] shrink-0 bg-brand-sun sm:mt-0" />
-                  <div className="flex flex-col sm:flex-row sm:gap-3">
-                    <p className="text-base font-semibold leading-[27px] text-brand-charcoal">
-                      {dest.time}
-                    </p>
-                    <p className="text-sm leading-6 text-brand-charcoal sm:text-base sm:leading-7">
+                  <div className="h-[5px] w-[23px] self-start pt-[9px] bg-brand-sun" />
+                  <p className="whitespace-nowrap text-sm font-semibold text-brand-charcoal sm:text-base self-start pt-1">
+                    {dest.time}
+                  </p>
+                  <div className="flex flex-col gap-0.5">
+                    <p className="text-sm leading-snug text-brand-charcoal sm:text-base sm:leading-7">
                       {dest.label}
                     </p>
+                    {dest.description && (
+                      <p className="text-xs leading-snug text-brand-muted">
+                        {dest.description}
+                      </p>
+                    )}
                   </div>
                 </div>
               ))}

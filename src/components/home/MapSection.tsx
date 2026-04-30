@@ -5,6 +5,8 @@ interface Destination {
   time: string;
   label: string;
   address?: string;
+  showOnMap?: boolean;
+  description?: string;
 }
 
 interface MapSectionProps {
@@ -46,8 +48,10 @@ export default async function MapSection({
     : DEFAULT_CENTER;
   const centerLabel = mapCenterLabel ?? (mapCenterAddress ?? DEFAULT_CENTER_LABEL);
 
-  // Geocode destination markers in parallel — only for entries that have an address
-  const addressedDestinations = resolvedDestinations.filter((d) => d.address);
+  // Geocode destination markers in parallel — only for entries with an address and showOnMap !== false
+  const addressedDestinations = resolvedDestinations.filter(
+    (d) => d.address && d.showOnMap !== false,
+  );
   const geocoded = await geocodeAddresses(
     addressedDestinations.map((d) => d.address!),
     center[0],
