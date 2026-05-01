@@ -9,6 +9,7 @@ export interface AreaCTA {
 export interface DevelopmentArea {
   _key: string;
   areaLabel?: string;
+  statusLabel?: string;
   title: string;
   body?: unknown[];
   opportunities?: string[];

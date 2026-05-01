@@ -3,6 +3,7 @@ import PortableText from "@/components/ui/PortableText";
 import SanityImage from "@/components/ui/SanityImage";
 import Button from "@/components/ui/Button";
 import AnimateIn from "@/components/ui/AnimateIn";
+import { cn } from "@/lib/utils";
 import type { DevelopmentAreaShowcaseProps, DevelopmentArea } from "./types";
 
 function MapPlaceholder() {
@@ -29,78 +30,84 @@ function MapPlaceholder() {
   );
 }
 
-function AreaSection({ area, index }: { area: DevelopmentArea; index: number }) {
-  const isEven = index % 2 === 0;
+function AreaSection({ area }: { area: DevelopmentArea }) {
+  const hasBody = area.body && (area.body as unknown[]).length > 0;
+  const hasOpportunities = area.opportunities && area.opportunities.length > 0;
+  const useTwoColumns = hasBody && hasOpportunities;
 
   return (
     <div className="border-b border-brand-border pb-16 last:border-0 last:pb-0">
-      <div className={`lg:grid lg:grid-cols-2 lg:gap-16 lg:items-start ${isEven ? "" : "lg:[&>*:first-child]:order-2"}`}>
-        <div>
-          {area.areaLabel && (
-            <div className="mb-4 flex flex-wrap gap-2">
-              {area.areaLabel.split("|").map((tag, i) => (
-                <span
-                  key={i}
-                  className="inline-flex items-center rounded-full bg-brand-sky/30 px-3 py-1 text-xs font-semibold font-accent italic text-brand-primary"
-                >
-                  {tag.trim()}
-                </span>
-              ))}
-            </div>
-          )}
+      <div className="space-y-[30px]">
+        {(area.areaLabel || area.statusLabel) && (
+          <div className="flex items-center gap-[30px]">
+            {area.areaLabel && (
+              <span className="font-accent italic text-[15px] leading-7 text-brand-soybean">
+                {area.areaLabel}
+              </span>
+            )}
+            {area.statusLabel && (
+              <span className="font-accent italic text-[15px] leading-7 text-brand-soybean">
+                {area.statusLabel}
+              </span>
+            )}
+          </div>
+        )}
 
-          <h3 className="mb-4 font-heading text-2xl font-medium text-brand-text-heading sm:text-[28px] sm:leading-[35px]">
-            {area.title}
-          </h3>
+        <h3 className="font-heading text-[28px] font-medium leading-[35px] text-brand-text-heading">
+          {area.title}
+        </h3>
 
-          {area.body && (area.body as unknown[]).length > 0 && (
-            <div className="mb-6 text-brand-charcoal">
-              <PortableText value={area.body as unknown[]} />
-            </div>
-          )}
+        <div className="h-px w-full bg-brand-sun" aria-hidden="true" />
 
-          {area.opportunities && area.opportunities.length > 0 && (
-            <div className="mb-6">
-              <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-brand-text">
-                Available Opportunities
-              </p>
-              <ul className="space-y-2">
-                {area.opportunities.map((opp, i) => (
-                  <li key={i} className="flex items-center gap-4 text-sm text-brand-charcoal">
-                    <div className="h-[5px] w-[23px] shrink-0 bg-brand-sun" aria-hidden="true" />
-                    <span>{opp}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+        {(hasBody || hasOpportunities) && (
+          <div className={cn(useTwoColumns && "grid grid-cols-1 gap-[30px] lg:grid-cols-2")}>
+            {hasBody && (
+              <div className="text-brand-text-heading">
+                <PortableText value={area.body as unknown[]} />
+              </div>
+            )}
+            {hasOpportunities && (
+              <div>
+                <p className="mb-3 text-base font-medium uppercase tracking-[2.4px] text-brand-text-heading">
+                  Available Opportunities
+                </p>
+                <ul className="list-disc list-inside space-y-2">
+                  {area.opportunities!.map((opp, i) => (
+                    <li key={i} className="text-sm leading-7 text-brand-charcoal">
+                      {opp}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
 
-          {area.cta?.label && area.cta.url && (
-            <Button
-              href={area.cta.url}
-              isExternal={area.cta.isExternal}
-              variant="blue-dark"
-              size="sm"
-            >
-              {area.cta.label}
-            </Button>
-          )}
-        </div>
+        {area.cta?.label && area.cta.url && (
+          <Button
+            href={area.cta.url}
+            isExternal={area.cta.isExternal}
+            variant="blue-dark"
+            size="sm"
+          >
+            {area.cta.label}
+          </Button>
+        )}
+      </div>
 
-        <div className="mt-8 lg:mt-0">
-          {area.mapImage?.asset ? (
-            <div className="relative min-h-[280px] overflow-hidden rounded">
-              <SanityImage
-                image={area.mapImage}
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-              />
-            </div>
-          ) : (
-            <MapPlaceholder />
-          )}
-        </div>
+      <div className="mt-20">
+        {area.mapImage?.asset ? (
+          <div className="relative min-h-[300px] w-full overflow-hidden lg:min-h-[638px]">
+            <SanityImage
+              image={area.mapImage}
+              fill
+              sizes="100vw"
+              className="object-cover"
+            />
+          </div>
+        ) : (
+          <MapPlaceholder />
+        )}
       </div>
     </div>
   );
@@ -134,7 +141,7 @@ export default function DevelopmentAreaShowcase({
         <div className="space-y-16">
           {areas.map((area, index) => (
             <AnimateIn key={area._key} delay={index * 0.05}>
-              <AreaSection area={area} index={index} />
+              <AreaSection area={area} />
             </AnimateIn>
           ))}
         </div>

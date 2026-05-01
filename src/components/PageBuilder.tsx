@@ -96,6 +96,13 @@ const moduleMap: Record<string, ComponentType<any>> = {
   momentumSection: MomentumSection,
 };
 
+// Scheme fallback for modules whose component hardcodes a background color
+// that doesn't come from the colorScheme field.
+const moduleDefaultSchemes: Record<string, string> = {
+  hero: "scheme-hero",
+  homepageHero: "scheme-hero",
+};
+
 const fullBleedModules = new Set([
   "hero",
   "cta",
@@ -148,7 +155,7 @@ export default function PageBuilder({ modules, globalSocialLinks }: PageBuilderP
           scheme === "surface" ? "scheme-surface" :
           scheme === "limestone" ? "scheme-limestone" :
           scheme === "sky" ? "scheme-sky" :
-          "scheme-default";
+          moduleDefaultSchemes[module._type] ?? "scheme-default";
         const isFullBleed = fullBleedModules.has(module._type);
         const anchorId = stegaClean(module.anchorSlug?.current) || undefined;
 

@@ -32,7 +32,13 @@ export default defineType({
               name: "areaLabel",
               title: "Area Label",
               type: "string",
-              description: 'e.g. "High-Visibility | Interstate Access | Commercial & Industrial"',
+              description: 'e.g. "Major Initiative | Planning & Development"',
+            }),
+            defineField({
+              name: "statusLabel",
+              title: "Status Label",
+              type: "string",
+              description: 'e.g. "In Progress", "Complete", "Coming Soon"',
             }),
             defineField({
               name: "title",
