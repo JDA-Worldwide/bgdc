@@ -30,12 +30,6 @@ export default defineType({
           options: { collapsed: false },
           fields: [
             defineField({
-              name: "icon",
-              title: "Icon (emoji)",
-              type: "string",
-              description: "Use an emoji, e.g. 🗺️ or 📄",
-            }),
-            defineField({
               name: "title",
               title: "Resource Title",
               type: "string",

@@ -1,6 +1,5 @@
 export interface Resource {
   _key: string;
-  icon?: string;
   title: string;
   description?: string;
   linkLabel?: string;
