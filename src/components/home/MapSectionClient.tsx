@@ -49,7 +49,7 @@ export default function MapSectionClient({
       <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-stretch lg:gap-0">
           {/* Map — full width mobile, 2/3 on desktop */}
-          <div className="relative h-[60vh] overflow-hidden lg:h-[90vh] lg:w-2/3 lg:shrink-0">
+          <div className="relative h-[calc(100dvh-var(--header-height)-7.125rem)] overflow-hidden lg:w-2/3 lg:shrink-0">
             <MapboxMapClient
               center={center}
               zoom={zoom}
@@ -61,7 +61,7 @@ export default function MapSectionClient({
           {/* Sidebar — below map on mobile, right 1/3 column on desktop */}
           <div
             ref={sidebarRef}
-            className="flex flex-col gap-8 lg:h-[90vh] lg:w-1/3 lg:min-w-0 lg:overflow-y-auto lg:pl-12"
+            className="flex flex-col gap-8 lg:h-[calc(100dvh-var(--header-height)-7.125rem)] lg:w-1/3 lg:min-w-0 lg:overflow-y-auto lg:pl-12"
           >
             <div data-animate-fadeinup className="flex flex-col gap-[25px] text-brand-charcoal">
               {heading && (
