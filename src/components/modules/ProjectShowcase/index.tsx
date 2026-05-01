@@ -4,36 +4,8 @@ import Button from "@/components/ui/Button";
 import AnimateIn from "@/components/ui/AnimateIn";
 import type { ProjectShowcaseProps, Project } from "./types";
 
-const statusColors: Record<string, string> = {
-  "In Progress": "bg-brand-sky/30 text-brand-primary",
-  "Now Selling": "bg-brand-prairie/30 text-brand-soybean",
-  "Upcoming": "bg-brand-sun/20 text-brand-primary",
-  "Planning": "bg-brand-sky/30 text-brand-primary",
-  "Under Construction": "bg-brand-sun/30 text-brand-primary",
-  "Approved": "bg-brand-prairie/30 text-brand-soybean",
-  "Coming Soon": "bg-brand-limestone/60 text-brand-primary",
-};
-
-function CheckIcon() {
-  return (
-    <svg
-      className="mt-0.5 h-4 w-4 shrink-0 text-brand-secondary"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2.5}
-      aria-hidden="true"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-    </svg>
-  );
-}
 
 function ProjectCard({ project }: { project: Project }) {
-  const statusClass = project.status
-    ? (statusColors[project.status] ?? "bg-gray-100 text-gray-700")
-    : null;
-
   const hasImages = project.images && project.images.length > 0;
   const hasContent = project.body || project.highlights?.length || project.cta?.label;
 
@@ -41,27 +13,16 @@ function ProjectCard({ project }: { project: Project }) {
     <article className="bg-white">
       <div className={hasImages ? "lg:grid lg:grid-cols-2" : ""}>
         <div className="p-8 lg:p-10">
-          {/* Mobile: badge first, then eyebrow. Desktop: eyebrow left + badge top-right on same row. */}
-          {project.status && statusClass && (
-            <span
-              className={`mb-3 inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold font-accent italic sm:hidden ${statusClass}`}
-            >
-              {project.status}
-            </span>
-          )}
-
-          <div className="mb-3 flex items-start justify-between gap-4">
+          <div className="mb-3 flex items-center gap-[30px]">
             {project.tagLabel ? (
-              <p className="font-accent text-sm italic text-brand-primary">
+              <p className="flex-1 font-accent text-[20px] leading-7 italic text-brand-soybean">
                 {project.tagLabel}
               </p>
             ) : (
-              <span />
+              <span className="flex-1" />
             )}
-            {project.status && statusClass && (
-              <span
-                className={`hidden shrink-0 items-center rounded-full px-3 py-1 text-xs font-semibold font-accent italic sm:inline-flex ${statusClass}`}
-              >
+            {project.status && (
+              <span className="shrink-0 whitespace-nowrap font-heading font-semibold text-base leading-7 text-brand-text-heading">
                 {project.status}
               </span>
             )}
@@ -82,11 +43,10 @@ function ProjectCard({ project }: { project: Project }) {
           )}
 
           {project.highlights && project.highlights.length > 0 && (
-            <ul className="mb-6 space-y-2" aria-label="Vision highlights">
+            <ul className="mb-6 list-disc space-y-1 ps-6" aria-label="Vision highlights">
               {project.highlights.map((highlight, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-brand-charcoal">
-                  <CheckIcon />
-                  <span>{highlight}</span>
+                <li key={i} className="text-base leading-7 text-brand-text-heading">
+                  {highlight}
                 </li>
               ))}
             </ul>
@@ -96,7 +56,7 @@ function ProjectCard({ project }: { project: Project }) {
             <Button
               href={project.cta.url}
               isExternal={project.cta.isExternal}
-              variant="blue-dark-outline"
+              variant="blue-dark"
               size="sm"
             >
               {project.cta.label}
