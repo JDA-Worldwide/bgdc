@@ -92,14 +92,16 @@ export default function MapSectionClient({
                 <div
                   key={i}
                   data-animate-fadeinup
-                  className="grid grid-cols-[23px_auto_1fr] items-start gap-x-3"
+                  className="grid grid-cols-[auto_1fr] items-start gap-x-3"
                 >
-                  <div className="h-[5px] w-[23px] self-start pt-[9px] bg-brand-sun" />
-                  <p className="whitespace-nowrap text-sm font-semibold text-brand-charcoal sm:text-base self-start pt-1">
-                    {dest.time}
-                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="h-[5px] w-[23px] shrink-0 bg-brand-sun" />
+                    <p className="whitespace-nowrap text-sm font-semibold text-brand-charcoal sm:text-base">
+                      {dest.time}
+                    </p>
+                  </div>
                   <div className="flex flex-col gap-0.5">
-                    <p className="text-sm leading-snug text-brand-charcoal sm:text-base sm:leading-7">
+                    <p className="text-sm text-brand-charcoal sm:text-base">
                       {dest.label}
                     </p>
                     {dest.description && (
