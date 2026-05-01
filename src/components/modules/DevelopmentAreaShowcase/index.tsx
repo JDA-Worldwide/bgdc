@@ -41,12 +41,12 @@ function AreaSection({ area }: { area: DevelopmentArea }) {
         {(area.areaLabel || area.statusLabel) && (
           <div className="flex items-center gap-[30px]">
             {area.areaLabel && (
-              <span className="font-accent italic text-[15px] leading-7 text-brand-soybean">
+              <span className="flex-1 min-w-0 font-accent italic text-[20px] leading-7 text-brand-soybean">
                 {area.areaLabel}
               </span>
             )}
             {area.statusLabel && (
-              <span className="font-accent italic text-[15px] leading-7 text-brand-soybean">
+              <span className="shrink-0 whitespace-nowrap font-heading font-semibold text-base leading-7 text-brand-text-heading">
                 {area.statusLabel}
               </span>
             )}
@@ -121,31 +121,33 @@ export default function DevelopmentAreaShowcase({
   if (!areas?.length && !heading) return null;
 
   return (
-    <Container>
-      {(heading || introText) && (
-        <div className="mb-12">
-          {heading && (
-            <h2 className="mb-4 font-heading text-2xl font-medium text-brand-text-heading sm:text-3xl md:text-[43px] md:leading-[60px]">
-              {heading}
-            </h2>
-          )}
-          {introText && (
-            <p className="max-w-3xl text-base leading-7 text-brand-text">
-              {introText}
-            </p>
-          )}
-        </div>
-      )}
+    <div className="py-section">
+      <Container>
+        {(heading || introText) && (
+          <div className="mb-12">
+            {heading && (
+              <h2 className="mb-4 font-heading text-2xl font-medium text-brand-text-heading sm:text-3xl md:text-[43px] md:leading-[60px]">
+                {heading}
+              </h2>
+            )}
+            {introText && (
+              <p className="max-w-3xl text-base leading-7 text-brand-text">
+                {introText}
+              </p>
+            )}
+          </div>
+        )}
 
-      {areas && areas.length > 0 && (
-        <div className="space-y-16">
-          {areas.map((area, index) => (
-            <AnimateIn key={area._key} delay={index * 0.05}>
-              <AreaSection area={area} />
-            </AnimateIn>
-          ))}
-        </div>
-      )}
-    </Container>
+        {areas && areas.length > 0 && (
+          <div className="space-y-16">
+            {areas.map((area, index) => (
+              <AnimateIn key={area._key} delay={index * 0.05}>
+                <AreaSection area={area} />
+              </AnimateIn>
+            ))}
+          </div>
+        )}
+      </Container>
+    </div>
   );
 }

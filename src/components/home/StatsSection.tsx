@@ -4,6 +4,8 @@ import CountUp from "react-countup";
 import { gsap } from "@/lib/gsap";
 import { useGsap } from "@/hooks/useGsap";
 import { cn } from "@/lib/utils";
+import { stegaClean } from "@sanity/client/stega";
+import GradientMeshBg from "@/components/ui/GradientMeshBg";
 
 interface Stat {
   _key?: string;
@@ -17,6 +19,7 @@ interface Stat {
 interface StatsSectionProps {
   heading?: string;
   stats?: Stat[];
+  colorScheme?: string;
 }
 
 const defaultStats: Stat[] = [
@@ -35,7 +38,7 @@ function StatItem({ stat }: { stat: Stat }) {
 
   return (
     <div className="flex flex-col items-center gap-3 text-center sm:gap-5">
-      <p className="whitespace-nowrap font-heading text-2xl font-bold leading-tight text-brand-sun sm:text-4xl md:text-[60px] md:leading-[55px]">
+      <p className="whitespace-nowrap font-heading text-2xl font-bold leading-tight text-brand-primary sm:text-4xl md:text-[60px] md:leading-[55px]">
         {hasNumber ? (
           <CountUp
             end={stat.number!}
@@ -55,7 +58,7 @@ function StatItem({ stat }: { stat: Stat }) {
           </>
         )}
       </p>
-      <p className="font-accent text-sm italic leading-5 text-white sm:text-xl sm:leading-7">
+      <p className="font-accent text-sm italic leading-5 text-brand-text sm:text-xl sm:leading-7">
         {stat.label}
       </p>
     </div>
@@ -65,9 +68,11 @@ function StatItem({ stat }: { stat: Stat }) {
 export default function StatsSection({
   heading = "Bargersville by the Numbers",
   stats,
+  colorScheme,
 }: StatsSectionProps) {
   const resolvedStats = stats?.length ? stats : defaultStats;
   const count = resolvedStats.length;
+  const isGradientMesh = !stegaClean(colorScheme);
 
   const sectionRef = useGsap<HTMLElement>((el) => {
     gsap.fromTo(
@@ -88,46 +93,44 @@ export default function StatsSection({
   });
 
   return (
-    <>
-      <section ref={sectionRef} className="border-t-[5px] border-white bg-brand-blue py-16 md:py-section">
-        <div className="@container mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
-          {heading && (
-            <h2 data-animate-fadeinup className="mb-10 text-center text-2xl font-medium leading-tight text-white sm:text-3xl md:mb-[60px] md:text-[43px] md:leading-[60px]">
-              {heading}
-            </h2>
-          )}
-          <div
-            className={cn(
-              "grid gap-x-16 gap-y-10 @[36rem]:gap-x-6 @[56rem]:gap-x-4",
-              count === 1 && "grid-cols-1 justify-items-center",
-              count === 2 && "grid-cols-2",
-              count === 3 && "grid-cols-2 @[56rem]:grid-cols-3 justify-between",
-              count >= 4 && "grid-cols-2 @[75rem]:grid-cols-4 justify-between",
-            )}
-          >
-            {resolvedStats.map((stat, i) => (
-              <div
-                key={stat._key ?? i}
-                data-animate-fadeinup
-                className={cn(
-                  count === 1 && "max-w-md",
-                  count === 3 && i === 2 && "col-span-2 @[56rem]:col-span-1 justify-self-center",
-                )}
-              >
-                <StatItem stat={stat} />
-              </div>
-            ))}
-          </div>
+    <section
+      ref={sectionRef}
+      className="relative py-16 md:py-section"
+    >
+      {isGradientMesh && (
+        <div className="absolute inset-0 -z-10" aria-hidden="true">
+          <GradientMeshBg />
         </div>
-      </section>
-      <div
-        aria-hidden="true"
-        className="h-[31px] w-full rotate-180"
-        style={{
-          background:
-            "linear-gradient(to right, #8B9A72, #96A07E, #A8AE7C, #94A8AF, #8FA3AD)",
-        }}
-      />
-    </>
+      )}
+      <div className="@container mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
+        {heading && (
+          <h2 data-animate-fadeinup className="mb-10 text-center text-2xl font-medium leading-tight text-brand-text-heading sm:text-3xl md:mb-[60px] md:text-[43px] md:leading-[60px]">
+            {heading}
+          </h2>
+        )}
+        <div
+          className={cn(
+            "grid gap-x-16 gap-y-10 @[36rem]:gap-x-6 @[56rem]:gap-x-4",
+            count === 1 && "grid-cols-1 justify-items-center",
+            count === 2 && "grid-cols-2",
+            count === 3 && "grid-cols-2 @[56rem]:grid-cols-3 justify-between",
+            count >= 4 && "grid-cols-2 @[75rem]:grid-cols-4 justify-between",
+          )}
+        >
+          {resolvedStats.map((stat, i) => (
+            <div
+              key={stat._key ?? i}
+              data-animate-fadeinup
+              className={cn(
+                count === 1 && "max-w-md",
+                count === 3 && i === 2 && "col-span-2 @[56rem]:col-span-1 justify-self-center",
+              )}
+            >
+              <StatItem stat={stat} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

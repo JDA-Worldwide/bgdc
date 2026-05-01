@@ -135,6 +135,15 @@
     color: #212322;
   }
 
+  /* Stats Bar — animated gradient mesh background; dark text since mesh is light-colored */
+  .scheme-statsbar {
+    --color-brand-text: #000000;
+    --color-brand-text-heading: #000000;
+    --color-brand-primary: #003B71;
+    --color-brand-secondary: #FFBF3C;
+    --color-brand-muted: #6E6860;
+  }
+
   /* ── Button Color Schemes ── */
 
   /* Dark Blue: brand-blue fill → inverts to white fill on hover/focus */

@@ -74,7 +74,7 @@ export default defineType({
       ],
       validation: (rule) => rule.min(1).max(4),
     }),
-    { ...colorSchemeField, initialValue: "dark" },
+    { ...colorSchemeField, initialValue: undefined },
     anchorSlugField,
   ],
   preview: {

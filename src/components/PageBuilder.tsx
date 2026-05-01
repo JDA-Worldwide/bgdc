@@ -101,6 +101,7 @@ const moduleMap: Record<string, ComponentType<any>> = {
 const moduleDefaultSchemes: Record<string, string> = {
   hero: "scheme-hero",
   homepageHero: "scheme-hero",
+  statsBar: "scheme-statsbar",
 };
 
 const fullBleedModules = new Set([
@@ -121,6 +122,7 @@ const fullBleedModules = new Set([
   "incentivesGrid",
   "projectShowcase",
   "mapEmbed",
+  "developmentAreaShowcase",
 ]);
 
 function buildFaqJsonLd(module: FAQModule) {
@@ -167,10 +169,10 @@ export default function PageBuilder({ modules, globalSocialLinks }: PageBuilderP
 
         if (isFullBleed) {
           return (
-            <div key={module._key} id={anchorId} className={cn(schemeClass, scrollClass)}>
+            <section key={module._key} id={anchorId} className={cn(schemeClass, scrollClass)}>
               {module._type === "faq" && buildFaqJsonLd(module as FAQModule)}
               <Component {...module} {...extraProps} />
-            </div>
+            </section>
           );
         }
 

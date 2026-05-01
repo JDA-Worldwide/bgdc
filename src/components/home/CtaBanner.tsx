@@ -7,6 +7,7 @@ import CtaButtons from "@/components/ui/CtaButtons";
 import type { CtaButtonItem } from "@/components/ui/CtaButtons";
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
 import { PortableText, type PortableTextBlock } from "@portabletext/react";
+import GradientMeshBg from "@/components/ui/GradientMeshBg";
 
 interface CtaBannerProps {
   callout?: string;
@@ -57,11 +58,7 @@ export default function CtaBanner({
         ) : (
           <div className="absolute inset-0 bg-brand-soybean" />
         )}
-        {/* Animated mesh gradient overlay */}
-        <div className="cta-gradient-canvas">
-          <div className="cta-blob-3" />
-          <div className="cta-blob-4" />
-        </div>
+        <GradientMeshBg />
       </div>
 
       <div className="mx-auto max-w-[816px]">
