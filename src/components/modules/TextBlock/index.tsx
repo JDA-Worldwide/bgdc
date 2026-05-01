@@ -28,9 +28,14 @@ export default function TextBlock({ heading, body, image, imagePlacement = "left
   }
 
   return (
-    <Container>
-      <AnimateIn className={cn("grid grid-cols-1 gap-16 md:grid-cols-2 md:items-stretch")}>
-        <div className={cn("relative aspect-square overflow-hidden rounded order-first md:h-full md:min-h-[400px]", placement === "right" && "md:order-last")}>
+    <div className="mx-auto w-full max-w-container px-6 sm:px-10 lg:px-gutter">
+      <AnimateIn className="grid grid-cols-1 gap-16 md:grid-cols-2 md:items-center">
+        <div
+          className={cn(
+            "relative aspect-4/3 w-full overflow-hidden rounded order-first",
+            placement === "right" && "md:order-last",
+          )}
+        >
           <SanityImage
             image={image}
             fill
@@ -47,6 +52,6 @@ export default function TextBlock({ heading, body, image, imagePlacement = "left
           {body?.length ? <PortableText value={body} /> : null}
         </div>
       </AnimateIn>
-    </Container>
+    </div>
   );
 }

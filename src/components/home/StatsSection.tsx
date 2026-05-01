@@ -97,7 +97,7 @@ export default function StatsSection({
   return (
     <section
       ref={sectionRef}
-      className="relative isolate py-16 md:py-section"
+      className="relative isolate border-t-[5px] border-t-brand-white py-16 md:py-section"
     >
       {showGradientMesh && (
         <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
