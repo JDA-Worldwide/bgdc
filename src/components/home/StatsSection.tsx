@@ -4,7 +4,6 @@ import CountUp from "react-countup";
 import { gsap } from "@/lib/gsap";
 import { useGsap } from "@/hooks/useGsap";
 import { cn } from "@/lib/utils";
-import { stegaClean } from "@sanity/client/stega";
 import GradientMeshBg from "@/components/ui/GradientMeshBg";
 
 interface Stat {
@@ -19,7 +18,11 @@ interface Stat {
 interface StatsSectionProps {
   heading?: string;
   stats?: Stat[];
-  colorScheme?: string;
+  /**
+   * When false, skips the animated gradient mesh so the outer PageBuilder scheme
+   * shows a flat background only. Omit or true for standalone use defaults to mesh on.
+   */
+  showGradientMesh?: boolean;
 }
 
 const defaultStats: Stat[] = [
@@ -68,11 +71,10 @@ function StatItem({ stat }: { stat: Stat }) {
 export default function StatsSection({
   heading = "Bargersville by the Numbers",
   stats,
-  colorScheme,
+  showGradientMesh = true,
 }: StatsSectionProps) {
   const resolvedStats = stats?.length ? stats : defaultStats;
   const count = resolvedStats.length;
-  const isGradientMesh = !stegaClean(colorScheme);
 
   const sectionRef = useGsap<HTMLElement>((el) => {
     gsap.fromTo(
@@ -95,14 +97,14 @@ export default function StatsSection({
   return (
     <section
       ref={sectionRef}
-      className="relative py-16 md:py-section"
+      className="relative isolate py-16 md:py-section"
     >
-      {isGradientMesh && (
-        <div className="absolute inset-0 -z-10" aria-hidden="true">
+      {showGradientMesh && (
+        <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
           <GradientMeshBg />
         </div>
       )}
-      <div className="@container mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
+      <div className="@container relative z-10 mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
         {heading && (
           <h2 data-animate-fadeinup className="mb-10 text-center text-2xl font-medium leading-tight text-brand-text-heading sm:text-3xl md:mb-[60px] md:text-[43px] md:leading-[60px]">
             {heading}

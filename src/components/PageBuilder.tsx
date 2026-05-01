@@ -104,6 +104,9 @@ const moduleDefaultSchemes: Record<string, string> = {
   statsBar: "scheme-statsbar",
 };
 
+// Explicit CMS color overrides for stats bar — everything else uses gradient mesh + scheme-statsbar.
+const STATS_BAR_SCHEME_OVERRIDES = new Set(["dark", "surface", "limestone", "sky"]);
+
 const fullBleedModules = new Set([
   "hero",
   "cta",
@@ -152,6 +155,7 @@ export default function PageBuilder({ modules, globalSocialLinks }: PageBuilderP
         }
 
         const scheme = stegaClean(module.colorScheme);
+        const schemeKey = scheme ?? "";
         const schemeClass =
           scheme === "dark" ? "scheme-dark" :
           scheme === "surface" ? "scheme-surface" :
@@ -161,9 +165,13 @@ export default function PageBuilder({ modules, globalSocialLinks }: PageBuilderP
         const isFullBleed = fullBleedModules.has(module._type);
         const anchorId = stegaClean(module.anchorSlug?.current) || undefined;
 
-        const extraProps = module._type === "contactInfo" && globalSocialLinks
-          ? { globalSocialLinks }
-          : {};
+        const extraProps: Record<string, unknown> = {};
+        if (module._type === "contactInfo" && globalSocialLinks) {
+          extraProps.globalSocialLinks = globalSocialLinks;
+        }
+        if (module._type === "statsBar") {
+          extraProps.showGradientMesh = !STATS_BAR_SCHEME_OVERRIDES.has(schemeKey);
+        }
 
         const scrollClass = anchorId ? "scroll-mt-[var(--header-height)]" : undefined;
 
