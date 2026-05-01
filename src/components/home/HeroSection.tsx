@@ -51,19 +51,19 @@ export default function HeroSection({
     >
       {/* Background */}
       <div data-hero-bg className="absolute inset-0 -z-10">
-        {backgroundImage?.asset ? (
-          <SanityImage
-            image={backgroundImage}
-            fill
-            sizes="100vw"
-            priority
-            className="object-cover"
-            decorative
-          />
-        ) : (
-          <div className="absolute inset-0 bg-brand-blue" />
+        <div className="absolute inset-0 bg-brand-blue" />
+        {backgroundImage?.asset && (
+          <div className="absolute inset-0 overflow-hidden opacity-20">
+            <SanityImage
+              image={backgroundImage}
+              fill
+              sizes="100vw"
+              priority
+              className="object-cover"
+              decorative
+            />
+          </div>
         )}
-        <div className="absolute inset-0 bg-black/70 mix-blend-multiply" />
       </div>
 
       {callout && (
@@ -72,7 +72,7 @@ export default function HeroSection({
         </p>
       )}
 
-      <div className="mt-10 flex max-w-4xl flex-col gap-8 text-center text-white md:mt-[60px] md:gap-[54px]">
+      <div className="mt-10 flex max-w-content flex-col gap-8 text-center text-white md:mt-[60px] md:gap-[54px]">
         {heading && (
           <h1 data-animate-fadeinup className="text-3xl font-medium text-white sm:text-5xl md:text-[70px] md:leading-[1.15]">
             {heading.split("\n").map((line, i, arr) => (
