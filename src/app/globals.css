@@ -212,6 +212,15 @@
     color: var(--color-brand-blue);
     border-color: var(--color-brand-white);
   }
+
+  /* Remove padding-top from section when next section has the same scheme */
+  .scheme-default   + .scheme-default   > section.py-section,
+  .scheme-dark      + .scheme-dark      > section.py-section,
+  .scheme-surface   + .scheme-surface   > section.py-section,
+  .scheme-limestone + .scheme-limestone > section.py-section,
+  .scheme-sky       + .scheme-sky       > section.py-section {
+    padding-top: 0;
+  }
 }
 
 /* ── Typography Scale ──

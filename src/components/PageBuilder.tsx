@@ -113,6 +113,7 @@ const fullBleedModules = new Set([
   "projectsGrid",
   "incentivesGrid",
   "projectShowcase",
+  "mapEmbed",
 ]);
 
 function buildFaqJsonLd(module: FAQModule) {
@@ -147,7 +148,7 @@ export default function PageBuilder({ modules, globalSocialLinks }: PageBuilderP
           scheme === "surface" ? "scheme-surface" :
           scheme === "limestone" ? "scheme-limestone" :
           scheme === "sky" ? "scheme-sky" :
-          undefined;
+          "scheme-default";
         const isFullBleed = fullBleedModules.has(module._type);
         const anchorId = stegaClean(module.anchorSlug?.current) || undefined;
 
