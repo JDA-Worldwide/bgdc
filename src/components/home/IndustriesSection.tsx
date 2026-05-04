@@ -121,7 +121,7 @@ export default function IndustriesSection({
               {/* Rest: gradient darkens toward bottom */}
               <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/20 to-black/70 transition-opacity duration-400 group-hover:opacity-0 group-focus:opacity-0" />
               {/* Hover: flat dark overlay matching Figma rgba(0,0,0,0.7) */}
-              <div className="absolute inset-0 bg-black/70 opacity-0 transition-opacity duration-400 group-hover:opacity-100 group-focus:opacity-100" />
+              <div className="absolute inset-0 bg-black/70 opacity-35 transition-opacity duration-400 group-hover:opacity-100 group-focus:opacity-100" />
 
               {/* Content — heading + hr always visible; description reveals on hover */}
               <div className="relative z-10 flex flex-col gap-[30px]">

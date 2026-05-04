@@ -28,7 +28,7 @@ function StatsList({ stats }: { stats: StatItem[] }) {
     <ul ref={ref} className="flex flex-col gap-[40px]">
       {stats.map((stat) => (
         <li key={stat._key} className="flex flex-col gap-[21px]">
-          <span className="font-heading text-[60px] leading-[55px] font-bold text-brand-primary">
+          <span className="font-heading text-[36px] leading-[33px] font-bold text-brand-primary">
             {stat.value}
           </span>
           <span className="font-accent text-[20px] leading-7 italic text-brand-charcoal">
@@ -82,7 +82,7 @@ export default function DetailedStats({
               </h2>
             )}
             {introText && (
-              <p className="mx-auto max-w-2xl text-base leading-7 text-brand-text">
+              <p className="mx-auto max-w-2xl text-base leading-7 text-brand-text lg:max-w-4xl">
                 {introText}
               </p>
             )}

@@ -110,7 +110,7 @@ export default function ValuePropsSection({
               </div>
 
               <div className="flex flex-1 flex-col gap-[30px]">
-                <h3 className="text-2xl font-medium leading-[35px] !text-brand-blue md:text-[28px]">
+                <h3 className="text-2xl font-medium leading-[35px] text-brand-blue! md:text-[28px]">
                   {card.title}
                 </h3>
                 <hr className="border-brand-sun" />
