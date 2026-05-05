@@ -9,10 +9,6 @@ export const mainDocuments = defineDocuments([
     route: "/:slug",
     filter: `_type == "page" && slug.current == $slug`,
   },
-  {
-    route: "/blog/:slug",
-    filter: `_type == "blogPost" && slug.current == $slug`,
-  },
 ]);
 
 export const locations = {
@@ -27,18 +23,6 @@ export const locations = {
       ],
     }),
   }),
-  blogPost: defineLocations({
-    select: { title: "title", slug: "slug.current" },
-    resolve: (doc) => ({
-      locations: [
-        {
-          title: doc?.title || "Untitled",
-          href: `/blog/${doc?.slug}`,
-        },
-        { title: "Blog", href: "/blog" },
-      ],
-    }),
-  }),
   globalSettings: defineLocations({
     message: "This document is used on all pages",
     tone: "caution",
@@ -47,13 +31,6 @@ export const locations = {
     }),
   }),
   navigation: defineLocations({
-    message: "This document is used on all pages",
-    tone: "caution",
-    resolve: () => ({
-      locations: [{ title: "Home", href: "/" }],
-    }),
-  }),
-  footer: defineLocations({
     message: "This document is used on all pages",
     tone: "caution",
     resolve: () => ({

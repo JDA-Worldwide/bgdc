@@ -28,7 +28,8 @@ export const settingsQuery = groq`
     siteUrl,
     logo,
     defaultSeo,
-    socialLinks
+    socialLinks,
+    address
   }
 `;
 
@@ -48,12 +49,6 @@ export const navigationQuery = groq`
         isExternal
       }
     }
-  }
-`;
-
-export const footerQuery = groq`
-  *[_type == "footer"][0] {
-    address
   }
 `;
 
@@ -123,8 +118,8 @@ export const pageBySlugQuery = groq`
       },
       _type == "teamGrid" => {
         heading,
-        members[]-> {
-          _id,
+        members[] {
+          _key,
           name,
           jobTitle,
           photo,
@@ -209,8 +204,8 @@ export const homepageQuery = groq`
       },
       _type == "teamGrid" => {
         heading,
-        members[]-> {
-          _id,
+        members[] {
+          _key,
           name,
           jobTitle,
           photo,
@@ -295,8 +290,8 @@ export const homepageDataQuery = groq`
       },
       _type == "teamGrid" => {
         heading,
-        members[]-> {
-          _id,
+        members[] {
+          _key,
           name,
           jobTitle,
           photo,

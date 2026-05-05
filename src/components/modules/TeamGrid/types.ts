@@ -1,7 +1,7 @@
 import type { SanityImageSource } from "@/components/ui/SanityImage/types";
 
 export interface TeamMemberData {
-  _id: string;
+  _key: string;
   name: string;
   jobTitle?: string;
   photo?: SanityImageSource;

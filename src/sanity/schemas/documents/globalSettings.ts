@@ -73,6 +73,12 @@ export default defineType({
         },
       ],
     }),
+    defineField({
+      name: "address",
+      title: "Footer Address",
+      description: "Each line of the address on a separate line.",
+      type: "text",
+    }),
   ],
   preview: {
     select: { title: "siteTitle" },

@@ -12,20 +12,12 @@ export const structure: StructureResolver = (S) =>
         ),
       S.divider(),
       S.documentTypeListItem("page").title("Pages"),
-      S.documentTypeListItem("blogPost").title("Blog Posts"),
-      S.documentTypeListItem("teamMember").title("Team Members"),
       S.divider(),
       S.listItem()
         .title("Navigation")
         .schemaType("navigation")
         .child(
           S.editor().title("Navigation").schemaType("navigation").documentId("navigation")
-        ),
-      S.listItem()
-        .title("Footer")
-        .schemaType("footer")
-        .child(
-          S.editor().title("Footer").schemaType("footer").documentId("footer")
         ),
       S.divider(),
       S.documentTypeListItem("formSubmission").title("Form Submissions"),

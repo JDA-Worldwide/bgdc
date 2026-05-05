@@ -20,8 +20,40 @@ export default defineType({
       type: "array",
       of: [
         {
-          type: "reference",
-          to: [{ type: "teamMember" }],
+          type: "object",
+          fields: [
+            defineField({
+              name: "name",
+              title: "Name",
+              type: "string",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "jobTitle",
+              title: "Job Title",
+              type: "string",
+            }),
+            defineField({
+              name: "photo",
+              title: "Photo",
+              type: "image",
+              options: { hotspot: true },
+              fields: [
+                defineField({
+                  name: "alt",
+                  title: "Alt text",
+                  type: "string",
+                  validation: (rule) => rule.required(),
+                }),
+              ],
+            }),
+            defineField({
+              name: "bio",
+              title: "Bio",
+              type: "text",
+              rows: 3,
+            }),
+          ],
         },
       ],
       validation: (rule) => rule.min(1),

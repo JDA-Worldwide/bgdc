@@ -6,8 +6,6 @@ import { DashboardWidgetContainer } from "@sanity/dashboard";
 
 interface ContentCounts {
   pages: number;
-  posts: number;
-  members: number;
   submissions: number;
 }
 
@@ -20,8 +18,6 @@ function WelcomeWidgetComponent() {
       .fetch(
         `{
           "pages": count(*[_type == "page"]),
-          "posts": count(*[_type == "blogPost"]),
-          "members": count(*[_type == "teamMember"]),
           "submissions": count(*[_type == "formSubmission"])
         }`
       )
@@ -41,8 +37,6 @@ function WelcomeWidgetComponent() {
             }}
           >
             <StatCard label="Pages" count={counts.pages} />
-            <StatCard label="Blog Posts" count={counts.posts} />
-            <StatCard label="Team Members" count={counts.members} />
             <StatCard label="Submissions" count={counts.submissions} />
           </div>
         ) : (

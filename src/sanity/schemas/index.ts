@@ -3,10 +3,7 @@ import type { SchemaTypeDefinition } from "sanity";
 // Documents
 import globalSettings from "./documents/globalSettings";
 import page from "./documents/page";
-import blogPost from "./documents/blogPost";
-import teamMember from "./documents/teamMember";
 import navigation from "./documents/navigation";
-import footer from "./documents/footer";
 import formSubmission from "./documents/formSubmission";
 
 // Objects
@@ -56,10 +53,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   // Documents
   globalSettings,
   page,
-  blogPost,
-  teamMember,
   navigation,
-  footer,
   formSubmission,
 
   // Objects

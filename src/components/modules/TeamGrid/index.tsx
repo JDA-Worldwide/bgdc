@@ -15,8 +15,8 @@ export default function TeamGrid({ heading, members }: TeamGridProps) {
       )}
 
       <AnimateIn stagger className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {members.map((member) => (
-          <div key={member._id} className="text-center">
+        {members.map((member, i) => (
+          <div key={member._key ?? i} className="text-center">
             {member.photo?.asset && (
               <div className="mx-auto mb-4 h-40 w-40 overflow-hidden rounded-full">
                 <SanityImage
