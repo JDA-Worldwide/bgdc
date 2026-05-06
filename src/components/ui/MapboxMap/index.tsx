@@ -1,6 +1,6 @@
 "use client";
 
-import type { FeatureCollection, Feature } from "geojson";
+import type { Feature } from "geojson";
 import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import { BRAND_MAP_STYLE, ensureMapboxCSS, validateMapboxToken } from "@/lib/mapbox";
 
@@ -84,34 +84,6 @@ const MapboxMap = forwardRef<MapboxMapHandle, MapboxMapProps>(function MapboxMap
         );
 
         m.on("load", async () => {
-          // Fetch district boundary, fit map to its bounds, then add layers
-          try {
-            const res = await fetch(
-              "https://gis.townofbargersville.org/arcgis/rest/services/PublicData/StormwaterNetwork/MapServer/8/query?where=1%3D1&outFields=*&f=geojson",
-            );
-            if (cancelled) return;
-            const geojson = await res.json() as FeatureCollection;
-            if (cancelled) return;
-
-            m.addSource("bargersville-district", { type: "geojson", data: geojson });
-            m.addLayer({
-              id: "bargersville-district-fill",
-              type: "fill",
-              source: "bargersville-district",
-              paint: { "fill-color": "#FFBF3C", "fill-opacity": 0.1 },
-            });
-            m.addLayer({
-              id: "bargersville-district-line",
-              type: "line",
-              source: "bargersville-district",
-              paint: { "line-color": "#FFBF3C", "line-width": 2, "line-opacity": 0.7 },
-            });
-
-            // District boundary loaded — bounds fitted to markers below
-          } catch (err) {
-            console.warn("Failed to load district boundary:", err);
-          }
-
           // Fit map to all marker positions
           const markerBounds = new mapboxgl.default.LngLatBounds();
           markers.forEach((mk) => markerBounds.extend([mk.lng, mk.lat]));
