@@ -45,6 +45,7 @@ next-env.d.ts
 
 # sanity
 /schema.json
+/public/studio/static
 
 # reference material
 /ref
