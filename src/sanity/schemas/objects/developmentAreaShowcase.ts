@@ -93,7 +93,7 @@ export default defineType({
             }),
             defineField({
               name: "mapImage",
-              title: "Parcel / Area Map",
+              title: "Image",
               type: "image",
               options: { hotspot: true },
               fields: [
@@ -109,18 +109,36 @@ export default defineType({
               name: "cta",
               title: "Call to Action",
               type: "object",
+              validation: (rule) =>
+                rule.custom((cta: { label?: string; url?: string; file?: { asset?: unknown } } | undefined) => {
+                  if (!cta?.label?.trim()) return true;
+                  const hasUrl = Boolean(cta.url?.trim());
+                  const hasFile = Boolean(cta.file?.asset);
+                  if (!hasUrl && !hasFile) {
+                    return "Add a URL or upload a file when the button has a label";
+                  }
+                  return true;
+                }),
               fields: [
                 defineField({ name: "label", title: "Label", type: "string" }),
                 defineField({
                   name: "url",
                   title: "URL",
                   type: "string",
+                  description: "Internal path (e.g. /contact) or full URL. Ignored if a file is uploaded.",
+                }),
+                defineField({
+                  name: "file",
+                  title: "File",
+                  type: "file",
+                  description: "Optional. When set, the button downloads this file instead of using the URL.",
                 }),
                 defineField({
                   name: "isExternal",
                   title: "Open in New Tab",
                   type: "boolean",
                   initialValue: false,
+                  description: "Applies when using URL only (not file download).",
                 }),
               ],
             }),

@@ -20,6 +20,31 @@ const ctaButtonFields = /* groq */ `
 // Inline projection for a ctas[] array of ctaButton.
 const ctasProjection = /* groq */ `ctas[] { ${ctaButtonFields} }`;
 
+const developmentAreaShowcaseModule = /* groq */ `
+  _type == "developmentAreaShowcase" => {
+    ...,
+    areas[] {
+      _key,
+      areaLabel,
+      statusLabel,
+      title,
+      body,
+      opportunities,
+      mapImage {
+        ...,
+        asset->
+      },
+      cta {
+        label,
+        url,
+        isExternal,
+        "downloadUrl": file.asset->url,
+        "downloadFilename": file.asset->originalFilename
+      }
+    }
+  }
+`;
+
 // --- Global ---
 
 export const settingsQuery = groq`
@@ -137,7 +162,8 @@ export const pageBySlugQuery = groq`
       _type == "businessIncentive" => {
         ...,
         cta { ${ctaButtonFields} }
-      }
+      },
+      ${developmentAreaShowcaseModule}
     }
   }
 `;
@@ -223,7 +249,8 @@ export const homepageQuery = groq`
       _type == "businessIncentive" => {
         ...,
         cta { ${ctaButtonFields} }
-      }
+      },
+      ${developmentAreaShowcaseModule}
     }
   }
 `;
@@ -309,7 +336,8 @@ export const homepageDataQuery = groq`
       _type == "businessIncentive" => {
         ...,
         cta { ${ctaButtonFields} }
-      }
+      },
+      ${developmentAreaShowcaseModule}
     }
   }
 `;

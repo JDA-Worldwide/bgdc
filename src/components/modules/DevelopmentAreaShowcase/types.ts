@@ -4,6 +4,9 @@ export interface AreaCTA {
   label?: string;
   url?: string;
   isExternal?: boolean;
+  /** Resolved from CTA file asset in GROQ */
+  downloadUrl?: string;
+  downloadFilename?: string;
 }
 
 export interface DevelopmentArea {

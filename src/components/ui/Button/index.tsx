@@ -5,6 +5,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "sm" | "md" | "lg";
   href?: string;
   isExternal?: boolean;
+  /** When `href` is set, passed to the anchor for file downloads */
+  download?: boolean | string;
 }
 
 const variants = {
@@ -39,6 +41,7 @@ export default function Button({
   size = "md",
   href,
   isExternal,
+  download,
   className,
   children,
   ...props
@@ -55,6 +58,7 @@ export default function Button({
       <a
         href={href}
         className={classes}
+        download={download}
         target={isExternal ? "_blank" : undefined}
         rel={isExternal ? "noopener noreferrer" : undefined}
       >

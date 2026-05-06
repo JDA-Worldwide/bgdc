@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "node scripts/sanity-prepare.mjs && next build",
-    "prod-build": "NODE_ENV=production next build",
+    "prod-build": "node scripts/sanity-prepare.mjs && NODE_ENV=production next build",
     "prod-start": "NODE_ENV=production next start",
     "start": "next start",
     "lint": "eslint",
