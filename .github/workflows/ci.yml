@@ -1,20 +1,11 @@
 name: CI
 
-# Lint on PRs; deploy Sanity schema on merges to main (and manual dispatch).
-# Add repo secret SANITY_AUTH_TOKEN (Sanity → Manage project → API → Add API token with deploy).
-# Add NEXT_PUBLIC_SANITY_PROJECT_ID and NEXT_PUBLIC_SANITY_DATASET (repository secrets
-# or variables) so sanity.cli.ts can resolve the project — same values as Vercel/local .env.local.
-
 on:
   pull_request:
     branches: [main]
-  push:
-    branches: [main]
-  workflow_dispatch:
 
 jobs:
   lint-and-typecheck:
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,22 +16,3 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
-
-  sanity-schema-deploy:
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - name: Extract Studio manifest
-        run: npm run sanity:manifest
-      - name: Deploy schema to Sanity Content Lake
-        env:
-          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
-          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
-          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
-        run: npm run sanity:schema-deploy
