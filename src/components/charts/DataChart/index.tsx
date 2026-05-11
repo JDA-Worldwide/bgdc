@@ -8,6 +8,7 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
+  LabelList,
   Legend,
   Line,
   LineChart,
@@ -133,7 +134,7 @@ export default function DataChart({
           <BarChart
             layout="vertical"
             data={chartData}
-            margin={{ top: 8, right: 24, left: 8, bottom: 8 }}
+            margin={{ top: 8, right: 56, left: 8, bottom: 8 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} horizontal={false} />
             <XAxis type="number" tick={axisTickStyle} tickLine={false} axisLine={axisLineStyle} />
@@ -154,6 +155,15 @@ export default function DataChart({
               {chartData.map((_, i) => (
                 <Cell key={`hbar-${i}`} fill={FILL_SEQUENCE[i % FILL_SEQUENCE.length]} />
               ))}
+              <LabelList
+                dataKey="value"
+                position="right"
+                offset={8}
+                fill="var(--color-brand-text)"
+                fontSize={11}
+                className="tabular-nums"
+                formatter={(v: unknown) => tooltipFormatValue(v, valueFormatter)}
+              />
             </Bar>
           </BarChart>
         );
