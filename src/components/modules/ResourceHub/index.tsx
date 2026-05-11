@@ -1,10 +1,13 @@
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import AnimateIn from "@/components/ui/AnimateIn";
-import type { ResourceHubProps, Resource } from "./types";
+import type { ResourceHubProps, Resource, ResourceLink } from "./types";
 
 function ResourceCard({ resource }: { resource: Resource }) {
-  const hasLink = !!resource.url;
+  const multiLinks =
+    resource.links?.filter((l): l is ResourceLink & { url: string } => !!l.url) ?? [];
+  const useMultiLinks = multiLinks.length > 0;
+  const hasLegacyLink = !useMultiLinks && !!resource.url;
 
   return (
     <div className="flex flex-col gap-[30px] bg-brand-sky p-10 in-[.scheme-limestone]:bg-white in-[.scheme-sky]:bg-white in-[.scheme-dark]:bg-white">
@@ -18,8 +21,21 @@ function ResourceCard({ resource }: { resource: Resource }) {
             {resource.description}
           </p>
         )}
-        <div className="mt-auto">
-          {hasLink ? (
+        <div className="mt-auto flex flex-col gap-3">
+          {useMultiLinks ? (
+            multiLinks.map((link) => (
+              <Button
+                key={link._key}
+                href={link.url}
+                isExternal={link.isExternal}
+                variant="blue-dark"
+                size="sm"
+                className="w-full sm:w-auto"
+              >
+                {link.linkLabel || "View Resource"}
+              </Button>
+            ))
+          ) : hasLegacyLink ? (
             <Button
               href={resource.url}
               isExternal={resource.isExternal}

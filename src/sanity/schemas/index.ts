@@ -48,6 +48,7 @@ import incentiveCards from "./objects/incentiveCards";
 import businessIncentive from "./objects/businessIncentive";
 import mapEmbed from "./objects/mapEmbed";
 import resourceHub from "./objects/resourceHub";
+import chartGrid from "./objects/chartGrid";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Documents
@@ -98,4 +99,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   businessIncentive,
   mapEmbed,
   resourceHub,
+  chartGrid,
 ];
