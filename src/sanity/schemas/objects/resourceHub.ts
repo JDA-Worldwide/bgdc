@@ -41,28 +41,83 @@ export default defineType({
               type: "string",
             }),
             defineField({
+              name: "links",
+              title: "Links",
+              type: "array",
+              description: "One or more buttons for this card. When set, the single URL fields below are ignored.",
+              of: [
+                defineArrayMember({
+                  type: "object",
+                  fields: [
+                    defineField({
+                      name: "linkLabel",
+                      title: "Link Label",
+                      type: "string",
+                      initialValue: "View Resource",
+                      validation: (rule) => rule.required(),
+                    }),
+                    defineField({
+                      name: "url",
+                      title: "URL",
+                      type: "string",
+                      validation: (rule) => rule.required(),
+                    }),
+                    defineField({
+                      name: "isExternal",
+                      title: "Open in New Tab",
+                      type: "boolean",
+                      initialValue: true,
+                    }),
+                  ],
+                  preview: {
+                    select: { linkLabel: "linkLabel", url: "url" },
+                    prepare({ linkLabel, url }) {
+                      return {
+                        title: linkLabel || "Link",
+                        subtitle: url || "",
+                      };
+                    },
+                  },
+                }),
+              ],
+            }),
+            defineField({
               name: "linkLabel",
-              title: "Link Label",
+              title: "Link Label (single link)",
               type: "string",
+              description: "Used only when Links is empty.",
               initialValue: "View Resource",
             }),
             defineField({
               name: "url",
-              title: "URL",
+              title: "URL (single link)",
               type: "string",
-              description: "Leave blank to show a 'coming soon' state",
+              description: "Used only when Links is empty. Leave blank to show a “coming soon” state.",
             }),
             defineField({
               name: "isExternal",
-              title: "Open in New Tab",
+              title: "Open in New Tab (single link)",
               type: "boolean",
+              description: "Used only when Links is empty.",
               initialValue: true,
             }),
           ],
           preview: {
-            select: { title: "title", url: "url" },
-            prepare({ title, url }) {
-              return { title: title || "Resource", subtitle: url || "Link coming soon" };
+            select: { title: "title", url: "url", links: "links" },
+            prepare({ title, url, links }) {
+              const linkCount = Array.isArray(links)
+                ? links.filter((l: { url?: string } | undefined) => !!l?.url).length
+                : 0;
+              let subtitle: string;
+              if (linkCount > 0) {
+                subtitle =
+                  linkCount === 1 ? `${linkCount} link` : `${linkCount} links`;
+              } else if (url) {
+                subtitle = url;
+              } else {
+                subtitle = "Link coming soon";
+              }
+              return { title: title || "Resource", subtitle };
             },
           },
         }),
