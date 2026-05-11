@@ -70,8 +70,12 @@ export default async function RootLayout({
     typedSettings?.siteUrl || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
   return (
-    <html lang="en" className={`${montserrat.variable} ${merriweather.variable}`}>
-      <body className="antialiased">
+    <html
+      lang="en"
+      className={`${montserrat.variable} ${merriweather.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="antialiased" suppressHydrationWarning>
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded focus:bg-brand-primary focus:px-4 focus:py-2 focus:text-white"
