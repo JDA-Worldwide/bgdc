@@ -147,7 +147,7 @@ See [SETUP.md](./SETUP.md) for detailed, step-by-step deployment and configurati
 1. Push to GitHub
 2. Import in Vercel — framework auto-detected as Next.js
 3. Add all environment variables (see table above, plus per-environment values in SETUP.md)
-4. Set up Sanity webhook for ISR: `https://yourdomain.com/api/revalidate` with `x-sanity-secret` header
+4. Set up Sanity webhook for ISR: `https://yourdomain.com/api/revalidate`, **Projection** `{_type}`, same **Secret** as `SANITY_REVALIDATE_SECRET` (signed as `sanity-webhook-signature`)
 5. Verify Resend sending domain (DNS records)
 6. Add client hostname to shared Turnstile widget
 
