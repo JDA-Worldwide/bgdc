@@ -38,6 +38,7 @@ export default defineType({
     defineArrayMember({ type: "businessIncentive" }),
     defineArrayMember({ type: "mapEmbed" }),
     defineArrayMember({ type: "resourceHub" }),
+    defineArrayMember({ type: "chartGrid" }),
   ],
   options: {
     insertMenu: {
@@ -59,12 +60,13 @@ export default defineType({
             "testimonials",
             "faq",
             "resourceHub",
+            "chartGrid",
           ],
         },
         {
           name: "stats",
           title: "Stats & Data",
-          of: ["statsCounter", "statsBar", "detailedStats", "momentumSection"],
+          of: ["statsCounter", "statsBar", "detailedStats", "momentumSection", "chartGrid"],
         },
         {
           name: "people",

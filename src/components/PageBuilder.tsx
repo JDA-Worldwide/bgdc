@@ -34,6 +34,7 @@ import ValuePropsSection from "./home/ValuePropsSection";
 import MapSection from "./home/MapSection";
 import IndustriesSection from "./home/IndustriesSection";
 import MomentumSection from "./home/MomentumSection";
+import ChartGrid from "./modules/ChartGrid";
 import { JsonLd, faqPageSchema } from "@/lib/jsonLd";
 import { toPlainText, type PortableTextBlock } from "@portabletext/react";
 
@@ -94,6 +95,7 @@ const moduleMap: Record<string, ComponentType<any>> = {
   mapSection: MapSection,
   industriesGrid: IndustriesSection,
   momentumSection: MomentumSection,
+  chartGrid: ChartGrid,
 };
 
 // Scheme fallback for modules whose component hardcodes a background color

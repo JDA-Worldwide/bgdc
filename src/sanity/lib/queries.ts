@@ -45,6 +45,24 @@ const developmentAreaShowcaseModule = /* groq */ `
   }
 `;
 
+const chartGridModule = /* groq */ `
+  _type == "chartGrid" => {
+    ...,
+    charts[] {
+      _key,
+      title,
+      chartType,
+      totalLabel,
+      totalValue,
+      items[] {
+        _key,
+        label,
+        value
+      }
+    }
+  }
+`;
+
 // --- Global ---
 
 export const settingsQuery = groq`
@@ -163,7 +181,8 @@ export const pageBySlugQuery = groq`
         ...,
         cta { ${ctaButtonFields} }
       },
-      ${developmentAreaShowcaseModule}
+      ${developmentAreaShowcaseModule},
+      ${chartGridModule}
     }
   }
 `;
@@ -250,7 +269,8 @@ export const homepageQuery = groq`
         ...,
         cta { ${ctaButtonFields} }
       },
-      ${developmentAreaShowcaseModule}
+      ${developmentAreaShowcaseModule},
+      ${chartGridModule}
     }
   }
 `;
@@ -337,7 +357,8 @@ export const homepageDataQuery = groq`
         ...,
         cta { ${ctaButtonFields} }
       },
-      ${developmentAreaShowcaseModule}
+      ${developmentAreaShowcaseModule},
+      ${chartGridModule}
     }
   }
 `;
