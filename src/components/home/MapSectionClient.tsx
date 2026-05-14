@@ -97,7 +97,7 @@ export default function MapSectionClient({
       <section className="py-section">
         <div className="mx-auto max-w-container px-6 sm:px-10 lg:px-gutter">
           <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-0">
-            <div className="w-full lg:w-2/3 lg:shrink-0 lg:pr-12">
+            <div className="w-full lg:w-[55%] lg:shrink-0 lg:pr-10">
               {mapImage?.asset ? (
                 <button
                   type="button"
@@ -112,7 +112,7 @@ export default function MapSectionClient({
                       image={mapImage as SanityImageSource}
                       width={layoutW}
                       height={layoutH}
-                      sizes="(max-width: 1024px) 100vw, 67vw"
+                      sizes="(max-width: 1024px) 100vw, 55vw"
                       className="h-auto w-full object-contain"
                     />
                   </figure>
@@ -144,7 +144,7 @@ export default function MapSectionClient({
 
             <div
               ref={sidebarRef}
-              className="flex w-full flex-col gap-8 lg:w-1/3 lg:min-w-0 lg:pl-0"
+              className="flex w-full min-w-0 flex-1 flex-col gap-8"
             >
               <div data-animate-fadeinup className="flex flex-col gap-[25px] text-brand-charcoal">
                 {heading && (
