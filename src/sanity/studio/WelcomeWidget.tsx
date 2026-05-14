@@ -1,7 +1,7 @@
 "use client";
 
 import { useClient } from "sanity";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DashboardWidgetContainer } from "@sanity/dashboard";
 
 interface ContentCounts {
@@ -11,19 +11,32 @@ interface ContentCounts {
 
 function WelcomeWidgetComponent() {
   const client = useClient({ apiVersion: "2024-01-01" });
+  const clientRef = useRef(client);
   const [counts, setCounts] = useState<ContentCounts | null>(null);
 
   useEffect(() => {
-    client
-      .fetch(
-        `{
+    clientRef.current = client;
+  });
+
+  useEffect(() => {
+    let cancelled = false;
+    const c = clientRef.current;
+    c.fetch(
+      `{
           "pages": count(*[_type == "page"]),
           "submissions": count(*[_type == "formSubmission"])
         }`
-      )
-      .then(setCounts)
-      .catch(() => setCounts(null));
-  }, [client]);
+    )
+      .then((data) => {
+        if (!cancelled) setCounts(data);
+      })
+      .catch(() => {
+        if (!cancelled) setCounts(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <DashboardWidgetContainer header="Overview">

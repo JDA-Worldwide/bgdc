@@ -59,15 +59,16 @@ export default function MapSectionClient({
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   const sidebarRef = useGsap<HTMLDivElement>((el) => {
+    const target = el.querySelector<HTMLElement>("[data-animate-fadeinup]");
+    if (!target) return;
     gsap.fromTo(
-      el.querySelectorAll("[data-animate-fadeinup]"),
+      target,
       { opacity: 0, y: 30 },
       {
         opacity: 1,
         y: 0,
         duration: 0.55,
         ease: "power2.out",
-        stagger: 0.12,
         scrollTrigger: { trigger: el, start: "top 80%" },
       },
     );
@@ -146,7 +147,8 @@ export default function MapSectionClient({
               ref={sidebarRef}
               className="flex w-full min-w-0 flex-1 flex-col gap-8"
             >
-              <div data-animate-fadeinup className="flex flex-col gap-[25px] text-brand-charcoal">
+              <div data-animate-fadeinup className="flex flex-col gap-8">
+                <div className="flex flex-col gap-[25px] text-brand-charcoal">
                 {heading && (
                   <h2 className="text-2xl font-medium leading-[35px] md:text-[28px]">
                     {heading}
@@ -183,7 +185,6 @@ export default function MapSectionClient({
                 {destinations.map((dest, i) => (
                   <div
                     key={dest._key ?? i}
-                    data-animate-fadeinup
                     className="grid grid-cols-[auto_1fr] items-start gap-x-3"
                   >
                     <div className="flex items-center gap-3">
@@ -200,6 +201,7 @@ export default function MapSectionClient({
                     </div>
                   </div>
                 ))}
+              </div>
               </div>
             </div>
           </div>

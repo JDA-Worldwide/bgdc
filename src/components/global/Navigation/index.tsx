@@ -73,16 +73,16 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [prevPathname, setPrevPathname] = useState(pathname);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const dropdownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  if (prevPathname !== pathname) {
-    setPrevPathname(pathname);
-    setMobileOpen(false);
-    setOpenDropdown(null);
-  }
+  useEffect(() => {
+    queueMicrotask(() => {
+      setMobileOpen(false);
+      setOpenDropdown(null);
+    });
+  }, [pathname]);
 
   useEffect(() => {
     if (!mobileOpen) return;
