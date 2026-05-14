@@ -63,6 +63,32 @@ const chartGridModule = /* groq */ `
   }
 `;
 
+/** Static map section image needs expanded asset for urlFor(). */
+const mapSectionModule = /* groq */ `
+  _type == "mapSection" => {
+    ...,
+    mapImage {
+      ...,
+      asset-> {
+        _id,
+        url,
+        metadata {
+          dimensions {
+            width,
+            height
+          }
+        }
+      }
+    },
+    destinations[] {
+      _key,
+      time,
+      label,
+      description
+    }
+  }
+`;
+
 // --- Global ---
 
 export const settingsQuery = groq`
@@ -182,7 +208,8 @@ export const pageBySlugQuery = groq`
         cta { ${ctaButtonFields} }
       },
       ${developmentAreaShowcaseModule},
-      ${chartGridModule}
+      ${chartGridModule},
+      ${mapSectionModule}
     }
   }
 `;
@@ -270,7 +297,8 @@ export const homepageQuery = groq`
         cta { ${ctaButtonFields} }
       },
       ${developmentAreaShowcaseModule},
-      ${chartGridModule}
+      ${chartGridModule},
+      ${mapSectionModule}
     }
   }
 `;
@@ -358,7 +386,8 @@ export const homepageDataQuery = groq`
         cta { ${ctaButtonFields} }
       },
       ${developmentAreaShowcaseModule},
-      ${chartGridModule}
+      ${chartGridModule},
+      ${mapSectionModule}
     }
   }
 `;

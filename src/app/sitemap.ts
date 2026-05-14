@@ -6,8 +6,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [{ data: pages }, { data: posts }] = await Promise.all([
-    sanityFetch({ query: allPagesQuery }),
-    sanityFetch({ query: allBlogPostsQuery }),
+    sanityFetch({ query: allPagesQuery, tags: ["page"] }),
+    sanityFetch({ query: allBlogPostsQuery, tags: ["blogPost"] }),
   ]);
 
   const typedPages = pages as { slug: string }[];
