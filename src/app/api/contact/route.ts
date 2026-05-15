@@ -100,7 +100,7 @@ export async function POST(request: Request) {
       const to = recipientEmail || process.env.CONTACT_FORM_RECIPIENT || "info@jdaworldwide.com";
       const from = process.env.CONTACT_FORM_SENDER || "noreply@jdaworldwide.com";
 
-      await resend!.emails.send({
+      const sendResult = await resend!.emails.send({
         from,
         to,
         subject: `New contact form submission from ${name}`,
@@ -118,6 +118,14 @@ export async function POST(request: Request) {
           <p><small>Submitted from: ${escapeHtml(sourcePage || "Unknown")}</small></p>
         `,
       });
+
+      if (sendResult.error) {
+        console.error("Resend rejected email:", sendResult.error);
+        return NextResponse.json(
+          { error: "Unable to send your message right now. Please try again later." },
+          { status: 502 }
+        );
+      }
     }
 
     // Store in Sanity
