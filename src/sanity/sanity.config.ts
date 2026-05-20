@@ -3,6 +3,7 @@ import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { presentationTool } from "sanity/presentation";
 import { dashboardTool, projectInfoWidget } from "@sanity/dashboard";
+import { media } from "sanity-plugin-media";
 import { schemaTypes } from "./schemas";
 import { locations, mainDocuments } from "./lib/resolve";
 import { structure } from "./lib/structure";
@@ -21,6 +22,7 @@ export default defineConfig({
       widgets: [welcomeWidget(), projectInfoWidget()],
     }),
     structureTool({ structure }),
+    media(),
     presentationTool({
       resolve: { locations, mainDocuments },
       previewUrl: {
