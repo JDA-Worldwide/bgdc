@@ -23,6 +23,15 @@
   --color-brand-text-heading: #003B71;
   --color-brand-muted: #6E6860;
 
+  /* Chart series — ≥4.5:1 vs white (#FFFFFF) for bars, slices, and legend swatches */
+  --color-chart-1: #003B71;
+  --color-chart-2: #5A6B17;
+  --color-chart-3: #2E5A7A;
+  --color-chart-4: #8A6B00;
+  --color-chart-5: #3D4F5A;
+  --color-chart-6: #1A5C4A;
+  --color-chart-7: #6B3D71;
+
   /* ── Typography ── */
   --font-heading: var(--font-montserrat), "Montserrat", sans-serif;
   --font-body: var(--font-montserrat), "Montserrat", sans-serif;
@@ -133,6 +142,15 @@
     --color-brand-secondary: #FFBF3C;
     background-color: #B7C7D3;
     color: #212322;
+  }
+
+  /* Chart cards — always light surface; pin tokens so labels/grid stay readable */
+  .scheme-chart-light {
+    --color-brand-background: #FFFFFF;
+    --color-brand-border: #E0DBD2;
+    --color-brand-text: #212322;
+    --color-brand-text-heading: #003B71;
+    --color-brand-muted: #6E6860;
   }
 
   /* Stats Bar — animated gradient mesh background; dark text since mesh is light-colored */

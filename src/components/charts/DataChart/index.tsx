@@ -18,18 +18,21 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  type TooltipPayload,
 } from "recharts";
+import { stegaClean } from "@sanity/client/stega";
 import { cn } from "@/lib/utils";
-import type { DataChartProps, DataChartType } from "./types";
+import type { ChartDatum, DataChartProps, DataChartType } from "./types";
 
+/** Accessible on white chart surfaces (≥4.5:1 non-text contrast). */
 const FILL_SEQUENCE = [
-  "var(--color-brand-primary)",
-  "var(--color-brand-secondary)",
-  "var(--color-brand-sky)",
-  "var(--color-brand-prairie)",
-  "var(--color-brand-soybean)",
-  "var(--color-brand-limestone)",
-  "var(--color-brand-muted)",
+  "var(--color-chart-1)",
+  "var(--color-chart-2)",
+  "var(--color-chart-3)",
+  "var(--color-chart-4)",
+  "var(--color-chart-5)",
+  "var(--color-chart-6)",
+  "var(--color-chart-7)",
 ] as const;
 
 const VALID_TYPES: DataChartType[] = ["bar", "horizontalBar", "pie", "line", "area"];
@@ -64,6 +67,42 @@ function tooltipFormatValue(
   return "—";
 }
 
+/** High-contrast label styling on white chart surfaces (not on bar fills). */
+const VALUE_LABEL_FILL = "var(--color-brand-charcoal)";
+const VALUE_LABEL_FONT_SIZE = 12;
+const VALUE_LABEL_FONT_WEIGHT = 500;
+
+function valueLabelFormatter(
+  v: unknown,
+  format: (n: number) => string,
+): string {
+  return tooltipFormatValue(v, format);
+}
+
+interface ChartTooltipProps {
+  active?: boolean;
+  payload?: TooltipPayload;
+  label?: string | number;
+  valueFormatter: (value: number) => string;
+}
+
+function ChartTooltipContent({ active, payload, label, valueFormatter }: ChartTooltipProps) {
+  if (!active || !payload?.length) return null;
+
+  const entry = payload[0];
+  const datum = entry.payload as ChartDatum | undefined;
+  const rawLabel = datum?.label ?? label ?? entry.name ?? "";
+  const categoryLabel = stegaClean(String(rawLabel));
+  const formattedValue = tooltipFormatValue(entry.value, valueFormatter);
+
+  return (
+    <div className="max-w-[min(20rem,90vw)] rounded-md border border-brand-border bg-white px-3 py-2 text-xs text-brand-charcoal shadow-sm">
+      <p className="font-medium leading-snug wrap-break-word">{categoryLabel}</p>
+      <p className="mt-0.5 tabular-nums">{formattedValue}</p>
+    </div>
+  );
+}
+
 export default function DataChart({
   title,
   chartType,
@@ -83,17 +122,13 @@ export default function DataChart({
 
   if (!chartData.length) return null;
 
-  const axisTickStyle = { fill: "var(--color-brand-muted)", fontSize: 11 };
+  const axisTickStyle = { fill: "var(--color-brand-charcoal)", fontSize: 12 };
   const axisLineStyle = { stroke: "var(--color-brand-border)" };
   const gridStroke = "var(--color-brand-border)";
 
-  const tooltipContentStyle = {
-    background: "var(--color-brand-background)",
-    border: "1px solid var(--color-brand-border)",
-    borderRadius: "6px",
-    fontSize: 12,
-    color: "var(--color-brand-text)",
-  };
+  const renderTooltip = (props: { active?: boolean; payload?: TooltipPayload; label?: string | number }) => (
+    <ChartTooltipContent {...props} valueFormatter={valueFormatter} />
+  );
 
   const ariaLabel = title
     ? `${title}${summaryLabel && summaryValue != null ? `. ${summaryLabel}: ${valueFormatter(summaryValue)}.` : ""}`
@@ -103,7 +138,7 @@ export default function DataChart({
     switch (kind) {
       case "bar":
         return (
-          <BarChart data={chartData} margin={{ top: 8, right: 8, left: 4, bottom: 48 }}>
+          <BarChart data={chartData} margin={{ top: 28, right: 8, left: 4, bottom: 48 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} vertical={false} />
             <XAxis
               dataKey="label"
@@ -116,15 +151,21 @@ export default function DataChart({
               interval={0}
             />
             <YAxis tick={axisTickStyle} tickLine={false} axisLine={axisLineStyle} width={48} />
-            <Tooltip
-              formatter={(v) => [tooltipFormatValue(v, valueFormatter), ""]}
-              labelFormatter={(label) => String(label)}
-              contentStyle={tooltipContentStyle}
-            />
+            <Tooltip content={renderTooltip} />
             <Bar dataKey="value" radius={[4, 4, 0, 0]}>
               {chartData.map((_, i) => (
                 <Cell key={`bar-${i}`} fill={FILL_SEQUENCE[i % FILL_SEQUENCE.length]} />
               ))}
+              <LabelList
+                dataKey="value"
+                position="top"
+                offset={6}
+                fill={VALUE_LABEL_FILL}
+                fontSize={VALUE_LABEL_FONT_SIZE}
+                fontWeight={VALUE_LABEL_FONT_WEIGHT}
+                className="tabular-nums"
+                formatter={(v: unknown) => valueLabelFormatter(v, valueFormatter)}
+              />
             </Bar>
           </BarChart>
         );
@@ -146,11 +187,7 @@ export default function DataChart({
               tickLine={false}
               axisLine={axisLineStyle}
             />
-            <Tooltip
-              formatter={(v) => [tooltipFormatValue(v, valueFormatter), ""]}
-              labelFormatter={(label) => String(label)}
-              contentStyle={tooltipContentStyle}
-            />
+            <Tooltip content={renderTooltip} />
             <Bar dataKey="value" radius={[0, 4, 4, 0]}>
               {chartData.map((_, i) => (
                 <Cell key={`hbar-${i}`} fill={FILL_SEQUENCE[i % FILL_SEQUENCE.length]} />
@@ -159,10 +196,11 @@ export default function DataChart({
                 dataKey="value"
                 position="right"
                 offset={8}
-                fill="var(--color-brand-text)"
-                fontSize={11}
+                fill={VALUE_LABEL_FILL}
+                fontSize={VALUE_LABEL_FONT_SIZE}
+                fontWeight={VALUE_LABEL_FONT_WEIGHT}
                 className="tabular-nums"
-                formatter={(v: unknown) => tooltipFormatValue(v, valueFormatter)}
+                formatter={(v: unknown) => valueLabelFormatter(v, valueFormatter)}
               />
             </Bar>
           </BarChart>
@@ -170,7 +208,7 @@ export default function DataChart({
 
       case "pie":
         return (
-          <PieChart>
+          <PieChart margin={{ top: 8, right: 8, left: 8, bottom: 8 }}>
             <Pie
               data={chartData}
               dataKey="value"
@@ -185,20 +223,26 @@ export default function DataChart({
                 <Cell key={`slice-${i}`} fill={FILL_SEQUENCE[i % FILL_SEQUENCE.length]} />
               ))}
             </Pie>
-            <Tooltip
-              formatter={(v) => [tooltipFormatValue(v, valueFormatter), ""]}
-              contentStyle={tooltipContentStyle}
-            />
+            <Tooltip content={renderTooltip} />
             <Legend
               verticalAlign="bottom"
-              wrapperStyle={{ fontSize: 11, paddingTop: 16 }}
+              wrapperStyle={{
+                fontSize: VALUE_LABEL_FONT_SIZE,
+                paddingTop: 16,
+                color: VALUE_LABEL_FILL,
+              }}
+              formatter={(value) => {
+                const row = chartData.find((d) => d.label === value);
+                if (!row) return value;
+                return `${value}: ${valueFormatter(row.value)}`;
+              }}
             />
           </PieChart>
         );
 
       case "line":
         return (
-          <LineChart data={chartData} margin={{ top: 8, right: 8, left: 4, bottom: 48 }}>
+          <LineChart data={chartData} margin={{ top: 28, right: 8, left: 4, bottom: 48 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
             <XAxis
               dataKey="label"
@@ -211,23 +255,31 @@ export default function DataChart({
               interval={0}
             />
             <YAxis tick={axisTickStyle} tickLine={false} axisLine={axisLineStyle} width={48} />
-            <Tooltip
-              formatter={(v) => [tooltipFormatValue(v, valueFormatter), ""]}
-              contentStyle={tooltipContentStyle}
-            />
+            <Tooltip content={renderTooltip} />
             <Line
               type="monotone"
               dataKey="value"
-              stroke="var(--color-brand-primary)"
+              stroke="var(--color-chart-1)"
               strokeWidth={2}
-              dot={{ r: 3, fill: "var(--color-brand-secondary)" }}
-            />
+              dot={{ r: 4, fill: "var(--color-chart-2)", stroke: "var(--color-chart-1)", strokeWidth: 1 }}
+            >
+              <LabelList
+                dataKey="value"
+                position="top"
+                offset={8}
+                fill={VALUE_LABEL_FILL}
+                fontSize={VALUE_LABEL_FONT_SIZE}
+                fontWeight={VALUE_LABEL_FONT_WEIGHT}
+                className="tabular-nums"
+                formatter={(v: unknown) => valueLabelFormatter(v, valueFormatter)}
+              />
+            </Line>
           </LineChart>
         );
 
       case "area":
         return (
-          <AreaChart data={chartData} margin={{ top: 8, right: 8, left: 4, bottom: 48 }}>
+          <AreaChart data={chartData} margin={{ top: 28, right: 8, left: 4, bottom: 48 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
             <XAxis
               dataKey="label"
@@ -240,18 +292,26 @@ export default function DataChart({
               interval={0}
             />
             <YAxis tick={axisTickStyle} tickLine={false} axisLine={axisLineStyle} width={48} />
-            <Tooltip
-              formatter={(v) => [tooltipFormatValue(v, valueFormatter), ""]}
-              contentStyle={tooltipContentStyle}
-            />
+            <Tooltip content={renderTooltip} />
             <Area
               type="monotone"
               dataKey="value"
-              stroke="var(--color-brand-primary)"
-              fill="var(--color-brand-sky)"
-              fillOpacity={0.35}
+              stroke="var(--color-chart-1)"
+              fill="var(--color-chart-3)"
+              fillOpacity={0.2}
               strokeWidth={2}
-            />
+            >
+              <LabelList
+                dataKey="value"
+                position="top"
+                offset={8}
+                fill={VALUE_LABEL_FILL}
+                fontSize={VALUE_LABEL_FONT_SIZE}
+                fontWeight={VALUE_LABEL_FONT_WEIGHT}
+                className="tabular-nums"
+                formatter={(v: unknown) => valueLabelFormatter(v, valueFormatter)}
+              />
+            </Area>
           </AreaChart>
         );
 

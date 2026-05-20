@@ -39,7 +39,7 @@ export default function ChartGrid({ heading, introText, charts }: ChartGridProps
               return (
                 <div
                   key={chart._key}
-                  className="rounded border border-brand-border bg-brand-background p-6 shadow-sm md:p-8"
+                  className="scheme-chart-light rounded border border-brand-border bg-white p-6 shadow-sm md:p-8"
                 >
                   <DataChart
                     title={chart.title}
