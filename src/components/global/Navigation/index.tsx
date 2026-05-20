@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { trackCtaClick, trackNavClick } from "@/lib/gtm";
 
 /* ---------- Types ---------- */
 
@@ -45,21 +46,65 @@ function NavLink({
   isExternal,
   className,
   children,
+  linkLocation,
 }: {
   href: string;
   isExternal?: boolean;
   className?: string;
   children: React.ReactNode;
+  linkLocation: string;
 }) {
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    trackNavClick({
+      linkText: event.currentTarget.textContent?.trim() || href,
+      linkUrl: href,
+      linkLocation,
+    });
+  };
+
   if (isExternal) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+        onClick={handleClick}
+      >
         {children}
       </a>
     );
   }
   return (
-    <Link href={href} className={className}>
+    <Link href={href} className={className} onClick={handleClick}>
+      {children}
+    </Link>
+  );
+}
+
+function NavCtaLink({
+  href,
+  className,
+  children,
+  linkLocation,
+}: {
+  href: string;
+  className?: string;
+  children: React.ReactNode;
+  linkLocation: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className={className}
+      onClick={(event) => {
+        trackCtaClick({
+          buttonText: event.currentTarget.textContent?.trim() || href,
+          buttonUrl: href,
+          ctaLocation: linkLocation,
+        });
+      }}
+    >
       {children}
     </Link>
   );
@@ -204,6 +249,7 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                           <NavLink
                             href={item.url}
                             isExternal={item.isExternal}
+                            linkLocation="header_dropdown_parent"
                             className={cn(
                               "block px-5 py-2.5 text-[15px] font-medium transition-colors hover:bg-brand-surface hover:text-brand-soybean border-b border-brand-border",
                               isActive(item.url) ? "text-brand-soybean" : "text-brand-blue"
@@ -216,6 +262,7 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                               key={child._key ?? child.url}
                               href={child.url}
                               isExternal={child.isExternal}
+                              linkLocation="header_dropdown_child"
                               className={cn(
                                 "block px-5 py-2.5 text-[15px] transition-colors hover:bg-brand-surface hover:text-brand-soybean",
                                 isActive(child.url) ? "text-brand-soybean" : "text-brand-blue"
@@ -236,6 +283,7 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                   key={item._key ?? item.url}
                   href={item.url}
                   isExternal={item.isExternal}
+                  linkLocation="header_desktop"
                   className={cn(
                     "text-base font-semibold leading-7 transition-colors hover:text-brand-soybean",
                     isActive(item.url) ? "text-brand-soybean" : "text-brand-blue"
@@ -247,12 +295,13 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
             })}
           </div>
 
-          <Link
+          <NavCtaLink
             href={ctaUrl}
+            linkLocation="navigation"
             className="btn-blue-dark rounded-button px-5 py-[15px] text-base font-semibold leading-[21px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2"
           >
             {ctaLabel}
-          </Link>
+          </NavCtaLink>
         </div>
 
         {/* Mobile toggle */}
@@ -329,6 +378,7 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                         <NavLink
                           href={item.url}
                           isExternal={item.isExternal}
+                          linkLocation="header_mobile_dropdown_parent"
                           className={cn(
                             "block rounded px-3 py-2 text-[15px] transition-colors hover:text-brand-soybean",
                             isActive(item.url) ? "text-brand-soybean" : "text-brand-blue"
@@ -341,6 +391,7 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                             key={child._key ?? child.url}
                             href={child.url}
                             isExternal={child.isExternal}
+                            linkLocation="header_mobile_dropdown_child"
                             className={cn(
                               "block rounded px-3 py-2 text-[15px] transition-colors hover:text-brand-soybean",
                               isActive(child.url) ? "text-brand-soybean" : "text-brand-blue"
@@ -360,6 +411,7 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                   key={item._key ?? item.url}
                   href={item.url}
                   isExternal={item.isExternal}
+                  linkLocation="header_mobile"
                   className={cn(
                     "block rounded px-3 py-3 text-base font-semibold transition-colors hover:text-brand-soybean",
                     isActive(item.url) ? "text-brand-soybean" : "text-brand-blue"
@@ -369,12 +421,13 @@ export default function Navigation({ items, ctaLabel = "Get in Touch", ctaUrl = 
                 </NavLink>
               );
             })}
-            <Link
+            <NavCtaLink
               href={ctaUrl}
+              linkLocation="navigation"
               className="btn-blue-dark mt-4 block rounded-button px-5 py-[15px] text-center text-base font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2"
             >
               {ctaLabel}
-            </Link>
+            </NavCtaLink>
           </div>
         </div>
       )}

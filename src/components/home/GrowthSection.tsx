@@ -106,7 +106,7 @@ export default function GrowthSection({
                 {description}
               </p>
             )}
-            <CtaButtons ctas={ctas} className="mt-6" />
+            <CtaButtons ctas={ctas} analyticsLocation="home_growth" className="mt-6" />
           </div>
         </div>
 

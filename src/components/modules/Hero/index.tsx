@@ -114,6 +114,7 @@ export default function Hero({
             <Button
               href={cta.url}
               isExternal={cta.isExternal}
+              analyticsLocation="hero"
               size="lg"
               variant={hasImage || isDark ? "blue-light" : "blue-dark"}
             >

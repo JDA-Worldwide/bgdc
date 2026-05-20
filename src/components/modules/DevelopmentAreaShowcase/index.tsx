@@ -3,6 +3,7 @@ import PortableText from "@/components/ui/PortableText";
 import SanityImage from "@/components/ui/SanityImage";
 import Button from "@/components/ui/Button";
 import AnimateIn from "@/components/ui/AnimateIn";
+import { stegaClean } from "@sanity/client/stega";
 import { cn } from "@/lib/utils";
 import type { DevelopmentAreaShowcaseProps, DevelopmentArea } from "./types";
 
@@ -44,7 +45,8 @@ function AreaSection({ area }: { area: DevelopmentArea }) {
       <Button
         href={ctaHref}
         download={area.cta.downloadUrl ? (area.cta.downloadFilename ?? true) : undefined}
-        isExternal={area.cta.downloadUrl ? false : area.cta.isExternal}
+        isExternal={stegaClean(area.cta.isExternal) ?? false}
+        analyticsLocation="development_area_showcase"
         variant="blue-dark"
         size="sm"
       >

@@ -6,6 +6,9 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import { JsonLd, organizationSchema } from "@/lib/jsonLd";
+import { GoogleTagManager } from "@next/third-parties/google";
+import { GTM_ID } from "@/lib/gtm";
+import AnalyticsListeners from "@/components/analytics/AnalyticsListeners";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -75,6 +78,7 @@ export default async function RootLayout({
       className={`${montserrat.variable} ${merriweather.variable}`}
       suppressHydrationWarning
     >
+      {GTM_ID ? <GoogleTagManager gtmId={GTM_ID} /> : null}
       <body className="antialiased" suppressHydrationWarning>
         <a
           href="#main-content"
@@ -93,6 +97,7 @@ export default async function RootLayout({
           />
         )}
         {children}
+        {GTM_ID ? <AnalyticsListeners /> : null}
         <Analytics />
         <SpeedInsights />
       </body>

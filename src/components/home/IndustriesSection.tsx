@@ -142,7 +142,7 @@ export default function IndustriesSection({
           ))}
         </div>
 
-        <CtaButtons ctas={ctas} className="mt-[60px] justify-center" />
+        <CtaButtons ctas={ctas} analyticsLocation="home_industries" className="mt-[60px] justify-center" />
       </div>
     </section>
   );

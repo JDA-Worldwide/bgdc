@@ -138,7 +138,7 @@ export default defineType({
                   title: "Open in New Tab",
                   type: "boolean",
                   initialValue: false,
-                  description: "Applies when using URL only (not file download).",
+                  description: "Opens the link in a new browser tab (URL or uploaded file).",
                 }),
               ],
             }),

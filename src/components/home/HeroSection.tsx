@@ -106,6 +106,7 @@ export default function HeroSection({
       <CtaButtons
         data-animate-fadeinup
         ctas={ctas}
+        analyticsLocation="home_hero"
         className="mt-10 justify-center sm:gap-[60px] md:mt-[60px]"
       />
     </section>

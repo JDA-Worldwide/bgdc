@@ -28,6 +28,7 @@ function ResourceCard({ resource }: { resource: Resource }) {
                 key={link._key}
                 href={link.url}
                 isExternal={link.isExternal}
+                analyticsLocation="resource_hub"
                 variant="blue-dark"
                 size="sm"
                 className="w-full sm:w-auto"
@@ -39,6 +40,7 @@ function ResourceCard({ resource }: { resource: Resource }) {
             <Button
               href={resource.url}
               isExternal={resource.isExternal}
+              analyticsLocation="resource_hub"
               variant="blue-dark"
               size="sm"
             >

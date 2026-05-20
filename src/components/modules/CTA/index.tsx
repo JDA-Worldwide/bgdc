@@ -70,6 +70,7 @@ export default function CTA({
                 <Button
                   href={primaryButton.url}
                   isExternal={primaryButton.isExternal}
+                  analyticsLocation="cta_module_primary"
                   variant={isPrimary ? "blue-light" : "blue-dark"}
                 >
                   {primaryButton.label}
@@ -79,6 +80,7 @@ export default function CTA({
                 <Button
                   href={secondaryButton.url}
                   isExternal={secondaryButton.isExternal}
+                  analyticsLocation="cta_module_secondary"
                   variant={isPrimary ? "blue-light-outline" : "blue-dark-outline"}
                 >
                   {secondaryButton.label}

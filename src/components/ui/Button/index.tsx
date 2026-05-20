@@ -1,12 +1,18 @@
-import { cn } from "@/lib/utils";
+"use client";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+import { cn } from "@/lib/utils";
+import { isPdfUrl, trackCtaClick } from "@/lib/gtm";
+
+interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> {
+  onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
   variant?: "primary" | "secondary" | "outline" | "blue-dark" | "blue-light" | "blue-dark-outline" | "blue-light-outline" | "blue-dark-alt" | "blue-light-alt";
   size?: "sm" | "md" | "lg";
   href?: string;
   isExternal?: boolean;
   /** When `href` is set, passed to the anchor for file downloads */
   download?: boolean | string;
+  /** GTM `cta_location` for link buttons (e.g. `hero`, `cta_module`) */
+  analyticsLocation?: string;
 }
 
 const variants = {
@@ -36,14 +42,26 @@ const sizes = {
   lg: "px-7 py-[18px] text-lg",
 };
 
+function linkLabel(
+  event: React.MouseEvent<HTMLAnchorElement>,
+  children: React.ReactNode
+): string {
+  const fromDom = event.currentTarget.textContent?.trim();
+  if (fromDom) return fromDom;
+  if (typeof children === "string") return children;
+  return "";
+}
+
 export default function Button({
   variant = "primary",
   size = "md",
   href,
   isExternal,
   download,
+  analyticsLocation,
   className,
   children,
+  onClick,
   ...props
 }: ButtonProps) {
   const classes = cn(
@@ -54,6 +72,20 @@ export default function Button({
   );
 
   if (href) {
+    const handleLinkClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+      onClick?.(event);
+      if (event.defaultPrevented) return;
+
+      const isFile = Boolean(download) || isPdfUrl(href);
+      if (isFile) return;
+
+      trackCtaClick({
+        buttonText: linkLabel(event, children),
+        buttonUrl: href,
+        ctaLocation: analyticsLocation ?? "unknown",
+      });
+    };
+
     return (
       <a
         href={href}
@@ -61,6 +93,7 @@ export default function Button({
         download={download}
         target={isExternal ? "_blank" : undefined}
         rel={isExternal ? "noopener noreferrer" : undefined}
+        onClick={handleLinkClick}
       >
         {children}
       </a>
@@ -68,7 +101,7 @@ export default function Button({
   }
 
   return (
-    <button className={classes} {...props}>
+    <button className={classes} onClick={onClick} {...props}>
       {children}
     </button>
   );

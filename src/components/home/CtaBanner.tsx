@@ -87,7 +87,12 @@ export default function CtaBanner({
             />
           </div>
         ) : null}
-        <CtaButtons data-animate-fadeinup ctas={ctas} className="mt-8 justify-center" />
+        <CtaButtons
+          data-animate-fadeinup
+          ctas={ctas}
+          analyticsLocation="home_cta_banner"
+          className="mt-8 justify-center"
+        />
       </div>
     </section>
   );

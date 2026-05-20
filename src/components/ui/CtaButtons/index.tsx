@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import { stegaClean } from "@sanity/client/stega";
 import { cn } from "@/lib/utils";
+import { isPdfUrl, trackCtaClick } from "@/lib/gtm";
 
 export type CtaVariant =
   | "blue-dark"
@@ -20,6 +23,8 @@ export interface CtaButtonItem {
 
 interface CtaButtonsProps extends React.HTMLAttributes<HTMLDivElement> {
   ctas?: CtaButtonItem[];
+  /** GTM `cta_location` for all buttons in this group */
+  analyticsLocation?: string;
 }
 
 const variantClasses: Record<CtaVariant, string> = {
@@ -31,7 +36,12 @@ const variantClasses: Record<CtaVariant, string> = {
   "blue-light-outline": "btn-blue-light-outline",
 };
 
-export default function CtaButtons({ ctas, className, ...divProps }: CtaButtonsProps) {
+export default function CtaButtons({
+  ctas,
+  analyticsLocation,
+  className,
+  ...divProps
+}: CtaButtonsProps) {
   const resolved = ctas?.filter((cta) => stegaClean(cta.url));
   if (!resolved?.length) return null;
 
@@ -40,12 +50,26 @@ export default function CtaButtons({ ctas, className, ...divProps }: CtaButtonsP
       {resolved.map((cta) => {
         const href = stegaClean(cta.url)!;
         const variant = stegaClean(cta.variant) ?? "blue-dark";
+        const label = stegaClean(cta.label) ?? href;
+
+        const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+          if (isPdfUrl(href)) return;
+
+          const buttonText = event.currentTarget.textContent?.trim() || label;
+          trackCtaClick({
+            buttonText,
+            buttonUrl: href,
+            ctaLocation: analyticsLocation ?? "unknown",
+          });
+        };
+
         return (
           <a
             key={cta._key}
             href={href}
             target={cta.isExternal ? "_blank" : undefined}
             rel={cta.isExternal ? "noopener noreferrer" : undefined}
+            onClick={handleClick}
             className={cn(
               "rounded-button px-5 py-[15px] text-base font-semibold leading-[21px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-sky focus-visible:ring-offset-2 focus-visible:ring-offset-brand-blue",
               variantClasses[variant as CtaVariant] ?? variantClasses["blue-dark"]

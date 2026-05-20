@@ -56,6 +56,7 @@ function ProjectCard({ project }: { project: Project }) {
             <Button
               href={project.cta.url}
               isExternal={project.cta.isExternal}
+              analyticsLocation="project_showcase"
               variant="blue-dark"
               size="sm"
             >

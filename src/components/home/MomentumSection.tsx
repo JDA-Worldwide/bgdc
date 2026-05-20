@@ -117,7 +117,7 @@ export default function MomentumSection({
           })}
         </div>
 
-        <CtaButtons ctas={ctas} className="mt-[60px] justify-center" />
+        <CtaButtons ctas={ctas} analyticsLocation="home_momentum" className="mt-[60px] justify-center" />
       </div>
     </section>
   );

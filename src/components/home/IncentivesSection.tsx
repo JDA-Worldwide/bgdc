@@ -136,7 +136,7 @@ export default function IncentivesSection({
               </p>
             )}
 
-            <CtaButtons ctas={ctas} className="mt-8" />
+            <CtaButtons ctas={ctas} analyticsLocation="home_incentives" className="mt-8" />
           </div>
 
           {/* Right grid */}

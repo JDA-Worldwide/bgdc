@@ -136,7 +136,12 @@ export default function LocationSection({
               )}
             </ul>
 
-            <CtaButtons data-animate-fadeinup ctas={ctas} className="mt-10" />
+            <CtaButtons
+              data-animate-fadeinup
+              ctas={ctas}
+              analyticsLocation="home_location"
+              className="mt-10"
+            />
           </div>
 
           {/* Right — Mapbox interactive map (no animation) */}

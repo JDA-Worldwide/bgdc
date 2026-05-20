@@ -45,6 +45,7 @@ export default function BusinessIncentive({
           <Button
             href={cta.url}
             isExternal={cta.isExternal}
+            analyticsLocation="business_incentive"
             variant={(stegaClean(cta.variant) as Parameters<typeof Button>[0]["variant"]) ?? "blue-dark"}
           >
             {cta.label}
